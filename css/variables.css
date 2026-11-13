@@ -1,0 +1,26 @@
+/* css/variables.css */
+:root {
+    /* 💡 Premium Clinical Theme */
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+    --bg-gray: #f8fafc;
+    --correct: #10b981;
+    --correct-light: #d1fae5;
+    --incorrect: #ef4444;
+    --incorrect-light: #fee2e2;
+    --border: #e2e8f0;
+}
+
+/* 🌙 Premium High-Contrast Dark Mode Variables */
+body.dark-mode {
+    --primary: #38bdf8 !important; 
+    --primary-light: #1e293b !important;
+    --text-dark: #f8fafc !important;
+    --text-gray: #94a3b8 !important;
+    --bg-gray: #0f172a !important;
+    --border: #334155 !important;
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
