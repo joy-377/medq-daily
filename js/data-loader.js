@@ -1,6 +1,6 @@
 // js/data-loader.js
 
-// ১৯টি সাবজেক্ট ইমপোর্ট করা হচ্ছে (সঠিক পাথ সহ)
+// ১৯টি সাবজেক্টের ডেটা সঠিক রুট পাথ দিয়ে ইমপোর্ট করা হচ্ছে
 import { anatomyQs } from '../data/anatomy.js';
 import { physiologyQs } from '../data/physiology.js';
 import { biochemistryQs } from '../data/biochemistry.js';
@@ -24,7 +24,7 @@ import { anesthesiaQs } from '../data/anesthesia.js';
 // ব্লগের ডেটা ইমপোর্ট করা হচ্ছে
 import { blogArticles } from '../data/blog-data.js';
 
-// সবগুলোকে গ্লোবাল Array-তে যুক্ত করা হলো যাতে সাইট সঠিকভাবে কাজ করে
+// সবগুলোকে গ্লোবাল Array-তে যুক্ত করা হলো
 window.qBank = [
     ...anatomyQs,
     ...physiologyQs,
