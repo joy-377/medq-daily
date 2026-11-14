@@ -598,5 +598,5 @@ export const forensicQs = [
   ans: 0,
   exp: "Lead inhibits enzymes involved in heme synthesis, especially aminolevulinic acid dehydratase and ferrochelatase. It can cause microcytic or normocytic anemia, basophilic stippling, abdominal colic, and peripheral neuropathy. Blood lead concentration is central to assessment, and management depends on exposure severity and clinical context.",
   wrongExp: "• <strong>Option B (Acetylcholinesterase inhibition):</strong> This mechanism is associated with organophosphorus compounds.<br>• <strong>Option C (Carboxyhemoglobin formation):</strong> Carbon monoxide exposure causes carboxyhemoglobinemia rather than the characteristic lead-associated heme-synthesis defect.<br>• <strong>Option D (Activation of clotting factors):</strong> Lead poisoning is not characterized by direct activation of vitamin K-dependent clotting factors."
-},
+}
 ];
