@@ -848,5 +848,5 @@ export const radiologyQs = [
   ans: 2,
   exp: "The patient has the classic 'CRAB' symptoms (Calcium elevation, Renal failure, Anemia, Bone lesions) of Multiple Myeloma. The pathognomonic radiographic finding in the skull is the 'Raindrop skull'—multiple, sharply defined, purely lytic 'punched-out' bone lesions that look like drops of rain hitting a surface, uniquely lacking any surrounding sclerotic reactive bone.",
   wrongExp: "• <strong>Option A (Cotton wool appearance):</strong> Classic for the sclerotic (late) phase of Paget's disease of bone, where thickened, disorganized, fluffy sclerotic patches mix with lytic areas in the skull vault.<br>• <strong>Option B (Salt and pepper skull):</strong> A classic radiographic finding in Hyperparathyroidism, where diffuse granular demineralization (osteopenia) gives the skull a speckled, granular appearance.<br>• <strong>Option D (Hair-on-end skull):</strong> Caused by extreme marrow hyperplasia widening the diploic space and forming vertical bony spicules, seen in severe chronic hemolytic anemias like Thalassemia major and Sickle cell disease."
-},
+}
 ];
