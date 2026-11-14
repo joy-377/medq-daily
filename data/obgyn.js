@@ -1,4 +1,5 @@
-export const obgynQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.obg = [
 {
   id: 13001,
   subject: "OBG",
