@@ -1,82 +1,140 @@
 // ============================================================================
-// 🌟 MEDQ - FULL APPLICATION LOGIC (APP.JS) - 100% RESTORED
+// 🌟 MEDQ - ULTIMATE JAVASCRIPT ENGINE (APP.JS)
 // ============================================================================
 
-// 🗂️ 1. LEGAL, POLICY & ABOUT US CONTENT DATA
-window.legalContentData = {
-    privacy: {
-        title: "Privacy Policy",
-        body: `
-            <h4>1. Information We Collect & Storage</h4>
-            <p>MedQ is built as a dedicated clinical preparation platform for medical students and interns. We respect your personal privacy. All your quiz history, test attempts, bookmarks, and analytics metrics are securely stored locally on your device via browser localStorage to ensure lightning-fast performance.</p>
-            <br>
-            <h4>2. Firebase Authentication & Cloud Sync</h4>
-            <p>If you choose to sign in using Google, we only access and store your basic profile credentials strictly for account identification and cross-device progress synchronization. We never sell or distribute your personal data.</p>
-            <br>
-            <h4>3. Advertisements</h4>
-            <p>We utilize Google AdSense to display relevant non-intrusive advertisements on our platform. Google may utilize cookies to serve ads based on your prior browsing history.</p>
-        `
-    },
-    terms: {
-        title: "Terms & Conditions",
-        body: `
-            <h4>1. Acceptance of Terms</h4>
-            <p>By accessing the MedQ platform, you agree to comply with and be bound by these Terms and Conditions.</p>
-            <br>
-            <h4>2. Educational Disclaimer</h4>
-            <p>MedQ is strictly designed as an educational aid for NEET PG and INI-CET. It must <strong>not</strong> be used as a primary clinical reference for direct patient diagnosis or therapeutic decisions.</p>
-            <br>
-            <h4>3. Intellectual Property Rights</h4>
-            <p>All high-yield clinical MCQs and UI layouts curated within MedQ are protected under intellectual property guidelines.</p>
-        `
-    },
-    about: {
-        title: "About Us",
-        body: `
-            <h4>Mission MD/MS 🚀</h4>
-            <p>MedQ is conceptualized and developed by medical students and interns, tailored specifically for NEET PG and INI-CET aspirants. Our core mission is to deliver high-yield clinical scenario-based questions and deep analytical insights.</p>
-            <br>
-            <h4>Key Platform Features</h4>
-            <p>• Daily Clinical Doses & Rapid Revision Archives<br>• Custom Q-Bank with Year-Wise, Subject, & PYQ Filters<br>• Advanced Analytics Hub & Mistake Vault</p>
-        `
-    },
-    contact: {
-        title: "Contact Us & Support",
-        body: `
-            <h4>Get in Touch</h4>
-            <p>If you encounter any erroneous clinical explanations, technical bugs, or have constructive suggestions, we would love to hear from you.</p>
-            <br>
-            <h4>Official Support Email</h4>
-            <p>Email: <strong>Injoy3707@gmail.com</strong></p>
-            <p>Our editorial team reviews all reported feedback promptly.</p>
-        `
+// ==========================================
+// 1. FIREBASE SETUP & CLOUD SYNC
+// ==========================================
+const firebaseConfig = {
+    apiKey: "AIzaSyC_a4lWu2TZRa2vc8m2Hy2g8Ww4fV5twA8",
+    authDomain: "medq-daily.firebaseapp.com",
+    projectId: "medq-daily",
+    storageBucket: "medq-daily.firebasestorage.app",
+    messagingSenderId: "23847093259",
+    appId: "1:23847093259:web:53bfa37687dc69b936330e",
+    measurementId: "G-RT29DSDRMQ"
+};
+
+// Initialize Firebase (Assuming script is loaded in HTML)
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+window.loginWithGoogle = function() {
+    playUISound('tap');
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(function(result) {
+        const user = result.user;
+        alert(`Welcome, ${user.displayName}! Successfully logged in.`);
+        localStorage.setItem('spUserName', user.displayName);
+        localStorage.setItem('spUserAvatar', user.photoURL);
+        localStorage.setItem('userEmail', user.email);
+        closeSPModal();
+        syncDataToCloud(user.uid);
+        loadUserProfile();
+    }).catch(function(error) {
+        alert("Google Login Failed: " + error.message);
+    });
+};
+
+window.syncDataToCloud = function(userId) {
+    let userData = {
+        name: localStorage.getItem('spUserName'),
+        totalSolved: localStorage.getItem('totalQuestionsSolved') || 0,
+        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    db.collection("users").doc(userId).set(userData, { merge: true });
+};
+
+window.logoutApp = function() {
+    playUISound('btn');
+    auth.signOut().then(() => {
+        alert("Logged out successfully.");
+        localStorage.removeItem('spUserName');
+        loadUserProfile();
+    });
+};
+
+// ==========================================
+// 2. AUDIO ENGINE
+// ==========================================
+let isSoundEnabled = (localStorage.getItem('soundEnabled') === 'true');
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+window.playUISound = function(type) {
+    if (!isSoundEnabled) return; 
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    oscillator.type = 'sine'; 
+    if (type === 'tap') {
+        oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.05);
+    } else if (type === 'btn') {
+        oscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
+        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.08);
     }
 };
 
-// 🗂️ 2. GLOBAL VARIABLES
+window.toggleSoundFromSidebar = function() {
+    isSoundEnabled = !isSoundEnabled;
+    localStorage.setItem('soundEnabled', isSoundEnabled);
+    let soundStatus = document.getElementById('sidebarSoundStatus');
+    if(soundStatus) soundStatus.innerText = isSoundEnabled ? "ON" : "OFF";
+    playUISound('tap');
+};
+
+// ==========================================
+// 3. LEGAL & POLICY DATA
+// ==========================================
+window.legalContentData = {
+    privacy: { title: "Privacy Policy", body: "<h4>1. Local Storage</h4><p>Your quiz history and metrics are securely stored locally on your device.</p><h4>2. Cloud Sync</h4><p>If signed in via Google, basic profile data is synced. We do not sell your data.</p>" },
+    terms: { title: "Terms & Conditions", body: "<h4>1. Educational Purpose</h4><p>MedQ is designed as an educational aid for NEET PG and INI-CET and should not be used as clinical reference.</p>" },
+    about: { title: "About Us", body: "<h4>Mission MD/MS 🚀</h4><p>Built by medicos, for medicos to provide high-yield clinical MCQs and rapid revision tools.</p>" },
+    contact: { title: "Contact Us", body: "<h4>Support</h4><p>Email: <strong>Injoy3707@gmail.com</strong></p><p>We review feedback promptly to maintain high academic standards.</p>" }
+};
+
+// ==========================================
+// 4. GLOBAL STATE & INITIALIZATION
+// ==========================================
 var TAB_ORDER = ['tabDaily', 'tabTests', 'tabHome', 'tabCustom', 'tabInsights'];
 var currentActiveTab = localStorage.getItem('medqActiveTab') || 'tabHome';
 
-let activeTestState = { questions: [], currentQ: 0, answers: [], timer: null, visited: {}, flags: {}, testName: '' };
+let activeTestState = { questions: [], currentQ: 0, answers: [], timer: null, testName: '' };
 let dailyQuestions = [];
 let currentDailyQ = 0;
 let dailyAnswers = [];
-let isSoundEnabled = (localStorage.getItem('soundEnabled') === 'true');
 
-// 🚀 3. INITIALIZATION & OUTSIDE CLICK LISTENER
 document.addEventListener('DOMContentLoaded', function() {
     loadUserProfile();
+    applyThemeOnLoad();
     switchTab(currentActiveTab);
     setupSwipeEngine();
-    applySavedTheme();
+    
+    // Set sound status text on load
+    let soundStatus = document.getElementById('sidebarSoundStatus');
+    if(soundStatus) soundStatus.innerText = isSoundEnabled ? "ON" : "OFF";
 });
 
-// 🖱️ OUTSIDE CLICK TO CLOSE MODALS
+// OUTSIDE CLICK LISTENER FOR ALL MODALS
 window.addEventListener('click', function(event) {
     const modals = [
         'spProfileModal', 'yearSetupModal', 'signInWarningModal', 'weakSubjectModal', 
         'milestoneModal', 'dailyReminderModal', 'notesSrsModal', 'favoritesModal', 
-        'legalModal', 'allBadgesModal'
+        'legalModal', 'allBadgesModal', 'instructionScreen'
     ];
     modals.forEach(modalId => {
         const modal = document.getElementById(modalId);
@@ -87,7 +145,9 @@ window.addEventListener('click', function(event) {
     if (event.target === sidebarOverlay) toggleSidebar();
 });
 
-// 📱 4. TAB SWITCHING ENGINE
+// ==========================================
+// 5. TAB SWITCHING & SWIPE ENGINE
+// ==========================================
 window.switchTab = function(tabId, navElement) {
     hideAllActiveScreens();
     currentActiveTab = tabId;
@@ -102,7 +162,6 @@ window.switchTab = function(tabId, navElement) {
     if (matchingNav) matchingNav.classList.add('active');
 
     if (tabId === 'tabHome') renderHomeDashboard();
-    if (tabId === 'tabInsights' && typeof renderInsightsHub === 'function') renderInsightsHub();
     if (tabId === 'tabDaily') loadTodayMCQ();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -110,45 +169,66 @@ window.switchTab = function(tabId, navElement) {
 
 function hideAllActiveScreens() {
     if (activeTestState && activeTestState.timer) clearInterval(activeTestState.timer);
-    const screens = [
-        'resultScreen', 'activeTestScreen', 'instructionScreen', 'reviewScreen', 
-        'loadingScreen', 'clinicalHubScreen', 'favoritesModal', 'legalModal', 
-        'spProfileModal', 'weakSubjectModal', 'milestoneModal', 'dailyReminderModal'
-    ];
+    const screens = ['resultScreen', 'activeTestScreen', 'instructionScreen', 'reviewScreen', 'loadingScreen', 'clinicalHubScreen', 'favoritesModal', 'legalModal', 'spProfileModal'];
     screens.forEach(id => {
         let el = document.getElementById(id);
-        if (el) {
-            el.classList.add('hidden');
-            el.style.display = (id === 'instructionScreen' || id === 'reviewScreen' || id === 'loadingScreen') ? 'none' : '';
-        }
+        if (el) { el.classList.add('hidden'); el.style.display = ''; }
     });
+    let instScreen = document.getElementById('instructionScreen');
+    if(instScreen) instScreen.style.display = 'none';
 }
 
-// ☰ 5. SIDEBAR & MODAL CONTROLLERS
+function setupSwipeEngine() {
+    let touchStartX = 0;
+    const mainArea = document.getElementById('mainContainer');
+    if (!mainArea) return;
+    
+    mainArea.addEventListener('touchstart', e => {
+        if (e.target.closest('.no-swipe') || e.target.closest('.card')) { touchStartX = null; return; }
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    mainArea.addEventListener('touchend', e => {
+        if (touchStartX === null) return;
+        let diffX = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diffX) > 80) { 
+            let currIdx = TAB_ORDER.indexOf(currentActiveTab);
+            if (diffX < 0 && currIdx < TAB_ORDER.length - 1) switchTab(TAB_ORDER[currIdx + 1]); 
+            else if (diffX > 0 && currIdx > 0) switchTab(TAB_ORDER[currIdx - 1]); 
+        }
+        touchStartX = null;
+    }, { passive: true });
+}
+
+// ==========================================
+// 6. MODALS, SIDEBAR & PROFILE CONTROLS
+// ==========================================
 window.toggleSidebar = function() {
     playUISound('tap');
     const sidebar = document.getElementById('mainSidebar');
     const overlay = document.getElementById('sidebarOverlay');
-    
     if (sidebar.style.left === '0px') {
         sidebar.style.left = '-300px';
-        overlay.classList.remove('active');
+        if(overlay) overlay.classList.remove('active');
     } else {
         sidebar.style.left = '0px';
-        overlay.classList.add('active');
-        document.getElementById('sidebarDoctorName').innerText = localStorage.getItem('spUserName') || 'Dr. Medical Student';
+        if(overlay) overlay.classList.add('active');
+        let dName = document.getElementById('sidebarDoctorName');
+        if(dName) dName.innerText = localStorage.getItem('spUserName') || 'Dr. Medical Student';
     }
 };
 
 window.openSPModal = function() {
     playUISound('tap');
-    document.getElementById('spProfileModal').classList.remove('hidden');
+    let pModal = document.getElementById('spProfileModal');
+    if(pModal) pModal.classList.remove('hidden');
     loadUserProfile();
 };
 
 window.closeSPModal = function() {
     playUISound('tap');
-    document.getElementById('spProfileModal').classList.add('hidden');
+    let pModal = document.getElementById('spProfileModal');
+    if(pModal) pModal.classList.add('hidden');
 };
 
 window.openLegalModal = function(type) {
@@ -156,42 +236,40 @@ window.openLegalModal = function(type) {
     const modal = document.getElementById('legalModal');
     const titleElem = document.getElementById('legalModalTitle');
     const bodyElem = document.getElementById('legalModalBody');
-    
     if (window.legalContentData && window.legalContentData[type]) {
-        titleElem.innerText = window.legalContentData[type].title;
-        bodyElem.innerHTML = window.legalContentData[type].body;
+        if(titleElem) titleElem.innerText = window.legalContentData[type].title;
+        if(bodyElem) bodyElem.innerHTML = window.legalContentData[type].body;
     }
-    modal.classList.remove('hidden');
+    if(modal) modal.classList.remove('hidden');
 };
 
 window.closeLegalModal = function() {
     playUISound('tap');
-    document.getElementById('legalModal').classList.add('hidden');
+    let modal = document.getElementById('legalModal');
+    if(modal) modal.classList.add('hidden');
 };
 
-// 👤 6. USER PROFILE & THEME LOGIC
 function loadUserProfile() {
-    let name = localStorage.getItem('spUserName');
-    if(name) {
-        let nameInputs = document.querySelectorAll('#spUserName, #homeUserName');
-        nameInputs.forEach(el => {
-            if(el.tagName === 'INPUT') el.value = name;
-            else el.innerText = name;
-        });
-        document.getElementById('navUserBadge').innerText = name.charAt(0).toUpperCase();
-        document.getElementById('spUserInitials').innerText = name.charAt(0).toUpperCase();
-    }
+    let name = localStorage.getItem('spUserName') || 'Medical Student';
+    let nameInput = document.getElementById('spUserName');
+    let homeName = document.getElementById('homeUserName');
+    let avatar = document.getElementById('navUserBadge');
+    
+    if(nameInput) nameInput.value = name;
+    if(homeName) homeName.innerText = name;
+    if(avatar) avatar.innerText = name.charAt(0).toUpperCase();
 }
 
 window.saveUserProfile = function() {
     let nameInput = document.getElementById('spUserName');
-    if(nameInput) {
+    if(nameInput && nameInput.value.trim() !== '') {
         localStorage.setItem('spUserName', nameInput.value);
         loadUserProfile();
     }
 };
 
-function applySavedTheme() {
+// Theme Controller
+function applyThemeOnLoad() {
     let theme = localStorage.getItem('medqTheme') || 'light';
     if (theme === 'dark') document.body.classList.add('dark-mode');
     else document.body.classList.remove('dark-mode');
@@ -204,48 +282,50 @@ window.toggleThemeFromSidebar = function() {
     toggleSidebar();
 };
 
-window.toggleSoundFromSidebar = function() {
-    isSoundEnabled = !isSoundEnabled;
-    localStorage.setItem('soundEnabled', isSoundEnabled);
-    document.getElementById('sidebarSoundStatus').innerText = isSoundEnabled ? "ON" : "OFF";
-    playUISound('tap');
-};
-
-// 📊 7. HOME DASHBOARD RENDERER
-function renderHomeDashboard() {
-    document.getElementById('homeUserName').innerText = localStorage.getItem('spUserName') || 'Doctor';
-    document.getElementById('homeStreakVal').innerText = localStorage.getItem('medqStreakCount') || '0';
-    
+// ==========================================
+// 7. HOME DASHBOARD RENDERER
+// ==========================================
+window.renderHomeDashboard = function() {
     let totalSolved = parseInt(localStorage.getItem('totalQuestionsSolved') || '0');
     let totalCorrect = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
     let accuracy = totalSolved > 0 ? Math.round((totalCorrect / totalSolved) * 100) : 0;
     
-    document.getElementById('homeStatSolved').innerText = totalSolved;
-    document.getElementById('homeStatAccuracy').innerText = accuracy + "%";
+    let elSolved = document.getElementById('homeStatSolved');
+    let elAcc = document.getElementById('homeStatAccuracy');
     
+    if(elSolved) elSolved.innerText = totalSolved;
+    if(elAcc) elAcc.innerText = accuracy + "%";
+    
+    // Clinical Pearl
     let pearls = [
         "Metoclopramide is contraindicated in Parkinson's disease due to dopamine antagonism.",
         "Drug of choice for trigeminal neuralgia is Carbamazepine.",
-        "Hypercalcemia with normal PTH is familial hypocalciuric hypercalcemia (FHH).",
-        "Most common site of ectopic pregnancy is the Ampulla of the fallopian tube."
+        "Hypercalcemia with normal PTH is familial hypocalciuric hypercalcemia (FHH)."
     ];
-    let todayIndex = new Date().getDate() % pearls.length;
-    document.getElementById('homeClinicalPearl').innerText = pearls[todayIndex];
-}
+    let pearlEl = document.getElementById('homeClinicalPearl');
+    if(pearlEl) pearlEl.innerText = pearls[new Date().getDate() % pearls.length];
+};
 
-// 📚 8. DAILY DOSE ENGINE
+// ==========================================
+// 8. DAILY DOSE ENGINE
+// ==========================================
 window.loadTodayMCQ = function() {
-    if(!window.qBank || window.qBank.length === 0) return;
+    if(!window.qBank || window.qBank.length === 0) {
+        let container = document.getElementById('dailyMcqContainer');
+        if(container) container.innerHTML = `<p style="padding:20px; text-align:center;">Loading questions...</p>`;
+        return;
+    }
     
-    let pool = window.qBank; 
-    let shuffledPool = pool.sort(() => 0.5 - Math.random()); 
+    // Randomly select 5 questions for daily dose
+    let shuffledPool = window.qBank.sort(() => 0.5 - Math.random()); 
     dailyQuestions = shuffledPool.slice(0, 5); 
     dailyAnswers = new Array(5).fill(null);
     currentDailyQ = 0;
     
-    document.getElementById('dailyDateTitle').innerText = `Daily Dose`;
+    let dateTitle = document.getElementById('dailyDateTitle');
+    if(dateTitle) dateTitle.innerText = `Daily Dose`;
+    
     renderSingleDailyQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 function renderSingleDailyQuestion() {
@@ -256,14 +336,15 @@ function renderSingleDailyQuestion() {
     const hasAnswered = dailyAnswers[currentDailyQ] !== null;
     const userAns = dailyAnswers[currentDailyQ];
 
-    document.getElementById('dailyProgress').innerText = (currentDailyQ + 1) + ' of ' + dailyQuestions.length;
+    let prog = document.getElementById('dailyProgress');
+    if(prog) prog.innerText = (currentDailyQ + 1) + ' of ' + dailyQuestions.length;
 
-    let html = `<div class="card" style="box-shadow: none; border: 1px solid var(--border); padding: 16px; border-radius: 12px;">
-        <div style="font-size:0.82rem; color:var(--primary); font-weight:800; text-transform: uppercase; margin-bottom:12px;">
-            ${q.subject}
+    let html = `<div class="card" style="box-shadow:none; border:1px solid var(--border); padding:16px; border-radius:12px;">
+        <div style="font-size:0.82rem; color:var(--primary); font-weight:800; text-transform:uppercase; margin-bottom:12px;">
+            ${q.subject || 'General'}
         </div>
         <div class="mcq-q">${q.q}</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">`;
+        <div style="display:flex; flex-direction:column; gap:10px;">`;
 
     q.opts.forEach((opt, oIdx) => {
         let optClass = "mcq-option";
@@ -280,14 +361,13 @@ function renderSingleDailyQuestion() {
 
     if (hasAnswered) {
         html += `
-            <div style="margin-top: 20px; background: #e2eef9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary);">
-                <strong style="color: var(--primary);">✅ Explanation:</strong><br>
-                <div style="font-size: 0.95rem; color: #004085; margin-top: 5px; line-height: 1.6;">${q.exp}</div>
-                ${q.wrongExp ? `<div style="margin-top:10px; color:#7f1d1d; border-top:1px dashed #93c5fd; padding-top:10px;">${q.wrongExp}</div>` : ''}
+            <div style="margin-top:20px; background:#e2eef9; padding:15px; border-radius:8px; border-left:4px solid var(--primary);">
+                <strong style="color:var(--primary);">✅ Explanation:</strong><br>
+                <div style="font-size:0.95rem; color:#004085; margin-top:5px; line-height:1.6;">${q.exp}</div>
             </div>
-            <div style="display: flex; gap: 8px; margin-top: 25px;">
-                <button class="btn btn-outline" style="flex: 1; visibility: ${currentDailyQ === 0 ? 'hidden' : 'visible'};" onclick="prevDailyQuestion()">⬅️ Prev</button>
-                <button class="btn btn-primary" style="flex: 1;" onclick="nextDailyQuestion()">${currentDailyQ === dailyQuestions.length - 1 ? 'Finish 🎉' : 'Next ➡️'}</button>
+            <div style="display:flex; gap:8px; margin-top:25px;">
+                <button class="btn btn-outline" style="flex:1; visibility:${currentDailyQ === 0 ? 'hidden' : 'visible'};" onclick="prevDailyQuestion()">⬅️ Prev</button>
+                <button class="btn btn-primary" style="flex:1;" onclick="nextDailyQuestion()">${currentDailyQ === dailyQuestions.length - 1 ? 'Finish 🎉' : 'Next ➡️'}</button>
             </div>
         `;
     }
@@ -298,6 +378,7 @@ window.handleDailyAnswer = function(qIndex, selectedIdx, correctIdx) {
     playUISound('tap');
     dailyAnswers[qIndex] = selectedIdx;
     
+    // Update Stats
     let totalSolved = parseInt(localStorage.getItem('totalQuestionsSolved') || '0') + 1;
     localStorage.setItem('totalQuestionsSolved', totalSolved);
     if(selectedIdx === correctIdx) {
@@ -324,7 +405,9 @@ window.prevDailyQuestion = function() {
     if (currentDailyQ > 0) { currentDailyQ--; renderSingleDailyQuestion(); }
 };
 
-// 📝 9. CUSTOM Q-BANK STUDIO
+// ==========================================
+// 9. CUSTOM Q-BANK STUDIO
+// ==========================================
 let selectedCustomDifficulty = 'Moderate';
 let selectedCustomCount = 20;
 
@@ -358,41 +441,44 @@ if(document.getElementById('btnGenerateCustom')) {
             return;
         }
 
-        const pattern = document.getElementById('customExamPattern').value;
-        const includePYQ = document.getElementById('includePYQ').checked;
-
-        let customPool = window.qBank.filter(q => {
-            let matchLevel = q.level === selectedCustomDifficulty;
-            let matchPYQ = includePYQ ? (q.isPYQ || q.tags?.includes('PYQ')) : true;
-            return matchLevel && matchPYQ;
-        });
-
-        if (customPool.length === 0) customPool = window.qBank;
+        let customPool = window.qBank.filter(q => q.level === selectedCustomDifficulty);
+        if (customPool.length === 0) customPool = window.qBank; 
+        
         customPool = customPool.sort(() => 0.5 - Math.random()).slice(0, selectedCustomCount);
 
         window.pendingTestParams = {
             testName: `Custom Test (${selectedCustomDifficulty})`,
-            examPattern: pattern,
             customPool: customPool
         };
 
-        document.getElementById('instTestTitle').innerText = window.pendingTestParams.testName;
-        document.getElementById('instQCount').innerText = customPool.length;
-        document.getElementById('instTime').innerText = customPool.length + " Mins";
-        document.getElementById('instructionScreen').style.display = 'flex';
+        let titleEl = document.getElementById('instTestTitle');
+        let countEl = document.getElementById('instQCount');
+        let timeEl = document.getElementById('instTime');
+        
+        if(titleEl) titleEl.innerText = window.pendingTestParams.testName;
+        if(countEl) countEl.innerText = customPool.length;
+        if(timeEl) timeEl.innerText = customPool.length + " Mins";
+        
+        let instScreen = document.getElementById('instructionScreen');
+        if(instScreen) instScreen.style.display = 'flex';
     };
 }
 
 window.cancelInstructions = function() {
     playUISound('tap');
-    document.getElementById('instructionScreen').style.display = 'none';
+    let instScreen = document.getElementById('instructionScreen');
+    if(instScreen) instScreen.style.display = 'none';
 };
 
-// 🚀 10. ACTIVE TEST ENGINE
+// ==========================================
+// 10. ACTIVE TEST ENGINE
+// ==========================================
 window.proceedToActualTest = function() {
     if (!window.pendingTestParams) return;
     playUISound('btn');
-    document.getElementById('instructionScreen').style.display = 'none';
+    
+    let instScreen = document.getElementById('instructionScreen');
+    if(instScreen) instScreen.style.display = 'none';
 
     var customPool = window.pendingTestParams.customPool;
     activeTestState = { 
@@ -403,13 +489,14 @@ window.proceedToActualTest = function() {
         testName: window.pendingTestParams.testName 
     };
 
-    document.getElementById('activeTestTitle').innerText = activeTestState.testName;
-    document.getElementById('totalQNum').innerText = customPool.length;
+    let actTitle = document.getElementById('activeTestTitle');
+    let actTotal = document.getElementById('totalQNum');
+    if(actTitle) actTitle.innerText = activeTestState.testName;
+    if(actTotal) actTotal.innerText = customPool.length;
     
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
     const actScreen = document.getElementById('activeTestScreen');
-    actScreen.classList.remove('hidden');
-    actScreen.style.display = 'flex';
+    if(actScreen) actScreen.classList.remove('hidden');
     
     renderQuestion();
     startTestTimer(customPool.length * 60);
@@ -418,41 +505,44 @@ window.proceedToActualTest = function() {
 function renderQuestion() {
     const qIndex = activeTestState.currentQ;
     const qData = activeTestState.questions[qIndex];
-    document.getElementById('currentQNum').innerText = qIndex + 1;
+    let qNum = document.getElementById('currentQNum');
+    if(qNum) qNum.innerText = qIndex + 1;
     
-    document.getElementById('questionText').innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-            <div>${qData.q}</div>
-        </div>
-    `;
-
+    let qText = document.getElementById('questionText');
+    if(qText) qText.innerHTML = `<div>${qData.q}</div>`;
+    
     const optionsContainer = document.getElementById('optionsContainer');
-    optionsContainer.innerHTML = '';
-    const currentSelected = activeTestState.answers[qIndex];
+    if(optionsContainer) {
+        optionsContainer.innerHTML = '';
+        const currentSelected = activeTestState.answers[qIndex];
 
-    qData.opts.forEach((opt, index) => {
-        const isChecked = currentSelected === index;
-        const borderStyle = isChecked ? "border: 2px solid var(--primary); background: var(--primary-light);" : "background:var(--bg-gray); border:1px solid var(--border);";
-        
-        optionsContainer.innerHTML += `
-            <div class="option-label" onclick="handleOptionToggle(${index})" style="display:flex; align-items:center; padding:14px 18px; margin-bottom:12px; border-radius:10px; cursor:pointer; user-select:none; ${borderStyle}">
-                <span style="font-size:1.02rem; font-weight:600;">${opt}</span>
-            </div>
-        `;
-    });
+        qData.opts.forEach((opt, index) => {
+            const isChecked = currentSelected === index;
+            const borderStyle = isChecked ? "border: 2px solid var(--primary); background: var(--primary-light);" : "background:var(--bg-gray); border:1px solid var(--border);";
+            
+            optionsContainer.innerHTML += `
+                <div class="option-label" onclick="handleOptionToggle(${index})" style="display:flex; align-items:center; padding:14px 18px; margin-bottom:12px; border-radius:10px; cursor:pointer; user-select:none; ${borderStyle}">
+                    <span style="font-size:1.02rem; font-weight:600;">${opt}</span>
+                </div>
+            `;
+        });
+    }
 
-    document.getElementById('prevBtn').style.visibility = qIndex === 0 ? 'hidden' : 'visible';
-    const nextBtn = document.getElementById('nextBtn');
+    let prevBtn = document.getElementById('prevBtn');
+    if(prevBtn) prevBtn.style.visibility = qIndex === 0 ? 'hidden' : 'visible';
     
-    if (qIndex === activeTestState.questions.length - 1) {
-        nextBtn.innerText = "Submit Test";
-        nextBtn.style.backgroundColor = "#198754";
-        nextBtn.style.color = "white";
-        nextBtn.onclick = submitTest;
-    } else {
-        nextBtn.innerText = "Next →";
-        nextBtn.style.backgroundColor = "var(--primary)";
-        nextBtn.onclick = nextQuestion;
+    const nextBtn = document.getElementById('nextBtn');
+    if(nextBtn) {
+        if (qIndex === activeTestState.questions.length - 1) {
+            nextBtn.innerText = "Submit Test";
+            nextBtn.style.backgroundColor = "#198754";
+            nextBtn.style.color = "white";
+            nextBtn.onclick = submitTest;
+        } else {
+            nextBtn.innerText = "Next →";
+            nextBtn.style.backgroundColor = "var(--primary)";
+            nextBtn.onclick = nextQuestion;
+        }
     }
 }
 
@@ -504,8 +594,10 @@ window.submitTest = function() {
         `;
     }
 
-    document.getElementById('activeTestScreen').classList.add('hidden');
-    document.getElementById('resultScreen').classList.remove('hidden');
+    let actScreen = document.getElementById('activeTestScreen');
+    if(actScreen) actScreen.classList.add('hidden');
+    let resScreen = document.getElementById('resultScreen');
+    if(resScreen) resScreen.classList.remove('hidden');
 };
 
 function startTestTimer(seconds) {
@@ -527,58 +619,16 @@ function startTestTimer(seconds) {
 
 window.backToHomeFromResults = function() {
     playUISound('btn');
-    document.getElementById('resultScreen').classList.add('hidden');
+    let resScreen = document.getElementById('resultScreen');
+    if(resScreen) resScreen.classList.add('hidden');
     switchTab('tabHome');
 };
 
-// 🖐️ 11. SWIPE ENGINE
-function setupSwipeEngine() {
-    let touchStartX = 0;
-    const mainArea = document.getElementById('mainContainer');
-    if (!mainArea) return;
-    
-    mainArea.addEventListener('touchstart', e => {
-        if (e.target.closest('.no-swipe') || e.target.closest('.card')) { touchStartX = null; return; }
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    mainArea.addEventListener('touchend', e => {
-        if (touchStartX === null) return;
-        let diffX = e.changedTouches[0].screenX - touchStartX;
-        if (Math.abs(diffX) > 80) { 
-            let currIdx = TAB_ORDER.indexOf(currentActiveTab);
-            if (diffX < 0 && currIdx < TAB_ORDER.length - 1) switchTab(TAB_ORDER[currIdx + 1]); 
-            else if (diffX > 0 && currIdx > 0) switchTab(TAB_ORDER[currIdx - 1]); 
-        }
-        touchStartX = null;
-    }, { passive: true });
-}
-
-// 🔊 12. AUDIO SYSTEM
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-
-function playUISound(type) {
-    if (!isSoundEnabled) return; 
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    oscillator.type = 'sine'; 
-    if (type === 'tap') {
-        oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
-        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.05);
-    } else if (type === 'btn') {
-        oscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
-        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.08);
-    }
-}
+// ==========================================
+// 11. EXTRA UI PLACEHOLDERS (To prevent errors)
+// ==========================================
+window.openFavoritesModal = () => { alert("Favorites Vault is currently empty."); };
+window.openMistakeStudio = () => { alert("Mistake Vault will be available after you take more tests."); };
+window.openTestHistoryFromSidebar = () => { alert("Test History is empty."); };
+window.openBlogModal = () => { alert("Blogs coming soon!"); };
+window.shareAppGeneric = () => { alert("App link copied to clipboard!"); };
