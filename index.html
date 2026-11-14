@@ -3273,13 +3273,13 @@ body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
 <script src="./data/pathology.js"></script>
 <script src="./data/pharmacology.js"></script>
 <script src="./data/microbiology.js"></script>
-<script src="./data/forensic-medicine.js"></script>
-<script src="./data/psm.js"></script>
+<script src="./data/forensic.js"></script>
+<script src="./data/community-medicine.js"></script>
 <script src="./data/ent.js"></script>
 <script src="./data/ophthalmology.js"></script>
 <script src="./data/medicine.js"></script>
 <script src="./data/surgery.js"></script>
-<script src="./data/obg.js"></script>
+<script src="./data/obgyn.js"></script>
 <script src="./data/pediatrics.js"></script>
 <script src="./data/orthopedics.js"></script>
 <script src="./data/psychiatry.js"></script>
@@ -3306,13 +3306,37 @@ body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
           measurementId: "G-RT29DSDRMQ"
       };
 
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db = firebase.firestore();
+      // Firebase is optional for local practice. If its CDN scripts fail to load,
+      // the MCQ, quiz and test features must continue working in guest mode.
+      let auth = null;
+      let db = null;
+      let firebaseReady = false;
+      try {
+          if (typeof firebase !== 'undefined' && firebase) {
+              if (!firebase.apps || firebase.apps.length === 0) {
+                  firebase.initializeApp(firebaseConfig);
+              }
+              if (typeof firebase.auth === 'function' &&
+                  typeof firebase.firestore === 'function') {
+                  auth = firebase.auth();
+                  db = firebase.firestore();
+                  firebaseReady = !!auth && !!db;
+              }
+          }
+      } catch (firebaseInitError) {
+          console.warn('Firebase unavailable; continuing in local guest mode.', firebaseInitError);
+          auth = null;
+          db = null;
+          firebaseReady = false;
+      }
 
       // --- GOOGLE AUTHENTICATION & CLOUD SYNC ---
       function loginWithGoogle() {
           playUISound('tap');
+          if (!firebaseReady || !auth || typeof firebase === 'undefined') {
+              alert('Google sign-in is temporarily unavailable. You can continue practising in Guest Mode; your progress will be saved on this device.');
+              return;
+          }
           const provider = new firebase.auth.GoogleAuthProvider();
           auth.signInWithPopup(provider)
               .then(function(result) {
@@ -3332,6 +3356,7 @@ body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
       }
 
       function syncDataToCloud(userId) {
+          if (!firebaseReady || !db || !userId) return;
           let userData = {
               name: localStorage.getItem('spUserName'),
               avatar: localStorage.getItem('spUserAvatar'),
@@ -3350,11 +3375,16 @@ body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
           // --- UI SOUND GENERATOR ---
       isSoundEnabled = (localStorage.getItem('soundEnabled') === 'true'); 
 
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      const audioCtx = new AudioContext();
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      let audioCtx = null;
+      try {
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+      } catch (audioInitError) {
+          console.warn('Audio effects unavailable; continuing without sounds.', audioInitError);
+      }
 
       function playUISound(type) {
-          if (!isSoundEnabled) return; 
+          if (!isSoundEnabled || !audioCtx) return;
           if (audioCtx.state === 'suspended') audioCtx.resume();
           const oscillator = audioCtx.createOscillator();
           const gainNode = audioCtx.createGain();
@@ -3643,6 +3673,33 @@ const qBank = [
           "Your future patients are waiting for your expertise. ⏳", // Friday
           "Success in medicine is built one MCQ at a time. 🏆" // Saturday
       ];
+
+      // Share/copy the visible Clinical Pearl.
+      function sharePearl(index) {
+          const pearl = (typeof CLINICAL_PEARLS !== 'undefined' && CLINICAL_PEARLS[index])
+              ? CLINICAL_PEARLS[index]
+              : '';
+          const plainText = pearl
+              .replace(/<br\s*\/?\s*>/gi, '\n')
+              .replace(/<\/(p|div|li|h[1-6])>/gi, '\n')
+              .replace(/<[^>]*>/g, '')
+              .replace(/&nbsp;/g, ' ')
+              .replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .trim();
+          if (!plainText) return;
+          if (navigator.share) {
+              navigator.share({ title: 'MedQ Daily — Clinical Pearl', text: plainText })
+                  .catch(function() {});
+          } else if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(plainText)
+                  .then(function() { alert('Clinical Pearl copied!'); })
+                  .catch(function() { alert(plainText); });
+          } else {
+              alert(plainText);
+          }
+      }
 
       // ================= 🎯 MCQ OF THE DAY (MOTD) LOGIC =================
       let currentMotd = null;
@@ -7065,6 +7122,10 @@ function prevQuestion() {
 
       function logoutApp() {
           playUISound('tap');
+          if (!auth || typeof auth.signOut !== 'function') {
+              alert('You are using Guest Mode. There is no Google account connected on this device.');
+              return;
+          }
           if (confirm("Are you sure you want to log out?")) {
               auth.signOut().then(function() {
                   localStorage.removeItem('spUserName'); localStorage.removeItem('spUserAvatar'); localStorage.removeItem('userEmail');
@@ -7274,6 +7335,7 @@ function prevQuestion() {
           renderFavoritesList();
       }
 
+      if (auth && typeof auth.onAuthStateChanged === 'function') {
       auth.onAuthStateChanged(function(user) {
           const signInBox = document.getElementById('googleSignInContainer');
           const loggedInBox = document.getElementById('loggedInContainer');
@@ -7302,9 +7364,18 @@ function prevQuestion() {
           } else {
               if (signInBox) signInBox.classList.remove('hidden');
               if (loggedInBox) loggedInBox.classList.add('hidden');
-              setTimeout(function(){ openSPModal(); }, 600);
+              if (emailText) emailText.innerText = 'Guest Mode — progress saved on this device';
+              // Do not auto-open the sign-in modal. It blocks the quiz/test UI for guests.
           }
       });
+      } else {
+          const signInBox = document.getElementById('googleSignInContainer');
+          const loggedInBox = document.getElementById('loggedInContainer');
+          const emailText = document.getElementById('connectedEmailText');
+          if (signInBox) signInBox.classList.remove('hidden');
+          if (loggedInBox) loggedInBox.classList.add('hidden');
+          if (emailText) emailText.innerText = 'Guest Mode — progress saved on this device';
+      }
 
       window.addEventListener('DOMContentLoaded', function() {
           applyTheme(localStorage.getItem('medqThemeMode') || 'system');
