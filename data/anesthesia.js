@@ -598,5 +598,5 @@ export const anesthesiaQs = [
   ans: 3,
   exp: "The epidural space is located immediately anterior to the ligamentum flavum. The ligamentum flavum is a dense, tough, fibroelastic ligament that offers significant resistance to the injection of air or fluid. As the Tuohy needle is advanced through this ligament, resistance is felt. The moment the needle tip pierces the ligamentum flavum and enters the epidural space (which has a slightly negative pressure), a sudden 'loss of resistance' is appreciated, confirming correct placement.",
   wrongExp: "• <strong>Option A (Posterior longitudinal ligament):</strong> This ligament lies anterior to the epidural space (on the posterior aspect of the vertebral bodies).<br>• <strong>Option B (Interspinous ligament):</strong> The needle passes through this before reaching the ligamentum flavum. It offers some resistance, but passing through it does not yield the definitive 'loss of resistance' of entering the epidural space.<br>• <strong>Option C (Supraspinous ligament):</strong> This is the most superficial ligament pierced in a midline approach; passing it does not enter the epidural space."
-},
+}
 ];
