@@ -1,4 +1,5 @@
-export const forensicQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.forensicMedicine = [
 {
   id: 7001,
   subject: "Forensic Medicine",
