@@ -848,5 +848,5 @@ export const dermatologyQs = [
   ans: 1,
   exp: "A Dermatofibroma (Benign Fibrous Histiocytoma) is a common, benign, dermal fibroproliferative lesion often arising on the lower extremities of women, frequently after minor trauma like a bug bite. It presents as a firm, hyperpigmented dome-shaped nodule. The pathognomonic clinical test is the 'Dimple sign' (or Fitzpatrick sign/Pinch test): when lateral pressure is applied, the lesion tethers to the underlying epidermis and retracts inward, creating a central dimple.",
   wrongExp: "• <strong>Option A (Darier sign; Mastocytoma):</strong> Darier's sign is the development of a wheal and flare upon rubbing a lesion due to mast cell degranulation, characteristic of mastocytosis or a solitary mastocytoma.<br>• <strong>Option C (Buttonhole sign; Neurofibroma):</strong> A soft, fleshy neurofibroma can be invaginated easily into the skin with the tip of a finger, feeling like pushing a button through a buttonhole.<br>• <strong>Option D (Ugly duckling sign; Melanoma):</strong> A clinical screening concept for melanoma, referring to a pigmented lesion that stands out as looking entirely different from the patient's other nevi."
-},
+}
 ];
