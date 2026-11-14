@@ -848,5 +848,5 @@ export const obgynQs = [
   ans: 1,
   exp: "The patient presents with continuous, painless urinary incontinence shortly after pelvic surgery, highly suspicious for a urogenital fistula. The 'double-dye' or tampon test is diagnostic. Methylene blue dye is instilled into the bladder. If the vaginal tampon turns blue, it confirms a direct communication between the bladder and vagina—a Vesicovaginal Fistula (VVF).",
   wrongExp: "• <strong>Option A (Ureterovaginal fistula):</strong> If the tampon remained white after instilling blue dye into the bladder, but turned wet/orange after giving the patient oral Pyridium (which is excreted from the kidneys through the ureters), it would diagnose a ureterovaginal fistula. The dye in the bladder does not travel retrogradely up the ureters.<br>• <strong>Option C (Urethrovaginal fistula):</strong> Typically causes leakage of urine into the vagina *only* during active voiding, not continuous leakage at rest, because the fistula is distal to the bladder neck/sphincter.<br>• <strong>Option D (Severe stress urinary incontinence):</strong> SUI occurs episodically with increased intra-abdominal pressure (coughing, lifting), not continuously at rest. The dye test would be negative in the vaginal vault."
-},
+}
 ];
