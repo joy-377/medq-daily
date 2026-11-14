@@ -598,5 +598,5 @@ export const pathologyQs = [
   ans: 1,
   exp: "Parkinson disease is associated with degeneration of dopaminergic neurons in the substantia nigra pars compacta, reducing dopaminergic input to the striatum. Lewy bodies and Lewy neurites contain aggregated alpha-synuclein. The resulting basal ganglia circuit dysfunction produces bradykinesia, resting tremor, rigidity, and postural instability.",
   wrongExp: "• <strong>Option A (Tau alone):</strong> Tau aggregates are central to several tauopathies, whereas alpha-synuclein is the major protein associated with classic Lewy bodies.<br>• <strong>Option C (Amyloid-beta exclusively):</strong> Amyloid-beta plaques are characteristic of Alzheimer disease and do not define Lewy bodies.<br>• <strong>Option D (Mutant beta-globin):</strong> Mutant beta-globin causes sickle cell disease and is unrelated to Parkinson disease pathology."
-},
+}
 ];
