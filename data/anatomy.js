@@ -1,5 +1,5 @@
-// data/anatomy.js
-export const anatomyQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.anatomy = [
         {
   id: 1001,
   subject: "Anatomy",
