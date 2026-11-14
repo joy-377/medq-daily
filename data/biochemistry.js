@@ -848,5 +848,5 @@ export const biochemistryQs = [
   ans: 0,
   exp: "Scurvy results from severe Vitamin C (ascorbate) deficiency. Inside the rough endoplasmic reticulum, prolyl hydroxylase and lysyl hydroxylase catalyze the post-translational hydroxylation of proline and lysine residues on preprocollagen chains. Ascorbate acts as a reducing agent to keep the active site iron in its ferrous (Fe2+) state. Without hydroxyproline, interchain hydrogen bonds cannot form, preventing the self-assembly of the stable triple helix and causing capillary fragility and poor healing.",
   wrongExp: "• <strong>Option B (Cleavage of propeptides):</strong> Performed by extracellular procollagen peptidases in the extracellular space to convert procollagen to tropocollagen; independent of vitamin C.<br>• <strong>Option C (Cross-linking by lysyl oxidase):</strong> Extracellular copper-dependent enzyme that deaminates lysine/hydroxylysine to form reactive aldehydes, generating covalent cross-links.<br>• <strong>Option D (Glycosylation of serine):</strong> In collagen, glucose and galactose are attached to hydroxylysine residues, not serine residues, and this step does not utilize vitamin C."
-},
+}
 ];
