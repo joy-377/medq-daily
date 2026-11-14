@@ -1130,6 +1130,235 @@ main#mainContainer {
 
   
 
+/* ==========================================
+   MEDQ DAILY - COMPLETE DARK MODE PATCH
+   Saved Questions, Review, Flashcards,
+   Question Options, Inputs and Modals
+========================================== */
+
+/* 1. Review Screen */
+body.dark-mode #reviewScreen {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #reviewScreen > div:first-child {
+    background: #172554 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode #reviewScreen > div:last-child {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode #revQuestionText {
+    color: #f8fafc !important;
+}
+
+body.dark-mode #revOptionsContainer li {
+    background: #1e293b !important;
+    border: 1px solid #475569 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Correct answer */
+body.dark-mode #revOptionsContainer li[style*="#d4edda"] {
+    background: rgba(16, 185, 129, 0.16) !important;
+    border-color: #10b981 !important;
+    color: #86efac !important;
+}
+
+/* Wrong answer */
+body.dark-mode #revOptionsContainer li[style*="#f8d7da"] {
+    background: rgba(239, 68, 68, 0.16) !important;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode #revExplanation {
+    background: #172554 !important;
+    border-color: #38bdf8 !important;
+    color: #e0f2fe !important;
+}
+
+body.dark-mode #revExplanation strong {
+    color: #7dd3fc !important;
+}
+
+body.dark-mode #revWrongExpBlock {
+    color: #fecaca !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #revWrongExpBlock strong {
+    color: #fca5a5 !important;
+}
+
+/* 2. Saved Questions / Favorites */
+body.dark-mode #favoritesModal {
+    background: rgba(2, 6, 23, 0.96) !important;
+}
+
+body.dark-mode #favoritesModal > div {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group {
+    background: #1e293b !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-summary {
+    background: #172554 !important;
+    color: #7dd3fc !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-summary span {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group > div {
+    background: #1e293b !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group > div > div {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group li {
+    background: #1e293b !important;
+    border-color: #475569 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Saved correct answers */
+body.dark-mode #favoritesListContainer li[style*="#d4edda"] {
+    background: rgba(16, 185, 129, 0.16) !important;
+    border-color: #10b981 !important;
+    color: #86efac !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group > div > div > div[style*="#e2eef9"] {
+    background: #172554 !important;
+    border-color: #38bdf8 !important;
+    color: #e0f2fe !important;
+}
+
+body.dark-mode #favoritesListContainer img {
+    background: #f8fafc !important;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* 3. Flashcards - Keep image readable */
+body.dark-mode #flashcardsScreen {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #flashcardsScreen header,
+body.dark-mode #flashcardsScreen > div:nth-child(2) {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode #flashcardsScreen header h3 {
+    color: #7dd3fc !important;
+}
+
+body.dark-mode #flashcardsScreen header p {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode #flashcardsScreen header button {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #flashcardContent {
+    background: #1e293b !important;
+    border: 1px solid #475569 !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+}
+
+/* Medical images should not be inverted */
+body.dark-mode #flashcardContent img {
+    background: #f8fafc !important;
+    filter: none !important;
+}
+
+/* 4. Mistake Vault */
+body.dark-mode #mistakeReviewView,
+body.dark-mode #mistakeReviewView > div {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode #mistakeQText {
+    color: #f8fafc !important;
+}
+
+body.dark-mode #mistakeExpBlock,
+body.dark-mode #mistakeWrongExpWrapper {
+    color: #e2e8f0 !important;
+}
+
+/* 5. MCQ of the Day */
+body.dark-mode #motdOptions .btn-outline {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #motdOptions .btn-outline span {
+    color: #94a3b8 !important;
+}
+
+/* 6. Form controls */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+}
+
+body.dark-mode input[type="checkbox"],
+body.dark-mode input[type="radio"] {
+    accent-color: #38bdf8;
+}
+
+/* 7. Images: preserve original image colours */
+body.dark-mode #reviewScreen img,
+body.dark-mode #favoritesModal img,
+body.dark-mode #mistakeReviewView img {
+    filter: none !important;
+}
+
+/* 8. General readable text in dynamic content */
+body.dark-mode #favoritesListContainer,
+body.dark-mode #reviewScreen,
+body.dark-mode #flashcardsScreen {
+    color: #e2e8f0;
+}
+
+body.dark-mode #favoritesListContainer strong,
+body.dark-mode #reviewScreen strong {
+    color: #f8fafc;
+}
+
  
 
     </style>
