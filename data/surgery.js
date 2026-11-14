@@ -848,5 +848,5 @@ export const surgeryQs = [
   ans: 2,
   exp: "For an asymptomatic male patient, elective repair (open or EVAR) is indicated when the AAA reaches a diameter of 5.5 cm (or 5.0 cm for females). Other indications for surgery include an expansion rate of >0.5 cm in 6 months, or if the aneurysm becomes symptomatic (e.g., abdominal/back pain, tenderness), regardless of size, due to the high risk of imminent rupture.",
   wrongExp: "• <strong>Option A (3.5 cm):</strong> The aorta is considered aneurysmal if it is >3.0 cm, but at 3.5 cm it only requires surveillance (typically US every 1-3 years).<br>• <strong>Option B (4.5 cm):</strong> Requires closer surveillance (ultrasound every 6 months), but does not meet the 5.5 cm threshold for elective repair in men.<br>• <strong>Option D (6.5 cm):</strong> While surgery is definitely indicated, waiting until the aneurysm is this large exposes the patient to an extremely high risk of lethal rupture; the threshold is 5.5 cm."
-},
+}
 ];
