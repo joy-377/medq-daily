@@ -598,5 +598,5 @@ export const medicineQs = [
   ans: 1,
   exp: "The patient has ingested Ethylene Glycol (commonly found in antifreeze, a sweet-tasting liquid). Ethylene glycol is metabolized by alcohol dehydrogenase into highly toxic aldehydes and oxalates (glycolic acid and oxalic acid). Oxalic acid binds with calcium to form calcium oxalate crystals (envelope-shaped on urinalysis), which deposit in the renal tubules, causing acute kidney injury. Fomepizole is the specific antidote; it is a competitive inhibitor of alcohol dehydrogenase that prevents the breakdown of ethylene glycol into its toxic metabolites, allowing the parent compound to be safely excreted by the kidneys.",
   wrongExp: "• <strong>Option A (Flumazenil):</strong> Flumazenil is a competitive antagonist at the GABA-A receptor used as an antidote for benzodiazepine overdose.<br>• <strong>Option C (N-acetylcysteine):</strong> NAC is the specific antidote for Acetaminophen (paracetamol) poisoning, acting as a glutathione precursor.<br>• <strong>Option D (Naloxone):</strong> Naloxone is a mu-opioid receptor antagonist used to rapidly reverse opioid overdose (heroin, fentanyl)."
-},
+}
 ];
