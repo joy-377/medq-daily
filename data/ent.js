@@ -1,4 +1,5 @@
-export const entQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.ent = [
 {
   id: 9001,
   subject: "ENT",
