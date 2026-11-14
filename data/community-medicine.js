@@ -1,4 +1,5 @@
-export const communityMedicineQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.psm = [
 {
   id: 8001,
   subject: "PSM",
