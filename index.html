@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MedQ - NEET PG / INI-CET Prep</title>
-        <!-- SEO & Social Media Meta Tags -->
-    <meta name="description" content="MedQ - The Ultimate NEET PG & INI-CET Preparation App. Practice high-yield clinical MCQs.">
-    <meta property="og:title" content="MedQ - Daily Medical MCQs">
-    <meta property="og:description" content="Boost your NEET PG prep with custom mock tests, daily doses, and instant insights.">
-    <meta property="og:image" content="https://yourwebsite.com/medq-banner.png">
+    <title>MedQ Daily | Medical MCQ Practice for NEET PG & INI-CET</title>
+    <!-- SEO & Social Metadata -->
+    <meta name="description" content="Practice medical MCQs for MBBS university exams, NEET PG and INI-CET. Explore daily quizzes, custom tests, mock exams and detailed explanations on MedQ Daily.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://medq-daily.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MedQ Daily">
+    <meta property="og:title" content="MedQ Daily | Medical MCQ Practice">
+    <meta property="og:description" content="Practice medical MCQs for MBBS university exams, NEET PG and INI-CET with daily quizzes, custom tests and mock exams.">
+    <meta property="og:url" content="https://medq-daily.netlify.app/">
+    <meta name="twitter:card" content="summary">
     <meta name="theme-color" content="#1a73e8">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5839775677116272" crossorigin="anonymous"></script>
+    <!-- Manual AdSense units are intentionally not hard-coded: add the real data-ad-slot ID from AdSense before creating manual units. Auto Ads script remains enabled. -->
        <!-- Firebase App & Firestore SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
@@ -608,17 +615,22 @@
             border-color: #38bdf8 !important;
         }
 
-        #customExamPattern, #includePYQ {
-            border: 2px solid #60a5fa !important;
-            background: #ffffff !important;
-            font-weight: 700 !important;
-            border-radius: 8px !important;
-        }
-        body.dark-mode #customExamPattern, body.dark-mode #includePYQ {
-            background: #0f172a !important;
-            border-color: #38bdf8 !important;
-            color: #f8fafc !important;
-        }
+     #customExamPattern,
+#customPYQMode {
+    border: 2px solid #60a5fa !important;
+    background: #ffffff !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    color: #1e293b !important;
+    width: 100%;
+}
+
+body.dark-mode #customExamPattern,
+body.dark-mode #customPYQMode {
+    background: #0f172a !important;
+    border-color: #38bdf8 !important;
+    color: #f8fafc !important;
+}
 
         /* 2. Year-Wise Folders */
         /* First Year: Soft Blue Shade */
@@ -1229,7 +1241,7 @@ main#mainContainer {
     <!-- 3. Core Hero Stats (4 Blocks) -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">
         <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 10px 4px; text-align: center;">
-            <div style="font-size: 0.65rem; color: var(--text-gray); font-weight: 700; text-transform: uppercase;">Solved</div>
+            <div style="font-size: 0.65rem; color: var(--text-gray); font-weight: 700; text-transform: uppercase;">Attempted</div>
             <div id="homeStatSolved" style="font-size: 1.05rem; font-weight: 800; color: var(--primary); margin-top: 3px;">0</div>
         </div>
         <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 10px 4px; text-align: center;">
@@ -1493,18 +1505,30 @@ main#mainContainer {
                 <h2 style="margin-bottom: 6px;">📝 Custom Q-Bank Studio</h2>
                 <p style="color: var(--text-gray); margin-bottom: 15px; font-size: 0.88rem;">Build your personalized mock test using specific filters.</p>
                 
-                <!-- NEW: Exam Pattern & PYQ Toggles -->
-                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">1. Exam Pattern & PYQs</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-                    <select id="customExamPattern" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem; background: var(--bg-gray); outline: none;">
-                        <option value="NEET_PG">NEET PG Pattern</option>
-                        <option value="INI_CET">INI-CET Pattern</option>
-                    </select>
-                    <label style="display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary-light); color: var(--primary); padding: 10px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--primary); cursor: pointer;">
-                       <input type="checkbox" id="includePYQ" style="width: 16px; height: 16px; accent-color: var(--primary);"> Include PYQs
+                <!-- CUSTOM EXAM PATTERN & PYQ SOURCE -->
+<div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">
+    1. Exam Pattern & PYQ Selection
+</div>
 
-                    </label>
-                </div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+
+    <select id="customExamPattern"
+        style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem; background: var(--bg-gray); outline: none; min-width: 0;">
+        <option value="NEET_PG">NEET PG Pattern</option>
+        <option value="INI_CET">INI-CET Pattern</option>
+    </select>
+
+    <select id="customPYQMode"
+        style="padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; background: var(--bg-gray); outline: none; min-width: 0;">
+
+        <option value="NONE">No PYQs</option>
+        <option value="NEET_PG">NEET PG PYQs</option>
+        <option value="INI_CET">INI-CET PYQs</option>
+        <option value="BOTH">Both PYQs</option>
+
+    </select>
+
+</div>
 
                 <!-- UPDATED: Year-Wise Subject Selection -->
                 <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px; margin-top: 20px;">2. Select Subjects (By Year)</div>
@@ -1794,7 +1818,9 @@ main#mainContainer {
             <!-- 💡 Marking Pattern Selector -->
             <div style="margin-bottom: 15px; text-align: left; background: var(--bg-gray); padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
                 <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-dark); display: block; margin-bottom: 5px;">Exam Marking Pattern:</label>
-                <select id="instExamPattern" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; outline: none;">
+                <select id="instExamPattern"
+    onchange="updateInstructionTestInfo()"
+    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; outline: none;">
                     <option value="NEET_PG">NEET PG (+4 / -1)</option>
                     <option value="INI_CET">INI-CET (+1 / -0.33)</option>
                 </select>
@@ -1809,7 +1835,7 @@ main#mainContainer {
             <div style="text-align: left; background: #fffdf9; border: 1px solid #f3efe6; padding: 15px 20px; border-radius: 10px; margin-bottom: 25px;">
                 <h4 style="margin: 0 0 10px 0; text-align: center;">📋 Clinical Exam Instructions</h4>
                 <ul style="font-size: 0.9rem; color: #555; line-height: 1.6; padding-left: 18px; margin: 0;">
-                    <li>Navigate freely between questions using Next and Previous.</li>
+                    <li>NEET PG allows free navigation. INI-CET sections lock automatically when their 45-minute timer ends.</li>
                     <li>Unanswered questions are recorded as Skipped (0 marks).</li>
                     <li>The exam auto-submits when the timer reaches zero.</li>
                 </ul>
@@ -1840,6 +1866,9 @@ main#mainContainer {
                 <div style="margin-left: 2px;">
                     <h3 id="activeTestTitle" style="margin: 0; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Test Name</h3>
                     <p style="margin: 2px 0 0 0; font-size: 0.75rem; opacity: 0.9;">Q <span id="currentQNum">1</span> of <span id="totalQNum">50</span></p>
+                    <p id="examSectionStatus"
+    style="margin: 3px 0 0 0; font-size: 0.65rem; opacity: 0.9; display: none;">
+</p>
                 </div>
             </div>
 
@@ -1939,6 +1968,28 @@ main#mainContainer {
                 <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('FLAGGED')">🚩 Flagged</button>
             </div>
         </div>
+                <!-- RESULT REVIEW QUESTION PALETTE -->
+        <div style="padding: 10px 15px; background: #f8fafc; border-bottom: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 0.85rem; color: var(--text-dark);">
+                    Question Navigator
+                </strong>
+                <span style="font-size: 0.72rem; color: var(--text-gray);">
+                    Tap any question
+                </span>
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; font-size: 0.7rem;">
+                <span style="color: #15803d;">● Correct</span>
+                <span style="color: #dc2626;">● Incorrect</span>
+                <span style="color: #64748b;">● Skipped</span>
+            </div>
+
+            <div id="reviewQuestionPalette"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 7px; max-height: 110px; overflow-y: auto; padding: 2px;">
+            </div>
+        </div>
+        <!-- END RESULT REVIEW QUESTION PALETTE -->
 
         <div style="flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px;">
             <div id="revQuestionText" style="font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;"></div>
@@ -2065,7 +2116,16 @@ main#mainContainer {
                     <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: var(--text-gray);">High-Yield Notes & Articles</p>
                 </div>
             </div>
-            <span style="font-size: 0.75rem; font-weight: 800; background: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 20px;">NEET PG</span>
+           <div style="display: flex; align-items: center; gap: 7px;">
+    <button onclick="openFlashcards()"
+        style="background: var(--primary); color: white; border: none; border-radius: 20px; padding: 7px 11px; font-size: 0.75rem; font-weight: 800; cursor: pointer; white-space: nowrap;">
+        🃏 Flashcards
+    </button>
+
+    <span style="font-size: 0.75rem; font-weight: 800; background: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 20px;">
+        NEET PG
+    </span>
+</div>
         </header>
 
         <!-- ভিউ A: হোম ফিড ও সাবজেক্ট ফোল্ডার -->
@@ -2105,7 +2165,85 @@ main#mainContainer {
     </div>
 
 
+<!-- ================= MEDQ FLASHCARDS SCREEN ================= -->
 
+<div id="flashcardsScreen" class="hidden"
+    style="position: fixed; inset: 0; z-index: 1070; background: var(--bg-gray); display: flex; flex-direction: column;">
+
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: white; border-bottom: 1px solid var(--border);">
+        <div>
+            <h3 style="color: var(--primary); font-size: 1.05rem;">🃏 Flashcards</h3>
+            <p style="font-size: 0.75rem; color: var(--text-gray);">Active Recall & Rapid Revision</p>
+        </div>
+
+        <button onclick="closeFlashcards()"
+            style="border: 1px solid var(--border); background: white; padding: 7px 12px; border-radius: 8px; cursor: pointer; color: var(--text-dark);">
+            ✕ Close
+        </button>
+    </header>
+
+    <div style="padding: 14px; display: flex; flex-wrap: wrap; gap: 8px; background: white; border-bottom: 1px solid var(--border);">
+
+        <select id="flashcardSubjectFilter"
+            onchange="updateFlashcardTopicOptions(); applyFlashcardFilters()"
+            aria-label="Filter flashcards by subject"
+            style="flex: 1; min-width: 130px; padding: 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-gray);">
+            <option value="ALL">All Subjects</option>
+        </select>
+
+        <select id="flashcardTopicFilter"
+            onchange="applyFlashcardFilters()"
+            aria-label="Filter flashcards by topic"
+            style="flex: 1; min-width: 130px; padding: 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-gray);">
+            <option value="ALL">All Topics</option>
+        </select>
+
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; padding: 8px;">
+            <input type="checkbox" id="flashcardSavedOnly" onchange="applyFlashcardFilters()">
+            Saved Only
+        </label>
+
+        <button onclick="shuffleFlashcards()"
+            style="padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--primary-light); color: var(--primary); font-weight: 700; cursor: pointer;">
+            🔀 Shuffle
+        </button>
+    </div>
+
+    <div style="flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; justify-content: center;">
+
+        <div id="flashcardProgress"
+            style="text-align: center; font-size: 0.85rem; color: var(--text-gray); font-weight: 700; margin-bottom: 12px;">
+            0 / 0
+        </div>
+
+        <div id="flashcardCard"
+            style="min-height: 260px; background: white; border: 2px solid var(--border); border-radius: 18px; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+            <div id="flashcardContent" style="width:100%; display:flex; justify-content:center; align-items:center;"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 16px;">
+
+            <button onclick="previousFlashcard()"
+                style="flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: white; font-weight: 700; cursor: pointer;">
+                ← Previous
+            </button>
+
+            <button onclick="toggleFlashcardSaved()"
+                id="flashcardSaveButton"
+                style="padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; background: #fffbeb; color: #b45309; font-weight: 700; cursor: pointer;">
+                ☆ Save
+            </button>
+
+            <button onclick="nextFlashcard()"
+                style="flex: 1; padding: 12px; border: none; border-radius: 10px; background: var(--primary); color: white; font-weight: 700; cursor: pointer;">
+                Next →
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= END MEDQ FLASHCARDS SCREEN ================= -->
     
     <!-- ================= MY FAVORITES MODAL ================= -->
     <div id="favoritesModal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999999; display: flex; align-items: center; justify-content: center; padding: 20px;">
@@ -2388,6 +2526,7 @@ main#mainContainer {
 <script src="./data/radiology.js"></script>
 <script src="./data/anesthesia.js"></script>
 <script src="./data/blog-data.js"></script>
+<script src="./data/flashcards.js"></script>
 
 <!-- ================= END EXTERNAL DATA FILES ================= -->
 
@@ -3396,6 +3535,10 @@ const qBank = [
       let dailyQuestions = [];
       let currentDailyQ = 0;
       let dailyAnswers = [];
+      // DAILY QUIZ TIME ANALYTICS
+let dailyQuestionStartedAt = [];
+let dailyQuestionElapsed = [];
+let dailySessionStartedAt = 0;
 
             // 💡 ইউজারের ইয়ার অনুযায়ী সিলেবাস ফিল্টার করার লজিক
       function getAllowedSubjectsForUser() {
@@ -3408,6 +3551,105 @@ const qBank = [
           return allowed;
       }
 
+
+function startDailyQuestionClock(index) {
+    if (dailyAnswers[index] !== null && dailyAnswers[index] !== undefined) {
+        return;
+    }
+
+    if (!dailyQuestionStartedAt[index]) {
+        dailyQuestionStartedAt[index] = Date.now();
+    }
+}
+
+function stopDailyQuestionClock(index) {
+    const startedAt = dailyQuestionStartedAt[index];
+
+    if (!startedAt) return;
+
+    const elapsed = Math.max(
+        0,
+        Math.round((Date.now() - startedAt) / 1000)
+    );
+
+    dailyQuestionElapsed[index] =
+        (dailyQuestionElapsed[index] || 0) + elapsed;
+
+    dailyQuestionStartedAt[index] = null;
+}
+
+function finishDailyTimingSummary() {
+    const times = dailyQuestionElapsed.map(function(seconds, index) {
+        return {
+            question: index + 1,
+            seconds: seconds || 0
+        };
+    }).filter(function(item) {
+        return item.seconds > 0;
+    });
+
+    const totalSeconds = times.reduce(function(total, item) {
+        return total + item.seconds;
+    }, 0);
+
+    const avgSeconds = times.length
+        ? Math.round(totalSeconds / times.length)
+        : 0;
+
+    const sorted = times.slice().sort(function(a, b) {
+        return a.seconds - b.seconds;
+    });
+
+    const fastest = sorted.length ? sorted[0] : null;
+    const slowest = sorted.length ? sorted[sorted.length - 1] : null;
+
+    const answeredCount = dailyAnswers.filter(function(answer) {
+        return answer !== null && answer !== undefined;
+    }).length;
+    const correctCount = dailyAnswers.reduce(function(total, answer, index) {
+        return total + (answer === dailyQuestions[index].ans ? 1 : 0);
+    }, 0);
+    const accuracy = answeredCount > 0
+        ? Math.round((correctCount / answeredCount) * 100)
+        : 0;
+
+    const summary = {
+        totalSeconds: totalSeconds,
+        averageSeconds: avgSeconds,
+        fastest: fastest,
+        slowest: slowest,
+        answeredCount: answeredCount,
+        correctCount: correctCount,
+        accuracy: accuracy,
+        date: new Date().toISOString()
+    };
+
+    localStorage.setItem(
+        'medqLastDailyTiming',
+        JSON.stringify(summary)
+    );
+
+    let message =
+        "Daily Dose Completed!\n\n" +
+        "Total Active Time: " + totalSeconds + " seconds\n" +
+        "Average Time: " + avgSeconds + " seconds/question\n" +
+        "Correct: " + correctCount + " / " + answeredCount + "\n" +
+        "Accuracy: " + accuracy + "%";
+
+    if (fastest) {
+        message +=
+            "\\nFastest: Q" + fastest.question +
+            " (" + fastest.seconds + " sec)";
+    }
+
+    if (slowest) {
+        message +=
+            "\\nSlowest: Q" + slowest.question +
+            " (" + slowest.seconds + " sec)";
+    }
+
+    return message;
+}
       function renderDailyMCQ() {
           const dailyMCQCount = 5;
           const today = new Date();
@@ -3420,14 +3662,20 @@ const qBank = [
 
           dailyQuestions = typeof seededShuffle === 'function' ? seededShuffle(userPool, dateSeed).slice(0, dailyMCQCount) : userPool.slice(0, dailyMCQCount);
           dailyAnswers = new Array(dailyQuestions.length).fill(null);
-          currentDailyQ = 0;
-          renderSingleDailyQuestion();
+currentDailyQ = 0;
+
+dailyQuestionStartedAt = new Array(dailyQuestions.length).fill(null);
+dailyQuestionElapsed = new Array(dailyQuestions.length).fill(0);
+dailySessionStartedAt = Date.now();
+
+renderSingleDailyQuestion();
       }
       function renderSingleDailyQuestion() {
           const container = document.getElementById('dailyMcqContainer');
           if (!container || dailyQuestions.length === 0) return;
 
           const q = dailyQuestions[currentDailyQ];
+          startDailyQuestionClock(currentDailyQ);
           const hasAnswered = dailyAnswers[currentDailyQ] !== null;
           const userAns = dailyAnswers[currentDailyQ];
 
@@ -3447,42 +3695,18 @@ const qBank = [
               <div class="mcq-q" style="font-size: 1.15rem; color: var(--text-dark);">${q.q} ${q.img ? `<img src="${q.img}" style="max-width:100%; border-radius:8px; margin-top:12px; border:1px solid #ddd; display:block;">` : ''}</div>
               <div class="options-container">`;
 
-          let fakePcts = [];
-          if (hasAnswered) {
-              let correctPct = 65 + ((q.id || currentDailyQ) % 20); 
-              let rem = 100 - correctPct;
-              for (let i = 0; i < q.opts.length; i++) {
-                  if (i === q.ans) {
-                      fakePcts.push(correctPct);
-                  } else {
-                      let p = Math.floor(rem / (q.opts.length - 1)) + (i % 3);
-                      fakePcts.push(p);
-                  }
-              }
-          }
-
           q.opts.forEach(function(opt, oIdx) {
               let optClass = "mcq-option";
               let pointerStyle = hasAnswered ? "pointer-events: none;" : "cursor: pointer;";
-              let percentHtml = "";
-              let barHtml = "";
 
-              if (hasAnswered) {
-                  if (oIdx === q.ans) {
-                      optClass += " correct";
-                      barHtml = `<div style="position:absolute; left:0; top:0; height:100%; width:${fakePcts[oIdx]}%; background:rgba(16, 185, 129, 0.2); border-radius:8px; z-index:0; transition: width 0.8s ease-out;"></div>`;
-                  } else if (oIdx === userAns) {
-                      optClass += " incorrect";
-                      barHtml = `<div style="position:absolute; left:0; top:0; height:100%; width:${fakePcts[oIdx]}%; background:rgba(239, 68, 68, 0.15); border-radius:8px; z-index:0; transition: width 0.8s ease-out;"></div>`;
-                  } else {
-                      barHtml = `<div style="position:absolute; left:0; top:0; height:100%; width:${fakePcts[oIdx]}%; background:rgba(0,0,0,0.05); border-radius:8px; z-index:0; transition: width 0.8s ease-out;"></div>`;
-                  }
-                  percentHtml = `<span style="font-weight:800; font-size:0.9rem; z-index:1; opacity:0.8;">${fakePcts[oIdx]}%</span>`;
+              if (hasAnswered && oIdx === q.ans) {
+                  optClass += " correct";
+              } else if (hasAnswered && oIdx === userAns) {
+                  optClass += " incorrect";
               }
-              html += `<div class="${optClass}" style="${pointerStyle} position:relative; overflow:hidden;" onclick="handleDailyAnswer(${currentDailyQ}, ${oIdx}, ${q.ans})">
-                  ${barHtml}
-                  <span style="z-index:1; position:relative;">${opt}</span>
-                  ${percentHtml}
+
+              html += `<div class="${optClass}" style="${pointerStyle}" onclick="handleDailyAnswer(${currentDailyQ}, ${oIdx}, ${q.ans})">
+                  <span>${opt}</span>
               </div>`;
           });
 
@@ -3522,13 +3746,32 @@ const qBank = [
       }
 
       function handleDailyAnswer(qIndex, selectedIdx, correctIdx) {
-          if (typeof playUISound === 'function') playUISound('tap');
-          dailyAnswers[qIndex] = selectedIdx;
-          const isCorrect = (selectedIdx === correctIdx);
-          recordQuestionAttempt(isCorrect, dailyQuestions[qIndex]);
-          recordSubjectAttempt(dailyQuestions[qIndex].subject, isCorrect);
-          renderSingleDailyQuestion();
-      }
+    if (typeof playUISound === 'function') playUISound('tap');
+
+    if (dailyAnswers[qIndex] !== null &&
+        dailyAnswers[qIndex] !== undefined) {
+        return;
+    }
+
+    stopDailyQuestionClock(qIndex);
+
+    dailyAnswers[qIndex] = selectedIdx;
+
+    const isCorrect = (selectedIdx === correctIdx);
+
+    recordQuestionAttempt(
+        isCorrect,
+        dailyQuestions[qIndex],
+        selectedIdx
+    );
+
+    recordSubjectAttempt(
+        dailyQuestions[qIndex].subject,
+        isCorrect
+    );
+
+    renderSingleDailyQuestion();
+}
 
        function showDailyExplanation(qIndex) {
           if (typeof playUISound === 'function') playUISound('tab');
@@ -3623,23 +3866,37 @@ const qBank = [
 
 
       function nextDailyQuestion() {
-          if (typeof playUISound === 'function') playUISound('tab');
+    if (typeof playUISound === 'function') playUISound('tab');
 
-          if (currentDailyQ < dailyQuestions.length - 1) {
-              currentDailyQ++;
-              renderSingleDailyQuestion();
-          } else {
-              checkAndSaveStreak();
-              alert("🎉 Awesome, Doctor! 🩺\nGreat job completing today's dose!");
-              switchTab('tabHome');
-          }
-      }
+    stopDailyQuestionClock(currentDailyQ);
+
+    if (currentDailyQ < dailyQuestions.length - 1) {
+        currentDailyQ++;
+        renderSingleDailyQuestion();
+    } else {
+        checkAndSaveStreak();
+
+        const summaryMessage = finishDailyTimingSummary();
+
+        alert(
+            "🎉 Awesome, Doctor!\n\n" + summaryMessage
+        );
+
+        switchTab('tabHome');
+    }
+}
 
 
       function prevDailyQuestion() {
-          playUISound('tab');
-          if (currentDailyQ > 0) { currentDailyQ--; renderSingleDailyQuestion(); }
-      }
+    playUISound('tab');
+
+    stopDailyQuestionClock(currentDailyQ);
+
+    if (currentDailyQ > 0) {
+        currentDailyQ--;
+        renderSingleDailyQuestion();
+    }
+}
 
             function loadArchiveMCQ(daysAgo) {
           playUISound('tap');
@@ -3656,6 +3913,9 @@ const qBank = [
           dailyQuestions = typeof seededShuffle === 'function' ? seededShuffle(userPool, dateSeed).slice(0, dailyMCQCount) : userPool.slice(0, dailyMCQCount).reverse();
           dailyAnswers = new Array(dailyQuestions.length).fill(null);
           currentDailyQ = 0;
+          
+          dailyQuestionStartedAt = new Array(dailyQuestions.length).fill(null);
+dailyQuestionElapsed = new Array(dailyQuestions.length).fill(0);
           
           const headerTitle = document.getElementById('dailyDateTitle');
           if (headerTitle) { headerTitle.innerText = `Archive: ${targetDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`; }
@@ -3734,6 +3994,8 @@ const qBank = [
       // --- ACTIVE TEST LOGIC ---
       let activeTestState = { questions: [], currentQ: 0, answers: [], timer: null, visited: {}, flags: {}, testName: '' };
       let currentReviewQ = 0;
+      let currentFilter = 'ALL';
+let filteredQuestionIndices = [];
 
       function submitTest() {
           playUISound('btn');
@@ -3744,9 +4006,18 @@ const qBank = [
           let totalQ = activeTestState.questions.length;
 
           // 💡 ১. পরীক্ষার মোট সময় এবং প্রতি প্রশ্নের গড় সময় বের করা
-          let maxTime = totalQ * 60;
-          let timeLeft = window.currentTestTimeLeft !== undefined ? window.currentTestTimeLeft : maxTime;
-          let timeTakenSecs = maxTime - timeLeft;
+          let maxTime = activeTestState.totalDurationSeconds ||
+    getExamDurationSeconds(
+        activeTestState.examPattern || 'NEET_PG',
+        totalQ,
+        activeTestState.iniSectionMode
+    );
+
+let timeLeft = Number.isFinite(window.currentTestTimeLeft)
+    ? window.currentTestTimeLeft
+    : (activeTestState.totalTimeLeft ?? maxTime);
+
+let timeTakenSecs = Math.max(0, maxTime - timeLeft);
           if (timeTakenSecs < 0) timeTakenSecs = 0;
           let avgQTime = totalQ > 0 ? Math.round(timeTakenSecs / totalQ) : 0;
 
@@ -3781,7 +4052,7 @@ const qBank = [
           }
           
           totalMarks = Math.round(totalMarks * 100) / 100;
-          if (totalMarks < 0) totalMarks = 0;
+          
 
           // 💡 ৪. শুধুমাত্র মক টেস্টের আসল সময় এবং সলভ সংখ্যা স্টোরেজে যোগ করা
           if (timeTakenSecs > 0) {
@@ -3882,8 +4153,9 @@ const qBank = [
           const revScreen = document.getElementById('reviewScreen');
           revScreen.classList.remove('hidden');
           revScreen.style.display = 'flex';
-          currentReviewQ = 0;
+                    currentReviewQ = 0;
           renderReviewQuestion();
+          renderReviewPalette();
       }
 
       function setReviewFilter(filterType) {
@@ -3910,6 +4182,75 @@ const qBank = [
               else if (currentFilter === 'FLAGGED' && isFlagged) { filteredQuestionIndices.push(idx); }
           });
       }
+
+function renderReviewPalette() {
+    const palette = document.getElementById('reviewQuestionPalette');
+    if (!palette || !activeTestState || !activeTestState.questions) return;
+
+    palette.innerHTML = '';
+
+    activeTestState.questions.forEach(function(q, idx) {
+        const userAns = activeTestState.answers[idx];
+
+        const isSkipped = userAns === null || userAns === undefined;
+        const isCorrect = !isSkipped && userAns === q.ans;
+        const isCurrent = filteredQuestionIndices[currentReviewQ] === idx;
+
+        let bg = '#64748b';
+        let color = '#ffffff';
+
+        if (isCorrect) {
+            bg = '#16a34a';
+        } else if (!isSkipped) {
+            bg = '#dc2626';
+        }
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = idx + 1;
+
+        button.style.cssText = `
+            min-width: 34px;
+            height: 34px;
+            border: ${isCurrent ? '3px solid #2563eb' : '1px solid transparent'};
+            border-radius: 7px;
+            background: ${bg};
+            color: ${color};
+            font-weight: 800;
+            font-size: 0.78rem;
+            cursor: pointer;
+        `;
+
+        button.title = isCorrect
+            ? 'Correct Answer'
+            : (isSkipped ? 'Unanswered' : 'Incorrect Answer');
+
+        button.onclick = function() {
+            jumpToReviewQuestion(idx);
+        };
+
+        palette.appendChild(button);
+    });
+}
+
+function jumpToReviewQuestion(questionIndex) {
+    playUISound('tap');
+
+    // Switch to All so every question is reachable
+    currentFilter = 'ALL';
+    document.getElementById('revFilterName').innerText = 'ALL';
+
+    applyReviewFilter();
+
+    const targetIndex = filteredQuestionIndices.indexOf(questionIndex);
+
+    if (targetIndex === -1) return;
+
+    currentReviewQ = targetIndex;
+
+    renderReviewQuestion();
+    renderReviewPalette();
+}
 
       function renderReviewQuestion() {
           if (filteredQuestionIndices.length === 0) return;
@@ -4039,66 +4380,163 @@ let selectedTopics = Array.from(checkedSubtopics).map(function(cb) {
               return; 
           }
           
-          var pyqCheckbox = document.getElementById('includePYQ');
-          var wantPYQ = pyqCheckbox ? pyqCheckbox.checked : false;
+            // ================= CUSTOM PYQ SOURCE FILTER =================
 
-          
-let topicPool = qBank.filter(function(q) {
-    return selectedTopics.some(function(selected) {
-        return q.subject === selected.subject &&
-               q.topic === selected.topic;
-    });
-});
+          var pyqModeSelect = document.getElementById('customPYQMode');
+          var pyqMode = pyqModeSelect ? pyqModeSelect.value : 'NONE';
 
+          // Identify whether a question is a PYQ
+          function isPYQQuestion(q) {
+              return q.isPYQ === true ||
+                     (q.tags && q.tags.indexOf('PYQ') > -1) ||
+                     !!q.pyqExam;
+          }
 
+          // Identify the PYQ examination source
+          function getPYQExam(q) {
+              var exam = String(q.pyqExam || '')
+                  .toUpperCase()
+                  .replace(/[\s-]/g, '_');
+
+              if (exam === 'NEET_PG' || exam === 'NEETPG') {
+                  return 'NEET_PG';
+              }
+
+              if (exam === 'INI_CET' || exam === 'INICET') {
+                  return 'INI_CET';
+              }
+
+              return 'UNSPECIFIED';
+          }
+
+          // First filter by selected subjects and topics
+          let topicPool = qBank.filter(function(q) {
+              return selectedTopics.some(function(selected) {
+                  return q.subject === selected.subject &&
+                         q.topic === selected.topic;
+              });
+          });
+
+          // Then filter by difficulty
           topicPool = topicPool.filter(function(q) {
-    return getQuestionDifficulty(q) === selectedCustomDifficulty;
-});
+              return getQuestionDifficulty(q) === selectedCustomDifficulty;
+          });
 
-if (topicPool.length === 0) {
-    alert("No questions available for the selected subjects, topics and difficulty.");
-    return;
-}
+          if (topicPool.length === 0) {
+              alert("No questions available for the selected subjects, topics and difficulty.");
+              return;
+          }
+
+          // Separate normal questions and PYQs
+          let regularQuestions = topicPool.filter(function(q) {
+              return !isPYQQuestion(q);
+          });
+
+          let pyqQuestions = topicPool.filter(function(q) {
+              return isPYQQuestion(q);
+          });
+
+          // Select PYQs according to the chosen source
+          if (pyqMode === 'NEET_PG') {
+
+              pyqQuestions = pyqQuestions.filter(function(q) {
+                  return getPYQExam(q) === 'NEET_PG';
+              });
+
+          } else if (pyqMode === 'INI_CET') {
+
+              pyqQuestions = pyqQuestions.filter(function(q) {
+                  return getPYQExam(q) === 'INI_CET';
+              });
+
+          } else if (pyqMode === 'BOTH') {
+
+              // Include both exam-specific and older unclassified PYQs
+              // No additional filtering required
+
+          } else {
+
+              // NONE: Do not include any PYQs
+              pyqQuestions = [];
+          }
+
+          // Shuffle both pools
+          regularQuestions.sort(function() {
+              return Math.random() - 0.5;
+          });
+
+          pyqQuestions.sort(function() {
+              return Math.random() - 0.5;
+          });
 
           let finalCustomQs = [];
 
-          if (wantPYQ) {
-              let maxPyqCount = Math.max(1, Math.round(selectedCustomQCount * 0.18));
-              
-              let pyqQuestions = topicPool.filter(function(q) {
-                  return q.isPYQ === true || (q.tags && q.tags.indexOf('PYQ') > -1);
-              });
-              let regularQuestions = topicPool.filter(function(q) {
-                  return !q.isPYQ && (!q.tags || q.tags.indexOf('PYQ') === -1);
-              });
+          if (pyqMode === 'NONE') {
 
-              pyqQuestions.sort(function() { return 0.5 - Math.random(); });
-              regularQuestions.sort(function() { return 0.5 - Math.random(); });
+              // Only normal Question Bank questions
+              finalCustomQs = regularQuestions.slice(0, selectedCustomQCount);
+
+          } else {
+
+              // Preserve the existing maximum 18% PYQ allocation
+              let maxPyqCount = Math.max(
+                  1,
+                  Math.round(selectedCustomQCount * 0.18)
+              );
 
               let pickedPYQs = pyqQuestions.slice(0, maxPyqCount);
+
               let neededRegular = selectedCustomQCount - pickedPYQs.length;
+
               let pickedRegular = regularQuestions.slice(0, neededRegular);
 
               finalCustomQs = pickedPYQs.concat(pickedRegular);
+
+              // If normal questions are insufficient,
+              // use additional PYQs from the selected source only
               if (finalCustomQs.length < selectedCustomQCount) {
-                  let remaining = topicPool.filter(function(q) { return !finalCustomQs.includes(q); });
-                  remaining.sort(function() { return 0.5 - Math.random(); });
-                  finalCustomQs = finalCustomQs.concat(remaining.slice(0, selectedCustomQCount - finalCustomQs.length));
+
+                  let remainingPYQs = pyqQuestions.filter(function(q) {
+                      return !pickedPYQs.includes(q);
+                  });
+
+                  finalCustomQs = finalCustomQs.concat(
+                      remainingPYQs.slice(
+                          0,
+                          selectedCustomQCount - finalCustomQs.length
+                      )
+                  );
               }
-          } else {
-              let regularPool = topicPool.filter(function(q) {
-                  return !q.isPYQ && (!q.tags || q.tags.indexOf('PYQ') === -1);
-              });
-              let poolToUse = regularPool.length >= selectedCustomQCount ? regularPool : topicPool;
-              poolToUse.sort(function() { return 0.5 - Math.random(); });
-              finalCustomQs = poolToUse.slice(0, selectedCustomQCount);
           }
+
+          // Stop if no eligible question exists
+          if (finalCustomQs.length === 0) {
+              alert("No eligible questions found for the selected PYQ source and filters.");
+              return;
+          }
+
+          // Inform the user if fewer questions are available
+          if (finalCustomQs.length < selectedCustomQCount) {
+              alert(
+                  "Only " + finalCustomQs.length +
+                  " eligible questions are available for your selected filters."
+              );
+          }
+
+          // ================= END CUSTOM PYQ SOURCE FILTER =================
 
           finalCustomQs.sort(function() { return 0.5 - Math.random(); });
           
           var patternSelect = document.getElementById('customExamPattern');
           var patternName = patternSelect && patternSelect.value === 'INI_CET' ? "INI-CET" : "NEET PG";
-          const customTitle = `Custom Mock (${patternName} • ${finalCustomQs.length} Qs)`;
+          const pyqSourceLabel = {
+    NONE: "No PYQs",
+    NEET_PG: "NEET PG PYQs",
+    INI_CET: "INI-CET PYQs",
+    BOTH: "Both PYQs"
+}[pyqMode] || "No PYQs";
+
+const customTitle = `Custom Mock (${patternName} • ${pyqSourceLabel} • ${finalCustomQs.length} Qs)`;
           
           pendingTestParams = {
               seedId: 'custom_' + Date.now(),
@@ -4146,11 +4584,12 @@ if (topicPool.length === 0) {
           // 💡 মেইন কন্টেইনারের গ্লোবাল গ্রিড ক্লাস মুছে ফেলা হলো যাতে ডিজাইন না ঘাটে
           container.classList.remove('syllabus-container');
           
-          const totalMocks = 5;      
-          const qsPerGrandMock = 200; 
-          const qsPerHalfMock = 100;
-          const qsPerMiniGrandMock = 50;
-          const qsPerMiniMock = 20;  
+          const totalMocks = 5;
+const qsPerNeetGrandMock = 180;
+const qsPerIniGrandMock = 200;
+const qsPerHalfMock = 90;
+const qsPerMiniGrandMock = 50;
+const qsPerMiniMock = 20;
           const subjectIcons = { "Anatomy": "🦴", "Physiology": "🫀", "Biochemistry": "🧬", "Pathology": "🔬", "Pharmacology": "💊", "Microbiology": "🦠", "Forensic Medicine": "⚖️", "PSM": "🌍", "ENT": "👂", "Ophthalmology": "👁️", "Medicine": "🩺", "Surgery": "✂️", "OBG": "🤰", "Pediatrics": "🍼", "Orthopedics": "🦵", "Psychiatry": "🧠", "Dermatology": "🧴", "Radiology": "🩻", "Anesthesia": "💉" };
 
           // 💡 1. Full PYQ Papers (isPyqOnly = true)
@@ -4158,7 +4597,7 @@ if (topicPool.length === 0) {
           let neetFullPyqs = '';
           let iniFullPyqs = '';
           pyqYears.forEach(function(year) {
-              neetFullPyqs += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left; font-size: 0.9rem;" onclick="startStandardTest('pyq_neet_full_${year}', 'NEET PG ${year} (Full Paper)', null, 200, 'NEET_PG', true)">📅 NEET PG ${year} (Full Paper)</button>`;
+              neetFullPyqs += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left; font-size: 0.9rem;" onclick="startStandardTest('pyq_neet_full_${year}', 'NEET PG ${year} (Full Paper)', null, 180, 'NEET_PG', true)">📅 NEET PG ${year} (Full Paper)</button>`;
               iniFullPyqs += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left; font-size: 0.9rem;" onclick="startStandardTest('pyq_ini_full_${year}', 'INI-CET ${year} (Full Paper)', null, 200, 'INI_CET', true)">📅 INI-CET ${year} (Full Paper)</button>`;
           });
 
@@ -4174,17 +4613,76 @@ if (topicPool.length === 0) {
           // 💡 Standard Mocks (isPyqOnly = false)
           let neetGrandMocks = '';
           let iniGrandMocks = '';
-          for(let i = 1; i <= totalMocks; i++) { 
-              neetGrandMocks += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left;" onclick="startStandardTest('neet_mock_${i}', 'NEET PG Full Mock ${i}', null, ${qsPerGrandMock}, 'NEET_PG', false)">🏆 NEET PG Full Mock ${i} (200 MCQs)</button>`; 
-              iniGrandMocks += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left;" onclick="startStandardTest('ini_mock_${i}', 'INI-CET Full Mock ${i}', null, ${qsPerGrandMock}, 'INI_CET', false)">🏆 INI-CET Full Mock ${i} (200 MCQs)</button>`; 
-          }
+          for (let i = 1; i <= totalMocks; i++) {
+
+    neetGrandMocks += `
+        <button class="btn btn-outline"
+            style="margin-bottom:10px; text-align:left;"
+            onclick="startStandardTest(
+                'neet_mock_${i}',
+                'NEET PG Full Mock ${i}',
+                null,
+                ${qsPerNeetGrandMock},
+                'NEET_PG',
+                false
+            )">
+            🏆 NEET PG Full Mock ${i} (180 MCQs)
+        </button>
+    `;
+
+    iniGrandMocks += `
+        <button class="btn btn-outline"
+            style="margin-bottom:10px; text-align:left;"
+            onclick="startStandardTest(
+                'ini_mock_${i}',
+                'INI-CET Full Mock ${i}',
+                null,
+                ${qsPerIniGrandMock},
+                'INI_CET',
+                false
+            )">
+            🏆 INI-CET Full Mock ${i} (200 MCQs)
+        </button>
+    `;
+}
 
           let halfMockButtons = '';
-          let miniGrandButtons = '';
-          for(let i = 1; i <= totalMocks; i++) { 
-              halfMockButtons += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left;" onclick="startStandardTest('half_mock_${i}', 'Half Grand Mock ${i}', null, ${qsPerHalfMock}, 'USER_CHOICE', false)">⏱️ Half Grand Mock ${i} (100 MCQs)</button>`; 
-              miniGrandButtons += `<button class="btn btn-outline" style="margin-bottom:10px; text-align:left;" onclick="startStandardTest('mini_grand_${i}', 'Mini Grand Mock ${i}', null, ${qsPerMiniGrandMock}, 'USER_CHOICE', false)">⚡ Mini Grand Mock ${i} (50 MCQs)</button>`; 
-          }
+let miniGrandButtons = '';
+
+for (let i = 1; i <= totalMocks; i++) {
+
+    halfMockButtons += `
+        <button class="btn btn-outline"
+            style="margin-bottom:10px; text-align:left;"
+            onclick="startStandardTest(
+                'half_mock_${i}',
+                'Half Grand Mock ${i}',
+                null,
+                0,
+                'USER_CHOICE',
+                false,
+                'HALF'
+            )">
+            ⏱️ Half Grand Mock ${i} (Pattern Based)
+        </button>
+    `;
+
+    miniGrandButtons += `
+        <button class="btn btn-outline"
+            style="margin-bottom:10px; text-align:left;"
+            onclick="startStandardTest(
+                'mini_grand_${i}',
+                'Mini Grand Mock ${i}',
+                null,
+                0,
+                'USER_CHOICE',
+                false,
+                'MINI_GRAND'
+            )">
+            ⚡ Mini Grand Mock ${i} (Pattern Based)
+        </button>
+    `;
+}
 
           // 💡 Custom HTML with Responsive Grids
           let html = `
@@ -4421,38 +4919,226 @@ if (topicPool.length === 0) {
 
               let pendingTestParams = null;
 
+// ================= EXAM PATTERN & TIMER HELPERS =================
+
+function getQuestionPYQExam(q) {
+    const exam = String(q.pyqExam || '')
+        .toUpperCase()
+        .replace(/[\s-]/g, '_');
+
+    if (exam === 'NEETPG' || exam === 'NEET_PG') return 'NEET_PG';
+    if (exam === 'INICET' || exam === 'INI_CET') return 'INI_CET';
+
+    return 'UNSPECIFIED';
+}
+
+function isQuestionFromSelectedPYQExam(q, exam) {
+    const isPYQ = q.isPYQ === true ||
+        (Array.isArray(q.tags) && q.tags.includes('PYQ')) ||
+        !!q.pyqExam;
+
+    return isPYQ && getQuestionPYQExam(q) === exam;
+}
+
+function getExamDurationSeconds(pattern, questionCount, useIniSections) {
+    if (pattern === 'INI_CET' && useIniSections && questionCount >= 50) {
+        return Math.ceil(questionCount / 50) * 45 * 60;
+    }
+
+    const secondsPerQuestion = pattern === 'INI_CET' ? 54 : 70;
+
+    return Math.round(questionCount * secondsPerQuestion);
+}
+
+function formatExamDuration(seconds) {
+    const totalMinutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    if (remainingSeconds === 0) {
+        return totalMinutes + " Mins";
+    }
+
+    return totalMinutes + "m " + remainingSeconds + "s";
+}
+
+function getActiveSectionBounds() {
+    const total = activeTestState.questions.length;
+
+    if (!activeTestState.iniSectionMode) {
+        return {
+            start: 0,
+            end: total - 1
+        };
+    }
+
+    const start = activeTestState.sectionIndex * 50;
+
+    return {
+        start: start,
+        end: Math.min(start + 49, total - 1)
+    };
+}
+
+function updateExamSectionStatus() {
+    let status = document.getElementById('examSectionStatus');
+
+    if (!status) return;
+
+    if (!activeTestState || !activeTestState.iniSectionMode) {
+        status.innerText = '';
+        status.style.display = 'none';
+        return;
+    }
+
+    status.style.display = 'block';
+
+    status.innerText =
+        'Part ' + (activeTestState.sectionIndex + 1) +
+        ' of ' + activeTestState.sectionCount +
+        ' • 50-question sections • 45 min each';
+}
+
+// Update the instructions screen when the exam pattern changes
+function updateInstructionTestInfo() {
+    if (!pendingTestParams) return;
+
+    const pattern = document.getElementById('instExamPattern').value;
+
+    let requestedCount = pendingTestParams.maxQs;
+
+    if (pendingTestParams.mockTier === 'HALF') {
+        requestedCount = pattern === 'INI_CET' ? 100 : 90;
+    } else if (pendingTestParams.mockTier === 'MINI_GRAND') {
+        requestedCount = 50;
+    }
+
+    if (pendingTestParams.customPool) {
+        requestedCount = pendingTestParams.customPool.length;
+    }
+
+    const pool = qBank.filter(function(q) {
+        const subjectMatch = pendingTestParams.subjectFilter
+            ? q.subject === pendingTestParams.subjectFilter
+            : true;
+
+        const pyqMatch = pendingTestParams.isPyqOnly
+            ? isQuestionFromSelectedPYQExam(q, pendingTestParams.pyqExam)
+            : true;
+
+        return subjectMatch && pyqMatch;
+    });
+
+    const actualCount = pendingTestParams.customPool
+        ? pendingTestParams.customPool.length
+        : Math.min(requestedCount, pool.length);
+
+    const useIniSections =
+        pattern === 'INI_CET' &&
+        actualCount >= 50;
+
+    const duration = getExamDurationSeconds(
+        pattern,
+        actualCount,
+        useIniSections
+    );
+
+    document.getElementById('instQCount').innerText = actualCount;
+    document.getElementById('instTime').innerText =
+        formatExamDuration(duration);
+}
+
+// ================= END EXAM HELPERS =================
+
       function proceedToActualTest() {
-          if (!pendingTestParams) return;
-          playUISound('btn');
-          
-          var finalPattern = document.getElementById('instExamPattern').value;
-          pendingTestParams.examPattern = finalPattern;
-          
-          document.getElementById('instructionScreen').style.display = 'none';
+    if (!pendingTestParams) return;
 
-          var seedId = pendingTestParams.seedId;
-          var testName = pendingTestParams.testName;
-          var subjectFilter = pendingTestParams.subjectFilter;
-          var maxQs = pendingTestParams.maxQs;
-          var customPool = pendingTestParams.customPool;
-          var pattern = pendingTestParams.examPattern;
-          var isPyqOnly = pendingTestParams.isPyqOnly; // 💡 PYQ ফিল্টারের স্ট্যাটাস
+    playUISound('btn');
 
-          if (customPool) {
-              activeTestState = { questions: customPool, answers: new Array(customPool.length).fill(null), currentQ: 0, timer: null, visited: {}, flags: {}, testName: testName, examPattern: pattern };
-              document.getElementById('activeTestTitle').innerText = testName;
-              document.getElementById('totalQNum').innerText = customPool.length;
-              var tabs = document.querySelectorAll('.tab-content');
-              for(var t=0; t<tabs.length; t++){ tabs[t].classList.add('hidden'); }
-              const actScreen = document.getElementById('activeTestScreen');
-              actScreen.classList.remove('hidden');
-              actScreen.style.display = '';
-              renderQuestion();
-              startTestTimer(customPool.length * 60);
-          } else {
-              executeStandardTest(seedId, testName, subjectFilter, maxQs, pattern, isPyqOnly);
-          }
-      }
+    const pattern = document.getElementById('instExamPattern').value;
+
+    pendingTestParams.examPattern = pattern;
+
+    // Determine the actual question count for the selected mock type
+    if (pendingTestParams.mockTier === 'HALF') {
+        pendingTestParams.maxQs =
+            pattern === 'INI_CET' ? 100 : 90;
+
+    } else if (pendingTestParams.mockTier === 'MINI_GRAND') {
+        pendingTestParams.maxQs = 50;
+    }
+
+    updateInstructionTestInfo();
+
+    const seedId = pendingTestParams.seedId;
+    const testName = pendingTestParams.testName;
+    const subjectFilter = pendingTestParams.subjectFilter;
+    const maxQs = pendingTestParams.maxQs;
+
+    const customPool = pendingTestParams.customPool;
+
+    document.getElementById('instructionScreen').style.display = 'none';
+
+    if (customPool) {
+        const useIniSections =
+    pattern === 'INI_CET' && customPool.length >= 50;
+
+const customSectionCount = useIniSections
+    ? Math.ceil(customPool.length / 50)
+    : 1;
+
+const totalDuration = getExamDurationSeconds(
+    pattern,
+    customPool.length,
+    useIniSections
+);
+
+        activeTestState = {
+            questions: customPool,
+            answers: new Array(customPool.length).fill(null),
+            currentQ: 0,
+            timer: null,
+            visited: {},
+            flags: {},
+            testName: testName,
+            examPattern: pattern,
+            iniSectionMode: useIniSections,
+sectionIndex: 0,
+sectionCount: customSectionCount,
+sectionTimeLeft: useIniSections ? 45 * 60 : totalDuration,
+totalDurationSeconds: totalDuration,
+totalTimeLeft: totalDuration
+        };
+
+        document.getElementById('activeTestTitle').innerText = testName;
+        document.getElementById('totalQNum').innerText = customPool.length;
+
+        const tabs = document.querySelectorAll('.tab-content');
+
+        for (let t = 0; t < tabs.length; t++) {
+            tabs[t].classList.add('hidden');
+        }
+
+        const actScreen = document.getElementById('activeTestScreen');
+        actScreen.classList.remove('hidden');
+        actScreen.style.display = '';
+
+        window.currentTestTimeLeft = totalDuration;
+
+        renderQuestion();
+        startTestTimer(totalDuration);
+
+    } else {
+        executeStandardTest(
+            seedId,
+            testName,
+            subjectFilter,
+            maxQs,
+            pattern,
+            pendingTestParams.isPyqOnly,
+            pendingTestParams.pyqExam
+        );
+    }
+}
 
       function cancelInstructions() {
           playUISound('tap');
@@ -4460,117 +5146,310 @@ if (topicPool.length === 0) {
       }
 
       // 💡 isPyqOnly প্যারামিটার অ্যাড করা হলো
-      function startStandardTest(seedId, testName, subjectFilter, maxQs, forcedPattern, isPyqOnly) {
-          playUISound('tab');
-          
-          // 💡 শুধুমাত্র PYQ বা নরমাল প্রশ্ন ফিল্টার করার আসল লজিক
-          let pool = qBank.filter(function(q) {
-              let subMatch = subjectFilter ? q.subject === subjectFilter : true;
-              let pyqMatch = isPyqOnly ? (q.isPYQ === true || (q.tags && q.tags.indexOf('PYQ') > -1)) : true;
-              return subMatch && pyqMatch;
-          });
-          
-          if (pool.length === 0) { 
-              alert("Stay tuned! " + (isPyqOnly ? "Previous Year Questions (PYQs)" : "High-yield MCQs") + " for this section are being added very soon."); 
-              return; 
-          }
-          
-          const actualQCount = Math.min(maxQs, pool.length);
-          
-          pendingTestParams = { seedId: seedId, testName: testName, subjectFilter: subjectFilter, maxQs: maxQs, isPyqOnly: isPyqOnly || false };
+      function startStandardTest(
+    seedId,
+    testName,
+    subjectFilter,
+    maxQs,
+    forcedPattern,
+    isPyqOnly,
+    mockTier
+) {
+    playUISound('tab');
 
-          document.getElementById('instTestTitle').innerText = testName;
-          document.getElementById('instQCount').innerText = actualQCount;
-          document.getElementById('instTime').innerText = actualQCount + " Mins";
-          
-          var patternSelect = document.getElementById('instExamPattern');
-          if (forcedPattern === 'NEET_PG') {
-              patternSelect.value = 'NEET_PG';
-              patternSelect.disabled = true;
-          } else if (forcedPattern === 'INI_CET') {
-              patternSelect.value = 'INI_CET';
-              patternSelect.disabled = true;
-          } else {
-              patternSelect.disabled = false; 
-          }
-          
-          document.getElementById('instructionScreen').style.display = 'flex';
-      }
+    const pyqExam = isPyqOnly ? forcedPattern : null;
 
-      function executeStandardTest(seedId, testName, subjectFilter, maxQs, pattern, isPyqOnly) {
-          // 💡 টেস্ট শুরু হওয়ার সময়ও ফিল্টারটি পুনরায় চেক করবে
-          let poolToUse = qBank.filter(function(q) {
-              return isPyqOnly ? (q.isPYQ === true || (q.tags && q.tags.indexOf('PYQ') > -1)) : true;
-          });
-          
-          let selectedQs = [];
-          if (subjectFilter) {
-              let pool = poolToUse.filter(function(q){ return q.subject === subjectFilter; });
-              if (pool.length === 0) return;
-              let shuffledPool = seededShuffle(pool, seedId);
-              let subtopicMap = {};
-              shuffledPool.forEach(function(q) {
-                  if (!subtopicMap[q.topic]) subtopicMap[q.topic] = [];
-                  subtopicMap[q.topic].push(q);
-              });
-              let keys = Object.keys(subtopicMap);
-              let i = 0;
-              while (selectedQs.length < maxQs && selectedQs.length < shuffledPool.length) {
-                  let key = keys[i % keys.length];
-                  if (subtopicMap[key].length > 0) { selectedQs.push(subtopicMap[key].shift()); }
-                  i++;
-              }
-          } else {
-              let shuffledPool = seededShuffle(poolToUse, seedId);
-              let subjectMap = {};
-              shuffledPool.forEach(function(q) {
-                  if (!subjectMap[q.subject]) subjectMap[q.subject] = [];
-                  subjectMap[q.subject].push(q);
-              });
-              let keys = Object.keys(subjectMap);
-              let i = 0;
-              while (selectedQs.length < maxQs && selectedQs.length < shuffledPool.length) {
-                  let key = keys[i % keys.length];
-                  if (subjectMap[key].length > 0) { selectedQs.push(subjectMap[key].shift()); }
-                  i++;
-              }
-          }
-          selectedQs = seededShuffle(selectedQs, seedId + "_final");
-          
-          activeTestState = { questions: selectedQs, answers: new Array(selectedQs.length).fill(null), currentQ: 0, timer: null, visited: {}, flags: {}, testName: testName, examPattern: pattern };
-          
-          document.getElementById('activeTestTitle').innerText = testName;
-          document.getElementById('totalQNum').innerText = selectedQs.length;
-          var tabs = document.querySelectorAll('.tab-content');
-          for(var t=0; t<tabs.length; t++){ tabs[t].classList.add('hidden'); }
-          document.getElementById('activeTestScreen').classList.remove('hidden');
-          renderQuestion();
-          startTestTimer(selectedQs.length * 60);
-      }
+    let pool = qBank.filter(function(q) {
+        const subMatch = subjectFilter
+            ? q.subject === subjectFilter
+            : true;
 
+        const pyqMatch = isPyqOnly
+            ? isQuestionFromSelectedPYQExam(q, pyqExam)
+            : true;
 
+        return subMatch && pyqMatch;
+    });
+
+    if (pool.length === 0) {
+        alert(
+            "No questions are currently available for this exam and selection."
+        );
+        return;
+    }
+
+    pendingTestParams = {
+        seedId: seedId,
+        testName: testName,
+        subjectFilter: subjectFilter,
+        maxQs: maxQs,
+        isPyqOnly: isPyqOnly || false,
+        pyqExam: pyqExam,
+        mockTier: mockTier || null
+    };
+
+    document.getElementById('instTestTitle').innerText = testName;
+
+    const patternSelect = document.getElementById('instExamPattern');
+
+    if (forcedPattern === 'NEET_PG') {
+        patternSelect.value = 'NEET_PG';
+        patternSelect.disabled = true;
+    } else if (forcedPattern === 'INI_CET') {
+        patternSelect.value = 'INI_CET';
+        patternSelect.disabled = true;
+    } else {
+        patternSelect.disabled = false;
+    }
+
+    patternSelect.onchange = updateInstructionTestInfo;
+
+    updateInstructionTestInfo();
+
+    document.getElementById('instructionScreen').style.display = 'flex';
+}
+
+      function executeStandardTest(
+    seedId,
+    testName,
+    subjectFilter,
+    maxQs,
+    pattern,
+    isPyqOnly,
+    pyqExam
+) {
+    let poolToUse = qBank.filter(function(q) {
+        return isPyqOnly
+            ? isQuestionFromSelectedPYQExam(q, pyqExam)
+            : true;
+    });
+
+    let selectedQs = [];
+
+    if (subjectFilter) {
+        let pool = poolToUse.filter(function(q) {
+            return q.subject === subjectFilter;
+        });
+
+        if (pool.length === 0) {
+            alert("No questions available for this subject.");
+            return;
+        }
+
+        let shuffledPool = seededShuffle(pool, seedId);
+
+        let subtopicMap = {};
+
+        shuffledPool.forEach(function(q) {
+            if (!subtopicMap[q.topic]) {
+                subtopicMap[q.topic] = [];
+            }
+
+            subtopicMap[q.topic].push(q);
+        });
+
+        let keys = Object.keys(subtopicMap);
+        let i = 0;
+
+        while (
+            selectedQs.length < maxQs &&
+            selectedQs.length < shuffledPool.length
+        ) {
+            let key = keys[i % keys.length];
+
+            if (subtopicMap[key].length > 0) {
+                selectedQs.push(subtopicMap[key].shift());
+            }
+
+            i++;
+        }
+
+    } else {
+        let shuffledPool = seededShuffle(poolToUse, seedId);
+
+        let subjectMap = {};
+
+        shuffledPool.forEach(function(q) {
+            if (!subjectMap[q.subject]) {
+                subjectMap[q.subject] = [];
+            }
+
+            subjectMap[q.subject].push(q);
+        });
+
+        let keys = Object.keys(subjectMap);
+        let i = 0;
+
+        while (
+            selectedQs.length < maxQs &&
+            selectedQs.length < shuffledPool.length
+        ) {
+            let key = keys[i % keys.length];
+
+            if (subjectMap[key].length > 0) {
+                selectedQs.push(subjectMap[key].shift());
+            }
+
+            i++;
+        }
+    }
+
+    selectedQs = seededShuffle(selectedQs, seedId + "_final");
+
+    if (selectedQs.length === 0) {
+        alert("No eligible questions found.");
+        return;
+    }
+
+    // INI-CET standard mocks with 50 or more questions use locked sections.
+    // Custom tests are handled separately and do not use this section lock.
+    const iniSectionMode =
+        pattern === 'INI_CET' &&
+        selectedQs.length >= 50;
+
+    const sectionCount = iniSectionMode
+        ? Math.ceil(selectedQs.length / 50)
+        : 1;
+
+    const totalDuration = getExamDurationSeconds(
+        pattern,
+        selectedQs.length,
+        iniSectionMode
+    );
+
+    activeTestState = {
+        questions: selectedQs,
+        answers: new Array(selectedQs.length).fill(null),
+        currentQ: 0,
+        timer: null,
+        visited: {},
+        flags: {},
+        testName: testName,
+        examPattern: pattern,
+
+        iniSectionMode: iniSectionMode,
+        sectionIndex: 0,
+        sectionCount: sectionCount,
+        sectionTimeLeft: iniSectionMode ? 45 * 60 : totalDuration,
+
+        totalDurationSeconds: totalDuration,
+        totalTimeLeft: totalDuration
+    };
+
+    document.getElementById('activeTestTitle').innerText = testName;
+    document.getElementById('totalQNum').innerText = selectedQs.length;
+
+    const tabs = document.querySelectorAll('.tab-content');
+
+    for (let t = 0; t < tabs.length; t++) {
+        tabs[t].classList.add('hidden');
+    }
+
+    const activeScreen = document.getElementById('activeTestScreen');
+    activeScreen.classList.remove('hidden');
+    activeScreen.style.display = '';
+
+    window.currentTestTimeLeft = totalDuration;
+
+    renderQuestion();
+    renderPaletteGrid();
+    updateExamSectionStatus();
+
+    startTestTimer(totalDuration);
+}
 
       function startTestTimer(seconds) {
-          let timeLeft = seconds;
-          if (activeTestState.timeLeft && activeTestState.timeLeft > 0) { timeLeft = activeTestState.timeLeft; }
-          const timerDisplay = document.getElementById('testTimer');
-          if (activeTestState.timer) clearInterval(activeTestState.timer);
-          activeTestState.timer = setInterval(function() {
-              if (timeLeft <= 0) {
-                  clearInterval(activeTestState.timer);
-                  alert("Time is up! Auto-submitting your test.");
-                  submitTest();
-                  return;
-              }
-              timeLeft--;
-              window.currentTestTimeLeft = timeLeft;
-              let h = Math.floor(timeLeft / 3600);
-              let m = Math.floor((timeLeft % 3600) / 60);
-              let s = timeLeft % 60;
-              if (timerDisplay) { timerDisplay.innerText = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0'); }
-          }, 1000);
-      }
-      
+    if (!activeTestState) return;
+
+    if (activeTestState.timer) {
+        clearInterval(activeTestState.timer);
+    }
+
+    let timeLeft = activeTestState.iniSectionMode
+        ? (activeTestState.sectionTimeLeft ?? 45 * 60)
+        : (activeTestState.totalTimeLeft ?? seconds);
+
+    let totalRemaining =
+        activeTestState.totalTimeLeft ?? seconds;
+
+    window.currentTestTimeLeft = totalRemaining;
+
+    const timerDisplay = document.getElementById('testTimer');
+
+    function updateTimerDisplay(value) {
+        const h = Math.floor(value / 3600);
+        const m = Math.floor((value % 3600) / 60);
+        const s = value % 60;
+
+        if (timerDisplay) {
+            timerDisplay.innerText =
+                h.toString().padStart(2, '0') + ':' +
+                m.toString().padStart(2, '0') + ':' +
+                s.toString().padStart(2, '0');
+        }
+    }
+
+    updateTimerDisplay(timeLeft);
+
+    activeTestState.timer = setInterval(function() {
+
+        if (timeLeft <= 1) {
+    totalRemaining = Math.max(0, totalRemaining - 1);
+    activeTestState.totalTimeLeft = totalRemaining;
+    window.currentTestTimeLeft = totalRemaining;
+    timeLeft = 0;
+
+            if (
+                activeTestState.iniSectionMode &&
+                activeTestState.sectionIndex < activeTestState.sectionCount - 1
+            ) {
+                // Lock the completed section and activate the next one
+                activeTestState.sectionIndex++;
+
+                const bounds = getActiveSectionBounds();
+
+                activeTestState.currentQ = bounds.start;
+
+                timeLeft = 45 * 60;
+                activeTestState.sectionTimeLeft = timeLeft;
+
+                updateExamSectionStatus();
+
+                renderQuestion();
+                renderPaletteGrid();
+
+                autoSaveTest();
+
+                updateTimerDisplay(timeLeft);
+
+                return;
+            }
+
+            clearInterval(activeTestState.timer);
+            activeTestState.timer = null;
+
+            alert("Time is up! Your exam will be submitted automatically.");
+
+            submitTest();
+
+            return;
+        }
+
+        timeLeft--;
+        totalRemaining--;
+
+        activeTestState.totalTimeLeft = Math.max(0, totalRemaining);
+
+        if (activeTestState.iniSectionMode) {
+            activeTestState.sectionTimeLeft = timeLeft;
+        }
+
+        window.currentTestTimeLeft = activeTestState.totalTimeLeft;
+
+        updateTimerDisplay(timeLeft);
+
+    }, 1000);
+}
             // ================= ⚙️ ACTIVE EXAM QUICK SETTINGS =================
       function toggleExamSettingsPopup(e) {
           if (e) e.stopPropagation();
@@ -4646,29 +5525,84 @@ if (topicPool.length === 0) {
       }
 
       function renderPaletteGrid() {
-          const grid = document.getElementById('paletteGrid');
-          grid.innerHTML = '';
-          activeTestState.questions.forEach(function(q, idx) {
-              let statusColor = "#f8f9fa"; let textColor = "#333"; let border = "1px solid #ddd";
-              if (activeTestState.visited[idx]) {
-                  if (activeTestState.answers[idx] !== null) { statusColor = "#1e8e3e"; textColor = "white"; border = "none"; } 
-                  else { statusColor = "#d93025"; textColor = "white"; border = "none"; }
-              }
-              let flagIcon = activeTestState.flags[idx] ? `<div style="position:absolute; top:-5px; right:-2px; font-size:0.7rem;">🚩</div>` : '';
-              grid.innerHTML += `
-                  <div onclick="jumpToQuestion(${idx})" style="position:relative; width: 35px; height: 35px; background: ${statusColor}; color: ${textColor}; border: ${border}; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: bold; cursor: pointer; user-select: none;">
-                      ${idx + 1}${flagIcon}
-                  </div>
-              `;
-          });
-      }
+    const grid = document.getElementById('paletteGrid');
+
+    if (!grid || !activeTestState) return;
+
+    grid.innerHTML = '';
+
+    const bounds = getActiveSectionBounds();
+
+    for (let idx = bounds.start; idx <= bounds.end; idx++) {
+
+        const q = activeTestState.questions[idx];
+
+        let statusColor = "#f8f9fa";
+        let textColor = "#333";
+        let border = "1px solid #ddd";
+
+        if (activeTestState.visited[idx]) {
+            if (
+                activeTestState.answers[idx] !== null &&
+                activeTestState.answers[idx] !== undefined
+            ) {
+                statusColor = "#1e8e3e";
+                textColor = "white";
+                border = "none";
+            } else {
+                statusColor = "#d93025";
+                textColor = "white";
+                border = "none";
+            }
+        }
+
+        const flagIcon = activeTestState.flags[idx]
+            ? `<div style="position:absolute; top:-5px; right:-2px; font-size:0.7rem;">🚩</div>`
+            : '';
+
+        grid.innerHTML += `
+            <div
+                onclick="jumpToQuestion(${idx})"
+                style="
+                    position:relative;
+                    width:35px;
+                    height:35px;
+                    background:${statusColor};
+                    color:${textColor};
+                    border:${border};
+                    border-radius:5px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:0.85rem;
+                    font-weight:bold;
+                    cursor:pointer;
+                    user-select:none;
+                ">
+                ${idx + 1}${flagIcon}
+            </div>
+        `;
+    }
+}
 
       function jumpToQuestion(index) {
-          playUISound('tap');
-          activeTestState.currentQ = index;
-          toggleQuestionPalette();
-          renderQuestion();
-      }
+    if (!activeTestState) return;
+
+    const bounds = getActiveSectionBounds();
+
+    if (index < bounds.start || index > bounds.end) {
+        alert("You can only access questions in the currently active section.");
+        return;
+    }
+
+    playUISound('tap');
+
+    activeTestState.currentQ = index;
+
+    toggleQuestionPalette();
+
+    renderQuestion();
+}
 
       function toggleFlag() {
           playUISound('tap');
@@ -4690,19 +5624,34 @@ if (topicPool.length === 0) {
       }
 
       function autoSaveTest() {
-          if (activeTestState && activeTestState.questions.length > 0) {
-              const cloneState = {
-                  questions: activeTestState.questions,
-                  answers: activeTestState.answers,
-                  currentQ: activeTestState.currentQ,
-                  visited: activeTestState.visited || {},
-                  flags: activeTestState.flags || {},
-                  testName: activeTestState.testName || document.getElementById('activeTestTitle').innerText,
-                  timeLeft: window.currentTestTimeLeft || (activeTestState.questions.length * 60)
-              };
-              localStorage.setItem('medqActiveTestBackup', JSON.stringify(cloneState));
-          }
-      }
+    if (!activeTestState || !activeTestState.questions.length) return;
+
+    const cloneState = {
+        questions: activeTestState.questions,
+        answers: activeTestState.answers,
+        currentQ: activeTestState.currentQ,
+        visited: activeTestState.visited || {},
+        flags: activeTestState.flags || {},
+
+        testName: activeTestState.testName,
+        examPattern: activeTestState.examPattern,
+
+        iniSectionMode: activeTestState.iniSectionMode || false,
+        sectionIndex: activeTestState.sectionIndex || 0,
+        sectionCount: activeTestState.sectionCount || 1,
+        sectionTimeLeft: activeTestState.sectionTimeLeft,
+
+        totalDurationSeconds: activeTestState.totalDurationSeconds,
+        totalTimeLeft: activeTestState.totalTimeLeft,
+
+        timeLeft: window.currentTestTimeLeft
+    };
+
+    localStorage.setItem(
+        'medqActiveTestBackup',
+        JSON.stringify(cloneState)
+    );
+}
 
         function renderQuestion() {
           const qIndex = activeTestState.currentQ;
@@ -4762,20 +5711,45 @@ if (topicPool.length === 0) {
           if (savedFavIds.indexOf(qData.id) > -1) { favBtn.innerHTML = '⭐'; favBtn.style.color = '#ffd700'; } 
           else { favBtn.innerHTML = '☆'; favBtn.style.color = 'white'; }
 
-          document.getElementById('prevBtn').style.visibility = qIndex === 0 ? 'hidden' : 'visible';
-          const nextBtn = document.getElementById('nextBtn');
-          if (qIndex === activeTestState.questions.length - 1) {
-              nextBtn.innerText = "Submit Test";
-              nextBtn.style.backgroundColor = "var(--success, #198754)";
-              nextBtn.style.color = "white";
-              nextBtn.onclick = submitTest;
-          } else {
-              nextBtn.innerText = "Next →";
-              nextBtn.style.backgroundColor = "";
-              nextBtn.style.color = "";
-              nextBtn.onclick = nextQuestion;
-          }
-      }
+          const bounds = getActiveSectionBounds();
+
+const prevBtn = document.getElementById('prevBtn');
+
+prevBtn.style.visibility =
+    qIndex === bounds.start ? 'hidden' : 'visible';
+
+const nextBtn = document.getElementById('nextBtn');
+
+nextBtn.disabled = false;
+
+if (qIndex === activeTestState.questions.length - 1) {
+
+    nextBtn.innerText = "Submit Test";
+    nextBtn.style.backgroundColor = "var(--success, #198754)";
+    nextBtn.style.color = "white";
+    nextBtn.onclick = submitTest;
+
+} else if (
+    activeTestState.iniSectionMode &&
+    qIndex === bounds.end
+) {
+
+    nextBtn.innerText = "Part Ends When Timer Expires";
+    nextBtn.style.backgroundColor = "#64748b";
+    nextBtn.style.color = "white";
+    nextBtn.disabled = true;
+    nextBtn.onclick = null;
+
+} else {
+
+    nextBtn.innerText = "Next →";
+    nextBtn.style.backgroundColor = "";
+    nextBtn.style.color = "";
+    nextBtn.onclick = nextQuestion;
+}
+
+updateExamSectionStatus();
+        }
 
       function handleOptionToggle(index) {
           const qIndex = activeTestState.currentQ;
@@ -4798,20 +5772,32 @@ if (topicPool.length === 0) {
       }
 
       function nextQuestion() {
-          if (typeof playUISound === 'function') playUISound('btn');
-          if (activeTestState.currentQ < activeTestState.questions.length - 1) { 
-              activeTestState.currentQ++; 
-              renderQuestion(); 
-          }
-      }
-      
-      function prevQuestion() {
-          if (typeof playUISound === 'function') playUISound('btn');
-          if (activeTestState.currentQ > 0) { 
-              activeTestState.currentQ--; 
-              renderQuestion(); 
-          }
-      }
+    if (!activeTestState) return;
+
+    playUISound('btn');
+
+    const bounds = getActiveSectionBounds();
+
+    if (activeTestState.currentQ < bounds.end) {
+        activeTestState.currentQ++;
+
+        renderQuestion();
+    }
+}
+
+function prevQuestion() {
+    if (!activeTestState) return;
+
+    playUISound('btn');
+
+    const bounds = getActiveSectionBounds();
+
+    if (activeTestState.currentQ > bounds.start) {
+        activeTestState.currentQ--;
+
+        renderQuestion();
+    }
+}
 
 
       
@@ -5487,26 +6473,56 @@ if (topicPool.length === 0) {
       }
 
       function resumeTestFromBanner() {
-          if(typeof playUISound === 'function') playUISound('btn');
-          let backup = localStorage.getItem('medqActiveTestBackup');
-          if (!backup) return;
-          activeTestState = JSON.parse(backup);
-          document.getElementById('activeTestTitle').innerText = activeTestState.testName || "Resumed Test";
-          document.getElementById('totalQNum').innerText = activeTestState.questions.length;
-          var tabs = document.querySelectorAll('.tab-content');
-          for(var t=0; t<tabs.length; t++){ tabs[t].classList.add('hidden'); }
-          const actScreen = document.getElementById('activeTestScreen');
-          actScreen.classList.remove('hidden');
-          actScreen.style.display = ''; 
-          renderQuestion();
-          startTestTimer(activeTestState.timeLeft || (activeTestState.questions.length * 60));
-      }
+    if (typeof playUISound === 'function') {
+        playUISound('btn');
+    }
 
-      if ('serviceWorker' in navigator) {
-          window.addEventListener('load', function() {
-              navigator.serviceWorker.register('sw.js').then(function(){ console.log('PWA Registered!'); }).catch(function(){});
-          });
-      }
+    const backup = localStorage.getItem('medqActiveTestBackup');
+
+    if (!backup) return;
+
+    activeTestState = JSON.parse(backup);
+
+    activeTestState.totalTimeLeft =
+        activeTestState.totalTimeLeft ??
+        activeTestState.timeLeft ??
+        activeTestState.totalDurationSeconds ??
+        activeTestState.questions.length * 60;
+
+    if (activeTestState.iniSectionMode) {
+        activeTestState.sectionTimeLeft =
+            activeTestState.sectionTimeLeft ?? 45 * 60;
+    }
+
+    window.currentTestTimeLeft = activeTestState.totalTimeLeft;
+
+    document.getElementById('activeTestTitle').innerText =
+        activeTestState.testName || "Resumed Test";
+
+    document.getElementById('totalQNum').innerText =
+        activeTestState.questions.length;
+
+    const tabs = document.querySelectorAll('.tab-content');
+
+    for (let t = 0; t < tabs.length; t++) {
+        tabs[t].classList.add('hidden');
+    }
+
+    const activeScreen = document.getElementById('activeTestScreen');
+
+    activeScreen.classList.remove('hidden');
+    activeScreen.style.display = '';
+
+    renderQuestion();
+    renderPaletteGrid();
+    updateExamSectionStatus();
+
+    startTestTimer(
+        activeTestState.iniSectionMode
+            ? activeTestState.sectionTimeLeft
+            : activeTestState.totalTimeLeft
+    );
+}
 
       function checkInternetConnection() {
           if (!navigator.onLine) {
@@ -6191,260 +7207,191 @@ const CLINICAL_ARTICLES = window.MEDQ_BLOG_DATA || [];
       let articleFontSize = 16;
       let hubHistoryState = 0; 
 
-      window.openClinicalHub = function() {
-          if (typeof playUISound === 'function') playUISound('tap');
-          const scr = document.getElementById('clinicalHubScreen');
-          if (scr) { scr.classList.remove('hidden'); scr.style.display = 'flex'; }
-          renderHubFolders();
-          backToHubFeed();
-          
-          if (hubHistoryState === 0 && typeof pushAppHistory === 'function') {
-              pushAppHistory('clinicalHubScreen');
-              hubHistoryState = 1;
-          }
-      };
-      
-      window.openBlogModal = window.openClinicalHub; 
+// ================= MEDQ IMAGE-ONLY FLASHCARDS LOGIC =================
 
-      window.closeClinicalHub = function() {
-          if (typeof playUISound === 'function') playUISound('tab');
-          const scr = document.getElementById('clinicalHubScreen');
-          if (scr) { scr.classList.add('hidden'); scr.style.display = 'none'; }
-          hubHistoryState = 0;
-      };
+let flashcardVisibleCards = [];
+let flashcardCurrentIndex = 0;
 
-      function renderHubFolders() {
-          const container = document.getElementById('hubCategoryList');
-          if (!container) return;
-          let html = '';
-          
-          let savedIds = JSON.parse(localStorage.getItem('medqSavedBlogs')) || [];
+function getSavedFlashcardIds() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('medqSavedFlashcards') || '[]');
+        return Array.isArray(saved) ? saved : [];
+    } catch (error) {
+        return [];
+    }
+}
 
-          HUB_CATEGORIES.forEach(cat => {
-              let subHtml = '';
-              
-              if (cat.isSavedFolder) {
-                  let savedArticles = CLINICAL_ARTICLES.filter(a => savedIds.includes(a.id));
-                  if (savedArticles.length === 0) {
-                      subHtml = `<div style="padding: 15px; text-align: center; color: var(--text-gray); font-size: 0.85rem;">No saved articles yet. Star (⭐) articles to read them later!</div>`;
-                  } else {
-                      savedArticles.forEach(art => { subHtml += createArticleCard(art); });
-                  }
-                  
-                  html += `
-                      <details open style="margin-bottom: 12px; border: 2px solid #fbbf24; border-radius: 10px; background: #fffbeb; overflow: hidden; box-shadow: 0 4px 10px rgba(245,158,11,0.1);">
-                          <summary style="padding: 14px 16px; background: #fef3c7; color: #b45309; font-weight: bold; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; border-bottom: 1px solid #fcd34d;">
-                              <span>${cat.icon} ${cat.name}</span><span style="font-size: 0.8rem; opacity: 0.8;">▼</span>
-                          </summary>
-                          <div style="padding: 10px;">${subHtml}</div>
-                      </details>
-                  `;
-                  return;
-              }
-              
-              cat.subjects.forEach(sub => {
-                  let articles = CLINICAL_ARTICLES.filter(a => a.category === cat.name && a.subject === sub);
-                  if (articles.length === 0) {
-                      articles = [{ id: 0, title: "Content coming soon...", preview: "High-yield notes for this topic are being updated.", subject: sub }];
-                  }
-                  
-                  let articlesHtml = '';
-                  articles.forEach(art => {
-                      if (art.id === 0) {
-                          articlesHtml += `<div style="padding:10px; color:var(--text-gray); font-size:0.8rem; font-style:italic;">${art.title}</div>`;
-                      } else {
-                          articlesHtml += createArticleCard(art);
-                      }
-                  });
-                  
-                  subHtml += `
-                      <details style="margin: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: white; overflow: hidden;">
-                          <summary style="padding: 12px; font-weight: 700; color: var(--text-dark); cursor: pointer; display: flex; justify-content: space-between; border-bottom: 1px solid transparent;">
-                              <span>📌 ${sub}</span><span style="font-size: 0.75rem; opacity: 0.6;">▼</span>
-                          </summary>
-                          <div style="padding: 12px; background: var(--bg-gray);">${articlesHtml}</div>
-                      </details>
-                  `;
-              });
-              
-              html += `
-                  <details style="margin-bottom: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-gray); overflow: hidden;">
-                      <summary style="padding: 14px 16px; background: var(--primary-light); color: var(--primary); font-weight: bold; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between;">
-                          <span>${cat.icon} ${cat.name}</span><span style="font-size: 0.8rem; opacity: 0.8;">▼</span>
-                      </summary>
-                      <div style="padding: 6px 0;">${subHtml}</div>
-                  </details>
-              `;
-          });
-          container.innerHTML = html;
-      }
+function getAllFlashcards() {
+    return Array.isArray(window.MEDQ_FLASHCARDS)
+        ? window.MEDQ_FLASHCARDS.filter(function(card) {
+            return card && card.id !== undefined && typeof card.img === 'string' && card.img.trim();
+        })
+        : [];
+}
 
-      function createArticleCard(art) {
-          let t = ARTICLE_THEMES[art.theme] || ARTICLE_THEMES.blue;
-          return `
-              <div onclick="openArticleReader(${art.id})" style="background: ${t.lightBg}; border: 1px solid ${t.border}; border-left: 5px solid ${t.text}; border-radius: 8px; padding: 14px; margin-bottom: 12px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                  <div style="font-weight: 800; font-size: 0.95rem; color: ${t.text}; margin-bottom: 4px;">${art.title}</div>
-                  <div style="font-size: 0.82rem; color: ${t.darkText}; line-height: 1.4;">${art.preview}</div>
-              </div>
-          `;
-      }
+function openFlashcards() {
+    if (typeof playUISound === 'function') playUISound('tap');
 
-      window.searchHubArticles = function(query) {
-          const q = (query || '').toLowerCase().trim();
-          const list = document.getElementById('hubCategoryList');
-          const results = document.getElementById('hubSearchResults');
-          
-          if (q.length < 2) {
-              list.classList.remove('hidden');
-              results.classList.add('hidden');
-              return;
-          }
-          
-          list.classList.add('hidden');
-          results.classList.remove('hidden');
-          
-          let matches = CLINICAL_ARTICLES.filter(a => a.id !== 0 && (a.title.toLowerCase().includes(q) || a.preview.toLowerCase().includes(q) || a.body.toLowerCase().includes(q)));
-          
-          if(matches.length === 0) {
-              results.innerHTML = `<div style="text-align: center; color: var(--text-gray); padding: 20px;">No articles found for "${query}"</div>`;
-              return;
-          }
-          
-          let html = '';
-          matches.forEach(art => { html += createArticleCard(art); });
-          results.innerHTML = html;
-      };
+    const screen = document.getElementById('flashcardsScreen');
+    if (!screen) return;
 
-      window.openArticleReader = function(id) {
-          if (typeof playUISound === 'function') playUISound('btn');
-          const art = CLINICAL_ARTICLES.find(a => a.id === id);
-          if (!art) return;
-          
-          currentReadingArticle = art;
-          let t = ARTICLE_THEMES[art.theme] || ARTICLE_THEMES.blue;
+    screen.classList.remove('hidden');
+    screen.style.display = 'flex';
 
-          // এখানে আর্টিকেলের রিডার পেজটিও সুন্দর থিমের রঙ অনুযায়ী সাজানো হলো!
-          document.getElementById('hubReaderContent').innerHTML = `
-              <div style="font-size: 0.8rem; font-weight: 800; color: ${t.text}; background: ${t.bg}; display: inline-block; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; margin-bottom: 12px;">${art.category} • ${art.subject}</div>
-              <h2 style="font-size: 1.4rem; color: ${t.darkText}; margin-bottom: 18px; line-height: 1.4; border-bottom: 2px dashed ${t.border}; padding-bottom: 12px;">${art.title}</h2>
-              <div style="padding-top: 5px; color: #1e293b;">${art.body}</div>
-          `;
-          
-          updateBookmarkButtonUI();
-          
-          document.getElementById('hubFeedView').classList.add('hidden');
-          document.getElementById('hubReaderView').classList.remove('hidden');
-          
-          if (hubHistoryState === 1 && typeof pushAppHistory === 'function') {
-              pushAppHistory('hubReaderView');
-              hubHistoryState = 2;
-          }
-      };
+    const cards = getAllFlashcards();
+    const subjectSelect = document.getElementById('flashcardSubjectFilter');
 
-      window.backToHubFeed = function() {
-          if (typeof playUISound === 'function') playUISound('tab');
-          document.getElementById('hubFeedView').classList.remove('hidden');
-          document.getElementById('hubReaderView').classList.add('hidden');
-          hubHistoryState = 1;
-          renderHubFolders(); 
-      };
+    subjectSelect.innerHTML = '<option value="ALL">All Subjects</option>';
 
-      window.handleHubBack = function() {
-          if (hubHistoryState === 2) {
-              if (typeof popAppHistory === 'function') popAppHistory('hubReaderView');
-              backToHubFeed();
-          } else {
-              if (typeof popAppHistory === 'function') popAppHistory('clinicalHubScreen');
-              closeClinicalHub();
-          }
-      };
+    [...new Set(cards.map(function(card) { return card.subject; }).filter(Boolean))]
+        .sort()
+        .forEach(function(subject) {
+            const option = document.createElement('option');
+            option.value = subject;
+            option.textContent = subject;
+            subjectSelect.appendChild(option);
+        });
 
-      window.adjustArticleFontSize = function(delta) {
-          articleFontSize = Math.max(14, Math.min(22, articleFontSize + delta));
-          document.getElementById('hubReaderContent').style.fontSize = articleFontSize + 'px';
-      };
+    document.getElementById('flashcardSavedOnly').checked = false;
+    updateFlashcardTopicOptions();
+    applyFlashcardFilters();
+}
 
-      // ================= ⭐ BOOKMARK LOGIC =================
-      window.toggleBookmarkArticle = function() {
-          if (!currentReadingArticle) return;
-          if (typeof playUISound === 'function') playUISound('tap');
-          
-          let savedIds = JSON.parse(localStorage.getItem('medqSavedBlogs')) || [];
-          let idx = savedIds.indexOf(currentReadingArticle.id);
-          
-          if (idx > -1) {
-              savedIds.splice(idx, 1);
-          } else {
-              savedIds.push(currentReadingArticle.id);
-          }
-          
-          localStorage.setItem('medqSavedBlogs', JSON.stringify(savedIds));
-          updateBookmarkButtonUI();
-      };
+function closeFlashcards() {
+    if (typeof playUISound === 'function') playUISound('tap');
 
-      function updateBookmarkButtonUI() {
-          const btn = document.getElementById('btnBookmarkArticle');
-          if (!btn || !currentReadingArticle) return;
-          let savedIds = JSON.parse(localStorage.getItem('medqSavedBlogs')) || [];
-          if (savedIds.includes(currentReadingArticle.id)) {
-              btn.innerHTML = '⭐ Saved';
-              btn.style.color = '#d97706';
-              btn.style.borderColor = '#fbbf24';
-              btn.style.background = '#fef3c7';
-          } else {
-              btn.innerHTML = '☆ Save';
-              btn.style.color = 'var(--text-dark)';
-              btn.style.borderColor = '#cbd5e1';
-              btn.style.background = 'white';
-          }
-      }
+    const screen = document.getElementById('flashcardsScreen');
+    if (screen) {
+        screen.classList.add('hidden');
+        screen.style.display = 'none';
+    }
+}
 
-      window.practiceCurrentArticleMCQs = function() {
-          if (!currentReadingArticle) return;
-          handleHubBack(); 
-          if(hubHistoryState === 1) handleHubBack(); 
+function updateFlashcardTopicOptions() {
+    const subject = document.getElementById('flashcardSubjectFilter').value;
+    const topicSelect = document.getElementById('flashcardTopicFilter');
+    const previousTopic = topicSelect.value;
 
-          const sub = currentReadingArticle.subject;
-          let pool = qBank.filter(q => q.subject === sub);
-          if (pool.length === 0) pool = qBank.slice();
-          pool.sort(() => 0.5 - Math.random());
-          let selected = pool.slice(0, 5);
+    const topics = [...new Set(
+        getAllFlashcards()
+            .filter(function(card) { return subject === 'ALL' || card.subject === subject; })
+            .map(function(card) { return card.topic; })
+            .filter(Boolean)
+    )].sort();
 
-          pendingTestParams = {
-              seedId: 'hub_' + Date.now(),
-              testName: `Review Quiz: ${currentReadingArticle.title.substring(0, 15)}...`,
-              subjectFilter: sub,
-              maxQs: selected.length,
-              customPool: selected,
-              examPattern: 'NEET_PG'
-          };
-          proceedToActualTest();
-      };
+    topicSelect.innerHTML = '<option value="ALL">All Topics</option>';
 
-      
+    topics.forEach(function(topic) {
+        const option = document.createElement('option');
+        option.value = topic;
+        option.textContent = topic;
+        topicSelect.appendChild(option);
+    });
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-     
+    if (topics.includes(previousTopic)) topicSelect.value = previousTopic;
+}
+
+function applyFlashcardFilters() {
+    const selectedSubject = document.getElementById('flashcardSubjectFilter').value;
+    const selectedTopic = document.getElementById('flashcardTopicFilter').value;
+    const savedOnly = document.getElementById('flashcardSavedOnly').checked;
+    const savedIds = getSavedFlashcardIds();
+
+    flashcardVisibleCards = getAllFlashcards().filter(function(card) {
+        const subjectMatch = selectedSubject === 'ALL' || card.subject === selectedSubject;
+        const topicMatch = selectedTopic === 'ALL' || card.topic === selectedTopic;
+        const savedMatch = !savedOnly || savedIds.includes(card.id);
+        return subjectMatch && topicMatch && savedMatch;
+    });
+
+    flashcardCurrentIndex = 0;
+    renderFlashcard();
+}
+
+function renderFlashcard() {
+    const content = document.getElementById('flashcardContent');
+    const progress = document.getElementById('flashcardProgress');
+    const saveButton = document.getElementById('flashcardSaveButton');
+    if (!content || !progress || !saveButton) return;
+
+    if (flashcardVisibleCards.length === 0) {
+        progress.innerText = '0 / 0';
+        content.innerHTML = `
+            <div style="text-align:center; padding:32px 12px; color:var(--text-gray);">
+                <div style="font-size:2.2rem; margin-bottom:10px;">🃏</div>
+                <strong>No image flashcards available</strong>
+                <p style="font-size:0.82rem; margin-top:7px;">Add image files and their paths to data/flashcards.js.</p>
+            </div>`;
+        saveButton.style.display = 'none';
+        return;
+    }
+
+    const card = flashcardVisibleCards[flashcardCurrentIndex];
+    progress.innerText = (flashcardCurrentIndex + 1) + ' / ' + flashcardVisibleCards.length;
+
+    const saved = getSavedFlashcardIds().includes(card.id);
+    saveButton.style.display = 'block';
+    saveButton.innerText = saved ? '★ Saved' : '☆ Save';
+
+    const image = document.createElement('img');
+    image.src = card.img;
+    image.alt = [card.subject, card.topic].filter(Boolean).join(' - ') || 'Medical image flashcard';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    image.style.cssText = 'display:block; width:100%; max-width:760px; max-height:62vh; object-fit:contain; border-radius:10px; margin:auto;';
+    image.onerror = function() {
+        content.innerHTML = '<p style="padding:24px; color:#b91c1c; text-align:center;">This flashcard image could not be loaded. Check its file path.</p>';
+    };
+
+    content.replaceChildren(image);
+}
+
+function nextFlashcard() {
+    if (!flashcardVisibleCards.length) return;
+    if (typeof playUISound === 'function') playUISound('btn');
+    flashcardCurrentIndex = (flashcardCurrentIndex + 1) % flashcardVisibleCards.length;
+    renderFlashcard();
+}
+
+function previousFlashcard() {
+    if (!flashcardVisibleCards.length) return;
+    if (typeof playUISound === 'function') playUISound('btn');
+    flashcardCurrentIndex = (flashcardCurrentIndex - 1 + flashcardVisibleCards.length) % flashcardVisibleCards.length;
+    renderFlashcard();
+}
+
+function shuffleFlashcards() {
+    if (!flashcardVisibleCards.length) return;
+    if (typeof playUISound === 'function') playUISound('tap');
+
+    for (let i = flashcardVisibleCards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [flashcardVisibleCards[i], flashcardVisibleCards[j]] =
+            [flashcardVisibleCards[j], flashcardVisibleCards[i]];
+    }
+
+    flashcardCurrentIndex = 0;
+    renderFlashcard();
+}
+
+function toggleFlashcardSaved() {
+    if (!flashcardVisibleCards.length) return;
+    const card = flashcardVisibleCards[flashcardCurrentIndex];
+    const saved = getSavedFlashcardIds();
+    const index = saved.indexOf(card.id);
+
+    if (index >= 0) saved.splice(index, 1);
+    else saved.push(card.id);
+
+    localStorage.setItem('medqSavedFlashcards', JSON.stringify(saved));
+    renderFlashcard();
+    if (document.getElementById('flashcardSavedOnly').checked) applyFlashcardFilters();
+}
+
+// ================= END IMAGE-ONLY FLASHCARDS =================
 
 
-
-
-
-
-
-
-
-      // ================= 🔄 UNIVERSAL HARDWARE BACK BUTTON MANAGER =================
+// ================= 🔄 UNIVERSAL HARDWARE BACK BUTTON MANAGER =================
       
       let appHistoryStack = []; // এটি মনে রাখবে ইউজার এখন কোন পেজে আছে
 
@@ -6547,9 +7494,11 @@ const CLINICAL_ARTICLES = window.MEDQ_BLOG_DATA || [];
 
       // Instruction Screen Override
       const originalStartStandard = window.startStandardTest;
-      window.startStandardTest = function(seedId, testName, subjectFilter, maxQs, forcedPattern, isPyqOnly) {
+      window.startStandardTest = function(seedId, testName, subjectFilter, maxQs, forcedPattern, isPyqOnly, mockTier) {
           pushAppHistory('instructionScreen');
-          if (originalStartStandard) originalStartStandard(seedId, testName, subjectFilter, maxQs, forcedPattern, isPyqOnly);
+          if (originalStartStandard) {
+              originalStartStandard(seedId, testName, subjectFilter, maxQs, forcedPattern, isPyqOnly, mockTier);
+          }
       };
 
       const originalStartSpecial = window.startSpecialDrill;
@@ -6573,8 +7522,7 @@ const CLINICAL_ARTICLES = window.MEDQ_BLOG_DATA || [];
         <div style="overflow: auto; max-width: 95%; max-height: 85%; display: flex; align-items: center; justify-content: center;">
             <img id="lightboxTargetImg" src="" style="max-width: 100%; max-height: 80vh; border-radius: 8px; transition: transform 0.2s ease; transform: scale(1);">
         </div>
-        <div style="color: #cbd5e1; font-size: 0.8rem; margin-top: 10px;">Use buttons to zoom in/out • Tap ✕ to close</div>    
-    
-    
+        <div style="color: #cbd5e1; font-size: 0.8rem; margin-top: 10px;">Use buttons to zoom in/out • Tap ✕ to close</div>
+    </div>
 </body>
 </html>
