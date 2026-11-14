@@ -1,4 +1,5 @@
-export const biochemistryQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.biochemistry = [
 {
   id: 3001,
   subject: "Biochemistry",
