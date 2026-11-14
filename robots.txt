@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://medq-daily.netlify.app/sitemap.xml
