@@ -1,0 +1,11 @@
+{
+  "name": "MedQ Daily \u2014 Medical MCQ Practice",
+  "short_name": "MedQ Daily",
+  "description": "Free medical MCQ practice, daily quizzes and mock tests for MBBS, NEET PG and INI-CET preparation.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "orientation": "portrait"
+}
