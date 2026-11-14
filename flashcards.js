@@ -1,1 +1,0 @@
-window.MEDQ_FLASHCARDS = window.MEDQ_FLASHCARDS || [];
