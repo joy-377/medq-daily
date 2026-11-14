@@ -1,4 +1,5 @@
-export const medicineQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.medicine = [
 {
   id: 11001,
   subject: "Medicine",
