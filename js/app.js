@@ -1,8 +1,8 @@
 // ============================================================================
-// 🌟 MEDQ - FULL APPLICATION LOGIC (APP.JS)
+// 🌟 MEDQ - FULL APPLICATION LOGIC (APP.JS) - 100% RESTORED
 // ============================================================================
 
-// 🗂️ 1. LEGAL & POLICY DATA
+// 🗂️ 1. LEGAL, POLICY & ABOUT US CONTENT DATA
 window.legalContentData = {
     privacy: {
         title: "Privacy Policy",
@@ -71,8 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
     applySavedTheme();
 });
 
+// 🖱️ OUTSIDE CLICK TO CLOSE MODALS
 window.addEventListener('click', function(event) {
-    const modals = ['spProfileModal', 'yearSetupModal', 'signInWarningModal', 'weakSubjectModal', 'milestoneModal', 'dailyReminderModal', 'notesSrsModal', 'favoritesModal', 'legalModal', 'allBadgesModal'];
+    const modals = [
+        'spProfileModal', 'yearSetupModal', 'signInWarningModal', 'weakSubjectModal', 
+        'milestoneModal', 'dailyReminderModal', 'notesSrsModal', 'favoritesModal', 
+        'legalModal', 'allBadgesModal'
+    ];
     modals.forEach(modalId => {
         const modal = document.getElementById(modalId);
         if (modal && event.target === modal) modal.classList.add('hidden');
@@ -97,12 +102,19 @@ window.switchTab = function(tabId, navElement) {
     if (matchingNav) matchingNav.classList.add('active');
 
     if (tabId === 'tabHome') renderHomeDashboard();
+    if (tabId === 'tabInsights' && typeof renderInsightsHub === 'function') renderInsightsHub();
+    if (tabId === 'tabDaily') loadTodayMCQ();
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 function hideAllActiveScreens() {
     if (activeTestState && activeTestState.timer) clearInterval(activeTestState.timer);
-    const screens = ['resultScreen', 'activeTestScreen', 'instructionScreen', 'reviewScreen', 'loadingScreen', 'clinicalHubScreen', 'favoritesModal', 'legalModal', 'spProfileModal', 'weakSubjectModal', 'milestoneModal', 'dailyReminderModal'];
+    const screens = [
+        'resultScreen', 'activeTestScreen', 'instructionScreen', 'reviewScreen', 
+        'loadingScreen', 'clinicalHubScreen', 'favoritesModal', 'legalModal', 
+        'spProfileModal', 'weakSubjectModal', 'milestoneModal', 'dailyReminderModal'
+    ];
     screens.forEach(id => {
         let el = document.getElementById(id);
         if (el) {
@@ -161,8 +173,11 @@ window.closeLegalModal = function() {
 function loadUserProfile() {
     let name = localStorage.getItem('spUserName');
     if(name) {
-        document.getElementById('spUserName').value = name;
-        document.getElementById('homeUserName').innerText = name;
+        let nameInputs = document.querySelectorAll('#spUserName, #homeUserName');
+        nameInputs.forEach(el => {
+            if(el.tagName === 'INPUT') el.value = name;
+            else el.innerText = name;
+        });
         document.getElementById('navUserBadge').innerText = name.charAt(0).toUpperCase();
         document.getElementById('spUserInitials').innerText = name.charAt(0).toUpperCase();
     }
@@ -196,7 +211,120 @@ window.toggleSoundFromSidebar = function() {
     playUISound('tap');
 };
 
-// 📝 7. CUSTOM Q-BANK STUDIO
+// 📊 7. HOME DASHBOARD RENDERER
+function renderHomeDashboard() {
+    document.getElementById('homeUserName').innerText = localStorage.getItem('spUserName') || 'Doctor';
+    document.getElementById('homeStreakVal').innerText = localStorage.getItem('medqStreakCount') || '0';
+    
+    let totalSolved = parseInt(localStorage.getItem('totalQuestionsSolved') || '0');
+    let totalCorrect = parseInt(localStorage.getItem('totalCorrectAnswers') || '0');
+    let accuracy = totalSolved > 0 ? Math.round((totalCorrect / totalSolved) * 100) : 0;
+    
+    document.getElementById('homeStatSolved').innerText = totalSolved;
+    document.getElementById('homeStatAccuracy').innerText = accuracy + "%";
+    
+    let pearls = [
+        "Metoclopramide is contraindicated in Parkinson's disease due to dopamine antagonism.",
+        "Drug of choice for trigeminal neuralgia is Carbamazepine.",
+        "Hypercalcemia with normal PTH is familial hypocalciuric hypercalcemia (FHH).",
+        "Most common site of ectopic pregnancy is the Ampulla of the fallopian tube."
+    ];
+    let todayIndex = new Date().getDate() % pearls.length;
+    document.getElementById('homeClinicalPearl').innerText = pearls[todayIndex];
+}
+
+// 📚 8. DAILY DOSE ENGINE
+window.loadTodayMCQ = function() {
+    if(!window.qBank || window.qBank.length === 0) return;
+    
+    let pool = window.qBank; 
+    let shuffledPool = pool.sort(() => 0.5 - Math.random()); 
+    dailyQuestions = shuffledPool.slice(0, 5); 
+    dailyAnswers = new Array(5).fill(null);
+    currentDailyQ = 0;
+    
+    document.getElementById('dailyDateTitle').innerText = `Daily Dose`;
+    renderSingleDailyQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+function renderSingleDailyQuestion() {
+    const container = document.getElementById('dailyMcqContainer');
+    if (!container || dailyQuestions.length === 0) return;
+
+    const q = dailyQuestions[currentDailyQ];
+    const hasAnswered = dailyAnswers[currentDailyQ] !== null;
+    const userAns = dailyAnswers[currentDailyQ];
+
+    document.getElementById('dailyProgress').innerText = (currentDailyQ + 1) + ' of ' + dailyQuestions.length;
+
+    let html = `<div class="card" style="box-shadow: none; border: 1px solid var(--border); padding: 16px; border-radius: 12px;">
+        <div style="font-size:0.82rem; color:var(--primary); font-weight:800; text-transform: uppercase; margin-bottom:12px;">
+            ${q.subject}
+        </div>
+        <div class="mcq-q">${q.q}</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">`;
+
+    q.opts.forEach((opt, oIdx) => {
+        let optClass = "mcq-option";
+        let optStyle = "cursor: pointer;";
+        if (hasAnswered) {
+            optStyle = "pointer-events: none;";
+            if (oIdx === q.ans) optClass += " correct";
+            else if (oIdx === userAns) optClass += " incorrect";
+        }
+        html += `<div class="${optClass}" style="${optStyle}" onclick="handleDailyAnswer(${currentDailyQ}, ${oIdx}, ${q.ans})">${opt}</div>`;
+    });
+
+    html += `</div>`;
+
+    if (hasAnswered) {
+        html += `
+            <div style="margin-top: 20px; background: #e2eef9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary);">
+                <strong style="color: var(--primary);">✅ Explanation:</strong><br>
+                <div style="font-size: 0.95rem; color: #004085; margin-top: 5px; line-height: 1.6;">${q.exp}</div>
+                ${q.wrongExp ? `<div style="margin-top:10px; color:#7f1d1d; border-top:1px dashed #93c5fd; padding-top:10px;">${q.wrongExp}</div>` : ''}
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 25px;">
+                <button class="btn btn-outline" style="flex: 1; visibility: ${currentDailyQ === 0 ? 'hidden' : 'visible'};" onclick="prevDailyQuestion()">⬅️ Prev</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="nextDailyQuestion()">${currentDailyQ === dailyQuestions.length - 1 ? 'Finish 🎉' : 'Next ➡️'}</button>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+}
+
+window.handleDailyAnswer = function(qIndex, selectedIdx, correctIdx) {
+    playUISound('tap');
+    dailyAnswers[qIndex] = selectedIdx;
+    
+    let totalSolved = parseInt(localStorage.getItem('totalQuestionsSolved') || '0') + 1;
+    localStorage.setItem('totalQuestionsSolved', totalSolved);
+    if(selectedIdx === correctIdx) {
+        let totalCorrect = parseInt(localStorage.getItem('totalCorrectAnswers') || '0') + 1;
+        localStorage.setItem('totalCorrectAnswers', totalCorrect);
+    }
+    
+    renderSingleDailyQuestion();
+};
+
+window.nextDailyQuestion = function() {
+    playUISound('btn');
+    if (currentDailyQ < dailyQuestions.length - 1) {
+        currentDailyQ++;
+        renderSingleDailyQuestion();
+    } else {
+        alert("🎉 Awesome, Doctor! \nGreat job completing today's dose!");
+        switchTab('tabHome');
+    }
+};
+
+window.prevDailyQuestion = function() {
+    playUISound('btn');
+    if (currentDailyQ > 0) { currentDailyQ--; renderSingleDailyQuestion(); }
+};
+
+// 📝 9. CUSTOM Q-BANK STUDIO
 let selectedCustomDifficulty = 'Moderate';
 let selectedCustomCount = 20;
 
@@ -226,7 +354,7 @@ if(document.getElementById('btnGenerateCustom')) {
     document.getElementById('btnGenerateCustom').onclick = function() {
         playUISound('btn');
         if (!window.qBank || window.qBank.length === 0) {
-            alert("Questions are loading. Please wait.");
+            alert("Questions are loading. Please wait a moment.");
             return;
         }
 
@@ -260,7 +388,7 @@ window.cancelInstructions = function() {
     document.getElementById('instructionScreen').style.display = 'none';
 };
 
-// 🚀 8. QUIZ ENGINE
+// 🚀 10. ACTIVE TEST ENGINE
 window.proceedToActualTest = function() {
     if (!window.pendingTestParams) return;
     playUISound('btn');
@@ -292,7 +420,12 @@ function renderQuestion() {
     const qData = activeTestState.questions[qIndex];
     document.getElementById('currentQNum').innerText = qIndex + 1;
     
-    document.getElementById('questionText').innerHTML = `<div>${qData.q}</div>`;
+    document.getElementById('questionText').innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+            <div>${qData.q}</div>
+        </div>
+    `;
+
     const optionsContainer = document.getElementById('optionsContainer');
     optionsContainer.innerHTML = '';
     const currentSelected = activeTestState.answers[qIndex];
@@ -300,6 +433,7 @@ function renderQuestion() {
     qData.opts.forEach((opt, index) => {
         const isChecked = currentSelected === index;
         const borderStyle = isChecked ? "border: 2px solid var(--primary); background: var(--primary-light);" : "background:var(--bg-gray); border:1px solid var(--border);";
+        
         optionsContainer.innerHTML += `
             <div class="option-label" onclick="handleOptionToggle(${index})" style="display:flex; align-items:center; padding:14px 18px; margin-bottom:12px; border-radius:10px; cursor:pointer; user-select:none; ${borderStyle}">
                 <span style="font-size:1.02rem; font-weight:600;">${opt}</span>
@@ -397,7 +531,7 @@ window.backToHomeFromResults = function() {
     switchTab('tabHome');
 };
 
-// 🖐️ 9. SWIPE ENGINE
+// 🖐️ 11. SWIPE ENGINE
 function setupSwipeEngine() {
     let touchStartX = 0;
     const mainArea = document.getElementById('mainContainer');
@@ -420,7 +554,7 @@ function setupSwipeEngine() {
     }, { passive: true });
 }
 
-// 🔊 10. AUDIO SYSTEM
+// 🔊 12. AUDIO SYSTEM
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
