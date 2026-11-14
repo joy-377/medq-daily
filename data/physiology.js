@@ -1,4 +1,5 @@
-export const physiologyQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.physiology = [
 {
   id: 2001,
   subject: "Physiology",
