@@ -1,4 +1,5 @@
-export const radiologyQs = [
+window.MEDQ_DATA = window.MEDQ_DATA || {};
+window.MEDQ_DATA.radiology = [
 {
   id: 18001,
   subject: "Radiology",
