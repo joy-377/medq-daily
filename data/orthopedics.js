@@ -848,5 +848,5 @@ export const orthopedicsQs = [
   ans: 2,
   exp: "The infant has Congenital Muscular Torticollis (CMT) due to fibrosis and shortening (a 'fibromatosis colli' tumor) of the sternocleidomastoid muscle. The head tilts TOWARD the affected muscle and rotates AWAY from it. Over 90% of cases resolve completely with conservative management: intensive, parent-guided passive stretching and repositioning exercises. Surgery (SCM release) is reserved for refractory cases lasting beyond 1 year of age.",
   wrongExp: "• <strong>Option A (Immediate surgical release):</strong> Unnecessary and overly aggressive for an infant; conservative physical therapy is highly effective.<br>• <strong>Option B (Botulinum toxin injection):</strong> Used as an adjunct in older children with refractory spasmodic torticollis, but not the first-line treatment for infant congenital torticollis.<br>• <strong>Option D (Cervical collar):</strong> Contraindicated; active and passive stretching is required, whereas immobilization will worsen the contracture."
-},
+}
 ];
