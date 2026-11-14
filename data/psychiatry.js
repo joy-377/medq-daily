@@ -848,5 +848,5 @@ export const psychiatryQs = [
   ans: 1,
   exp: "The patient is exhibiting Catatonia, a neuropsychiatric syndrome that can occur in severe psychiatric (schizophrenia, bipolar) or medical illnesses. The specific sign described—where the patient's limbs can be molded into awkward positions by the examiner and they hold that position indefinitely—is termed 'waxy flexibility' (catalepsy). Treatment of choice for catatonia is high-dose benzodiazepines (lorazepam) or ECT.",
   wrongExp: "• <strong>Option A (Echolalia):</strong> The meaningless repetition or echoing of another person's spoken words, also a sign of catatonia or autism, but it is a verbal sign, not motor.<br>• <strong>Option C (Tardive dyskinesia):</strong> Involuntary choreoathetoid movements (lip smacking, tongue rolling) caused by long-term dopamine receptor blockade.<br>• <strong>Option D (Lead-pipe rigidity):</strong> A uniform, constant resistance to passive movement seen in Neuroleptic Malignant Syndrome, unlike waxy flexibility where the limb is molded and stays in place without active resistance."
-},
+}
 ];
