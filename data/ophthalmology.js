@@ -848,5 +848,5 @@ export const ophthalmologyQs = [
   ans: 0,
   exp: "The patient is presenting with acute Orbital Cellulitis (post-septal cellulitis), an ophthalmic emergency. The presence of proptosis, ophthalmoplegia, and an RAPD (indicating optic nerve compromise) distinguishes it from the benign preseptal cellulitis. In children, orbital cellulitis most commonly originates from direct extension of a bacterial infection from the adjacent Ethmoid sinus, crossing the paper-thin lamina papyracea.",
   wrongExp: "• <strong>Option B (Maxillary sinus):</strong> Maxillary sinusitis can occasionally cause orbital cellulitis, particularly in adults or after dental procedures, but ethmoid sinusitis is vastly more common in pediatric cases.<br>• <strong>Option C (Dental root abscess):</strong> A very rare source of orbital cellulitis, usually via the maxillary sinus.<br>• <strong>Option D (Superficial skin abrasion):</strong> Causes Preseptal cellulitis (infection anterior to the orbital septum), which does NOT cause proptosis, ophthalmoplegia, or vision loss."
-},
+}
 ];
