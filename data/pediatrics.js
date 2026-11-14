@@ -848,5 +848,5 @@ export const pediatricsQs = [
   ans: 1,
   exp: "Posterior Urethral Valves (PUV) is the most common cause of severe obstructive uropathy in male infants. A congenital membrane obstructs the posterior urethra, leading to massive back-pressure. Ultrasound shows a thickened, distended bladder with a dilated posterior urethra ('keyhole sign') and bilateral hydroureteronephrosis. The lack of fetal urine output causes severe oligohydramnios, which can lead to fatal pulmonary hypoplasia (Potter sequence).",
   wrongExp: "• <strong>Option A (UPJ obstruction):</strong> The most common cause of unilateral hydronephrosis in children. It obstructs at the kidney pelvis, so the bladder is normal-sized and not dilated, and oligohydramnios is rare if the other kidney is normal.<br>• <strong>Option C (Vesicoureteral reflux):</strong> Caused by a loose, incompetent ureterovesical junction allowing urine to flow backwards. It can cause hydronephrosis but not a severely thickened, obstructed bladder or the 'keyhole sign'.<br>• <strong>Option D (Multicystic dysplastic kidney):</strong> A non-functioning kidney composed of cysts due to abnormal induction of metanephric mesenchyme. It is usually unilateral and does not cause a dilated bladder or keyhole sign."
-},
+}
 ];
