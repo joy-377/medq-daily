@@ -958,5 +958,5 @@ export const communityMedicineQs = [
   ans: 1,
   exp: "Prevention of fluorosis requires identifying and monitoring fluoride exposure, ensuring safe drinking-water supplies, and using appropriate mitigation measures such as alternative water sources or validated defluoridation systems. Public health programs also need surveillance, community education, and coordination with water-supply authorities.",
   wrongExp: "• <strong>Option A (Continue without testing):</strong> Excessive chronic fluoride exposure can cause dental and skeletal fluorosis; water quality must be assessed and managed appropriately.<br>• <strong>Option C (Antimalarial drugs):</strong> Antimalarials do not prevent fluorosis caused by excess fluoride exposure.<br>• <strong>Option D (Antibiotics instead of surveillance):</strong> Fluorosis is an environmental exposure-related condition, and antibiotics do not address its cause."
-},
+}
 ];
