@@ -1,7 +1,7 @@
 // js/data-loader.js
 
 // ১৯টি সাবজেক্টের ডেটা সঠিক রুট পাথ দিয়ে ইমপোর্ট করা হচ্ছে
-import { anatomyQs } from '../data/anatomy.js';
+import { anatomyQs } from './data/anatomy.js';
 import { physiologyQs } from '../data/physiology.js';
 import { biochemistryQs } from '../data/biochemistry.js';
 import { pathologyQs } from '../data/pathology.js';
