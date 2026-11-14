@@ -1359,9 +1359,512 @@ body.dark-mode #reviewScreen strong {
     color: #f8fafc;
 }
 
- 
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   MEDQ DAILY - DARK MODE READABILITY FIX
+========================================= */
+
+/* Main history containers */
+body.dark-mode #insTestHistoryContainer,
+body.dark-mode #testHistoryContainer {
+    color: #e2e8f0 !important;
+}
+
+/* History cards */
+body.dark-mode #insTestHistoryContainer > div,
+body.dark-mode #testHistoryContainer > div {
+    background: #1e293b !important;
+    border-color: #475569 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Test names */
+body.dark-mode #insTestHistoryContainer div,
+body.dark-mode #testHistoryContainer div {
+    color: #e2e8f0;
+}
+
+body.dark-mode #insTestHistoryContainer div[style*="font-weight: 800"],
+body.dark-mode #testHistoryContainer div[style*="font-weight: 800"] {
+    color: #f8fafc !important;
+}
+
+/* Date badges */
+body.dark-mode #insTestHistoryContainer span[style*="background: #e2e8f0"],
+body.dark-mode #testHistoryContainer span[style*="background: #e2e8f0"] {
+    background: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Score denominator */
+body.dark-mode #insTestHistoryContainer span[style*="color:#666"],
+body.dark-mode #testHistoryContainer span[style*="color:#666"] {
+    color: #cbd5e1 !important;
+}
+
+/* History filter buttons */
+body.dark-mode #insTestHistoryContainer button {
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #insTestHistoryContainer button[onclick*="filterTestHistory"] {
+    background: #0f172a !important;
+}
+
+body.dark-mode #insTestHistoryContainer button[onclick*="filterTestHistory"]:hover {
+    background: #334155 !important;
+}
+
+/* Review and Retest buttons */
+body.dark-mode #insTestHistoryContainer button[onclick*="loadSavedReview"] {
+    background: #172554 !important;
+    color: #93c5fd !important;
+    border-color: #3b82f6 !important;
+}
+
+body.dark-mode #insTestHistoryContainer button[onclick*="retestSavedExam"] {
+    background: #422006 !important;
+    color: #fcd34d !important;
+    border-color: #a16207 !important;
+}
+
+/* Review screen */
+body.dark-mode #reviewScreen {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #revQuestionText {
+    color: #f8fafc !important;
+}
+
+body.dark-mode #revOptionsContainer li {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+/* Correct answer */
+body.dark-mode #revOptionsContainer li[style*="#d4edda"] {
+    background: #064e3b !important;
+    color: #a7f3d0 !important;
+    border-color: #10b981 !important;
+}
+
+/* Incorrect answer */
+body.dark-mode #revOptionsContainer li[style*="#f8d7da"] {
+    background: #7f1d1d !important;
+    color: #fecaca !important;
+    border-color: #ef4444 !important;
+}
+
+/* Explanation */
+body.dark-mode #revExplanation {
+    background: #172554 !important;
+    color: #e0f2fe !important;
+    border-color: #38bdf8 !important;
+}
+
+body.dark-mode #revExplanation strong {
+    color: #7dd3fc !important;
+}
+
+body.dark-mode #revWrongExpBlock {
+    background: #450a0a !important;
+    color: #fecaca !important;
+}
+
+/* Saved Questions */
+body.dark-mode #favoritesModal {
+    background: rgba(2, 6, 23, 0.97) !important;
+}
+
+body.dark-mode #favoritesModal > div {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-summary {
+    background: #172554 !important;
+    color: #bfdbfe !important;
+}
+
+body.dark-mode #favoritesListContainer .subject-group > div > div {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #favoritesListContainer li {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #favoritesListContainer li[style*="#d4edda"] {
+    background: #064e3b !important;
+    color: #a7f3d0 !important;
+}
+
+/* Mistake Vault */
+body.dark-mode #mistakeScreen,
+body.dark-mode #mistakeReviewView {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode #mistakeQText {
+    color: #f8fafc !important;
+}
+
+body.dark-mode #mistakeOptionsContainer > div {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #mistakeExpBlock {
+    background: #172554 !important;
+    color: #e0f2fe !important;
+}
+
+/* Flashcards - empty state and future cards */
+body.dark-mode #flashcardsScreen {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #flashcardsScreen > div,
+body.dark-mode #flashcardContent {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode #flashcardContent img {
+    filter: none !important;
+}
+
+/* Inputs and select fields */
+body.dark-mode input:not([type="checkbox"]):not([type="radio"]),
+body.dark-mode textarea,
+body.dark-mode select {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode select option {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Modal text and dynamically generated content */
+body.dark-mode #spProfileModal,
+body.dark-mode #legalModal,
+body.dark-mode #blogModal,
+body.dark-mode #notesSrsModal {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode #spProfileModal p,
+body.dark-mode #legalModal p,
+body.dark-mode #blogModal p {
+    color: #cbd5e1 !important;
+}
+
+/* Do not invert medical images */
+body.dark-mode img {
+    filter: none !important;
+}
+
+        
 
     </style>
+
+<style id="medq-final-contrast-and-layout-fixes">
+/* Calm, low-glare clinical dark palette */
+body.dark-mode {
+  color-scheme: dark;
+  --primary:#60c5f5 !important;
+  --primary-light:#1b2a3d !important;
+  --text-dark:#edf4fb !important;
+  --text-gray:#a9b8c8 !important;
+  --bg-gray:#101b2a !important;
+  --border:#34465a !important;
+  background:#101b2a !important;
+  color:#edf4fb !important;
+}
+body.dark-mode #mainContainer { background:#101b2a !important; color:#edf4fb !important; }
+body.dark-mode #mainContainer .card,
+body.dark-mode #mainContainer .stat-box-ui,
+body.dark-mode #mainContainer .action-launch-card,
+body.dark-mode #mainContainer .settings-group-card,
+body.dark-mode #mainContainer .subject-stat-row {
+  background:#1a293a !important; border-color:#34465a !important; color:#edf4fb !important;
+}
+body.dark-mode #mainContainer [style*="background: white"],
+body.dark-mode #mainContainer [style*="background:white"],
+body.dark-mode #mainContainer [style*="background: #fff"],
+body.dark-mode #mainContainer [style*="background:#fff"] {
+  background-color:#1a293a !important; color:#e5eef7 !important; border-color:#34465a !important;
+}
+body.dark-mode #mainContainer [style*="color: #333"],
+body.dark-mode #mainContainer [style*="color:#333"],
+body.dark-mode #mainContainer [style*="color: #444"],
+body.dark-mode #mainContainer [style*="color:#444"],
+body.dark-mode #mainContainer [style*="color: #555"],
+body.dark-mode #mainContainer [style*="color:#555"],
+body.dark-mode #mainContainer [style*="color: #666"],
+body.dark-mode #mainContainer [style*="color:#666"],
+body.dark-mode #mainContainer [style*="color: #475569"],
+body.dark-mode #mainContainer [style*="color:#475569"] {
+  color:#c6d4e2 !important;
+}
+body.dark-mode #mainContainer input,
+body.dark-mode #mainContainer textarea,
+body.dark-mode #mainContainer select,
+body.dark-mode #mainContainer option {
+  background:#111e2e !important; color:#edf4fb !important; border-color:#40546a !important;
+}
+body.dark-mode #mainContainer input::placeholder,
+body.dark-mode #mainContainer textarea::placeholder { color:#93a6ba !important; }
+
+/* Mistake Vault: folder list, slide, answers and explanations */
+body.dark-mode #mistakeScreen { background:#101b2a !important; color:#edf4fb !important; }
+body.dark-mode #mistakeScreen > div:first-child,
+body.dark-mode #mistakeReviewView,
+body.dark-mode #mistakeReviewView > div:last-child {
+  background:#1a293a !important; border-color:#34465a !important; color:#edf4fb !important;
+}
+body.dark-mode #mistakeSubjectView,
+body.dark-mode #mistakeReviewView > div:nth-child(2) {
+  background:#101b2a !important; color:#e5eef7 !important;
+}
+body.dark-mode #mistakeSubjectList > div {
+  background:#1a293a !important; border-color:#40546a !important; color:#edf4fb !important;
+}
+body.dark-mode #mistakeSubjectList > div div { color:#dbe7f2 !important; }
+body.dark-mode #mistakeSubjectList > div div:first-child { color:#f2f7fc !important; }
+body.dark-mode #mistakeQMeta { color:#fda4af !important; }
+body.dark-mode #mistakeQText { color:#f2f7fc !important; }
+body.dark-mode #mistakeOptionsContainer > div {
+  background:#223247 !important; border-color:#4a6078 !important; color:#e5eef7 !important;
+}
+body.dark-mode #mistakeOptionsContainer > div[style*="#ecfdf5"],
+body.dark-mode #mistakeOptionsContainer > div[style*="#065f46"] {
+  background:rgba(16,185,129,.16) !important; border-color:#10b981 !important; color:#a7f3d0 !important;
+}
+body.dark-mode #mistakeOptionsContainer > div[style*="#fef2f2"],
+body.dark-mode #mistakeOptionsContainer > div[style*="#991b1b"] {
+  background:rgba(239,68,68,.16) !important; border-color:#ef4444 !important; color:#fecaca !important;
+}
+body.dark-mode #mistakeOptionsContainer > div span { color:inherit !important; }
+body.dark-mode #mistakeExpBlock {
+  background:#172b43 !important; border-color:#3b82a0 !important; color:#dbeafe !important;
+}
+body.dark-mode #mistakeExpBlock strong { color:#7dd3fc !important; }
+body.dark-mode #mistakeExpText { color:#dbeafe !important; }
+body.dark-mode #mistakeWrongExpWrapper {
+  background:rgba(127,29,29,.18) !important; border-top-color:#7f3545 !important;
+}
+body.dark-mode #mistakeWrongExpWrapper strong,
+body.dark-mode #mistakeWrongExpText { color:#fecaca !important; }
+body.dark-mode #mistakeScreen button.btn-outline {
+  background:#17283b !important; color:#dceaf7 !important; border-color:#52677d !important;
+}
+
+/* Test History metrics and denominator contrast */
+body.dark-mode #insTestHistoryContainer,
+body.dark-mode #testHistoryContainer { color:#e5eef7 !important; }
+body.dark-mode #insTestHistoryContainer > div,
+body.dark-mode #testHistoryContainer > div {
+  background:#1a293a !important; border-color:#40546a !important; color:#e5eef7 !important;
+}
+body.dark-mode #insTestHistoryContainer span,
+body.dark-mode #testHistoryContainer span { color:#b8c8d8 !important; }
+body.dark-mode #insTestHistoryContainer button,
+body.dark-mode #testHistoryContainer button { filter:brightness(.92); }
+
+/* Test Series: previous attempt strip */
+.test-series-attempt {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;
+  margin:-3px 0 10px; padding:9px 10px; border:1px solid #cbd5e1; border-radius:9px;
+  background:#f8fafc; color:#334155; font-size:.78rem;
+}
+.test-series-attempt-info { display:flex; flex-direction:column; gap:2px; min-width:130px; }
+.test-series-attempt-info strong { color:#1d4ed8; font-size:.78rem; }
+.test-series-attempt-info span { font-weight:800; color:#0f766e; }
+.test-series-attempt-info small { color:#64748b; }
+.test-series-attempt-actions { display:flex; gap:6px; }
+.test-series-attempt-actions button {
+  border:1px solid #93c5fd; border-radius:7px; padding:6px 9px; background:#eff6ff;
+  color:#1d4ed8; font-weight:700; font-size:.72rem; cursor:pointer;
+}
+.test-series-attempt-actions button:last-child { background:#fff7ed; border-color:#fdba74; color:#c2410c; }
+body.dark-mode .test-series-attempt {
+  background:#17283b !important; border-color:#40546a !important; color:#e5eef7 !important;
+}
+body.dark-mode .test-series-attempt-info strong { color:#7dd3fc !important; }
+body.dark-mode .test-series-attempt-info span { color:#6ee7b7 !important; }
+body.dark-mode .test-series-attempt-info small { color:#a9b8c8 !important; }
+body.dark-mode .test-series-attempt-actions button {
+  background:#18334c !important; color:#bae6fd !important; border-color:#35658a !important;
+}
+body.dark-mode .test-series-attempt-actions button:last-child {
+  background:#422b1b !important; color:#fed7aa !important; border-color:#8b5a2b !important;
+}
+
+/* Custom question-source toggles */
+.custom-source-option {
+  display:flex; align-items:center; gap:8px; position:relative; padding:11px 30px 11px 10px;
+  border:1px solid #cbd5e1; border-radius:10px; background:#f8fafc; cursor:pointer; min-width:0;
+}
+.custom-source-option input { width:17px; height:17px; accent-color:#2563eb; flex:0 0 auto; }
+.custom-source-option span { display:flex; flex-direction:column; gap:3px; min-width:0; }
+.custom-source-option strong { font-size:.78rem; color:#1e293b; }
+.custom-source-option small { font-size:.68rem; color:#64748b; line-height:1.3; }
+.custom-source-option .source-info {
+  position:absolute; right:7px; top:7px; width:22px; height:22px; border:0; border-radius:50%;
+  background:#dbeafe; color:#1d4ed8; font-weight:800; cursor:pointer;
+}
+body.dark-mode .custom-source-option { background:#17283b !important; border-color:#40546a !important; }
+body.dark-mode .custom-source-option strong { color:#e5eef7 !important; }
+body.dark-mode .custom-source-option small { color:#a9b8c8 !important; }
+body.dark-mode .custom-source-option .source-info { background:#1e4563 !important; color:#bae6fd !important; }
+
+/* Palette trigger stays in the same horizontal row as filters */
+.review-filter-toolbar { flex-wrap:nowrap; }
+.review-filter-toolbar button { white-space:nowrap; }
+#reviewPalettePopup { position:relative; z-index:3; }
+
+/* Persistent app chrome: visible on normal tabs and never lost after tab navigation */
+nav#bottomNav {
+  position:fixed !important; left:0 !important; right:0 !important; bottom:0 !important;
+  width:100% !important; display:grid !important; visibility:visible; opacity:1;
+  z-index:1000 !important;
+}
+#mainSidebar { position:fixed !important; top:0 !important; bottom:0 !important; z-index:10001 !important; }
+#sidebarOverlay { position:fixed !important; inset:0 !important; z-index:10000 !important; }
+body.dark-mode nav#bottomNav { background:#17283b !important; border-top-color:#34465a !important; }
+body.dark-mode .nav-item { color:#a9b8c8 !important; }
+body.dark-mode .nav-item.active, body.dark-mode .nav-home-label { color:#7dd3fc !important; }
+
+/* Flashcard surface: images remain natural and empty state is explicit/readable */
+#flashcardCard { overflow:auto; }
+#flashcardContent { width:100%; min-height:220px; }
+#flashcardContent img { max-width:100%; height:auto; object-fit:contain; }
+body.dark-mode #flashcardsScreen,
+body.dark-mode #flashcardsScreen > div,
+body.dark-mode #flashcardCard { background:#1a293a !important; border-color:#40546a !important; color:#e5eef7 !important; }
+body.dark-mode #flashcardsScreen header,
+body.dark-mode #flashcardsScreen > div:nth-child(2) { background:#17283b !important; border-color:#34465a !important; }
+body.dark-mode #flashcardsScreen button { color:#e5eef7; }
+body.dark-mode #flashcardContent img { background:#f8fafc !important; filter:none !important; }
+@media (max-width:420px) {
+  .custom-source-panel { grid-template-columns:1fr !important; }
+  .test-series-attempt { align-items:stretch; }
+  .test-series-attempt-actions button { flex:1; }
+}
+
+/* Remaining full-screen modules and overlays */
+body.dark-mode #clinicalHubScreen,
+body.dark-mode #hubFeedView,
+body.dark-mode #hubReaderView,
+body.dark-mode #hubReaderContent,
+body.dark-mode #mistakeScreen,
+body.dark-mode #flashcardsScreen,
+body.dark-mode #activeTestScreen,
+body.dark-mode #resultScreen,
+body.dark-mode #reviewScreen {
+  background:#101b2a !important; color:#e5eef7 !important;
+}
+body.dark-mode #clinicalHubScreen header,
+body.dark-mode #clinicalHubScreen > header,
+body.dark-mode #hubReaderView > div,
+body.dark-mode #activeTestScreen .test-header,
+body.dark-mode #activeTestScreen .test-footer,
+body.dark-mode #resultScreen > div,
+body.dark-mode #reviewScreen > div:first-child,
+body.dark-mode #reviewScreen > div:last-child {
+  background:#1a293a !important; color:#e5eef7 !important; border-color:#34465a !important;
+}
+body.dark-mode #hubReaderContent,
+body.dark-mode #hubCategoryList,
+body.dark-mode #hubSearchResults { color:#dbe7f2 !important; }
+body.dark-mode #hubReaderContent h1,
+body.dark-mode #hubReaderContent h2,
+body.dark-mode #hubReaderContent h3,
+body.dark-mode #hubReaderContent strong { color:#f1f7fc !important; }
+body.dark-mode #hubReaderContent a { color:#7dd3fc !important; }
+body.dark-mode #instructionScreen { background:rgba(7,15,27,.97) !important; }
+body.dark-mode #instructionScreen > div,
+body.dark-mode #spProfileModal > div,
+body.dark-mode #favoritesModal > div,
+body.dark-mode #legalModal > div,
+body.dark-mode #blogModal > div,
+body.dark-mode #notesSrsModal > div,
+body.dark-mode #dailyReminderModal > div,
+body.dark-mode #yearSetupModal > div,
+body.dark-mode #signInWarningModal > div,
+body.dark-mode #weakSubjectModal > div,
+body.dark-mode #milestoneModal > div {
+  background:#1a293a !important; color:#e5eef7 !important; border-color:#40546a !important;
+}
+body.dark-mode #reviewScreen .review-card,
+body.dark-mode #reviewScreen .review-opts li {
+  background:#1a293a !important; border-color:#40546a !important; color:#e5eef7 !important;
+}
+body.dark-mode #reviewScreen .opt-correct,
+body.dark-mode #reviewScreen li[style*="#d4edda"] {
+  background:rgba(16,185,129,.16) !important; border-color:#10b981 !important; color:#a7f3d0 !important;
+}
+body.dark-mode #reviewScreen .opt-wrong,
+body.dark-mode #reviewScreen li[style*="#f8d7da"] {
+  background:rgba(239,68,68,.16) !important; border-color:#ef4444 !important; color:#fecaca !important;
+}
+body.dark-mode #reviewScreen .review-exp,
+body.dark-mode #revExplanation {
+  background:#172b43 !important; border-color:#3b82a0 !important; color:#dbeafe !important;
+}
+body.dark-mode #reviewPalettePopup {
+  background:#17283b !important; border-color:#40546a !important; color:#e5eef7 !important;
+}
+body.dark-mode #reviewPalettePopup strong { color:#f1f7fc !important; }
+body.dark-mode #favoritesListContainer { color:#e5eef7 !important; }
+body.dark-mode #favoritesListContainer > div,
+body.dark-mode #favoritesListContainer .subject-group,
+body.dark-mode #favoritesListContainer .subject-group > div {
+  background:#1a293a !important; border-color:#40546a !important; color:#e5eef7 !important;
+}
+body.dark-mode #favoritesListContainer p,
+body.dark-mode #favoritesListContainer span,
+body.dark-mode #favoritesListContainer li { color:#d4e0eb !important; }
+body.dark-mode #favoritesListContainer div[style*="#e2eef9"],
+body.dark-mode #favoritesListContainer div[style*="#e2eef9;"] {
+  background:#172b43 !important; color:#dbeafe !important; border-color:#3b82a0 !important;
+}
+body.dark-mode #loadingScreen { background:#101b2a !important; color:#e5eef7 !important; }
+body.dark-mode #loadingScreen p { color:#a9b8c8 !important; }
+body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
+
+</style>
+
 </head>
 <body>
 
@@ -1759,14 +2262,29 @@ body.dark-mode #reviewScreen strong {
 
 </div>
 
+                <!-- Additional question sources: up to 10% each -->
+                <div class="section-title" style="font-size: 0.9rem; margin: 16px 0 8px;">2. Add Question Sources</div>
+                <div class="custom-source-panel" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                    <label class="custom-source-option">
+                        <input type="checkbox" id="customIncludeWrong">
+                        <span><strong>⚠️ Wrong Questions</strong><small>Up to 10% from your Mistake Vault</small></span>
+                        <button type="button" class="source-info" aria-label="Wrong questions information" onclick="event.preventDefault(); alert('If selected, up to 10% of your custom test will be selected from your previously answered wrong questions, matching your selected subjects and topics.')">ⓘ</button>
+                    </label>
+                    <label class="custom-source-option">
+                        <input type="checkbox" id="customIncludeSaved">
+                        <span><strong>⭐ Saved Questions</strong><small>Up to 10% from your Bookmarks</small></span>
+                        <button type="button" class="source-info" aria-label="Saved questions information" onclick="event.preventDefault(); alert('If selected, up to 10% of your custom test will be selected from your saved/bookmarked questions, matching your selected subjects and topics.')">ⓘ</button>
+                    </label>
+                </div>
+
                 <!-- UPDATED: Year-Wise Subject Selection -->
-                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px; margin-top: 20px;">2. Select Subjects (By Year)</div>
+                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px; margin-top: 20px;">3. Select Subjects (By Year)</div>
                 <div class="syllabus-container" id="yearWiseSubjectList" style="margin-bottom: 20px;">
                     <!-- JS will inject Year 1, Year 2, Year 3, Year 4 folders here -->
                 </div>
 
                 <!-- Difficulty Level Selection -->
-                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">3. Select Difficulty Level</div>
+                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">4. Select Difficulty Level</div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px;">
                     <button type="button" class="btn btn-outline custom-diff-btn" data-level="Easy" onclick="selectCustomDifficulty('Easy', this)" style="padding: 10px 6px; font-size: 0.85rem;">🟢 Easy</button>
                     <button type="button" class="btn btn-primary custom-diff-btn" data-level="Moderate" onclick="selectCustomDifficulty('Moderate', this)" style="padding: 10px 6px; font-size: 0.85rem;">🟡 Mod</button>
@@ -1774,7 +2292,7 @@ body.dark-mode #reviewScreen strong {
                 </div>
 
                 <!-- Question Count Selection -->
-                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">4. Number of Questions</div>
+                <div class="section-title" style="font-size: 0.9rem; margin-bottom: 10px;">5. Number of Questions</div>
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 22px;">
                     <button type="button" class="btn btn-outline custom-count-btn" data-count="10" onclick="selectCustomCount(10, this)" style="padding: 10px 4px; font-size: 0.85rem;">10</button>
                     <button type="button" class="btn btn-primary custom-count-btn" data-count="20" onclick="selectCustomCount(20, this)" style="padding: 10px 4px; font-size: 0.85rem;">20</button>
@@ -2203,47 +2721,47 @@ body.dark-mode #reviewScreen strong {
             </div>
 
             <!-- Smart Filter Buttons Bar -->
-            <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;">
-                <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('ALL')">All</button>
+            <div class="review-filter-toolbar" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; align-items:center;">
+                <button type="button" class="btn btn-outline review-palette-trigger" style="padding: 6px 12px; font-size: 0.8rem; width: auto; flex:0 0 auto;" onclick="toggleReviewPalette()">☷ Palette</button>
+                <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; width: auto; flex:0 0 auto;" onclick="setReviewFilter('ALL')">All</button>
                 <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('CORRECT')">✅ Correct</button>
                 <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('INCORRECT')">❌ Incorrect</button>
                 <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('SKIPPED')">⏭️ Skipped</button>
                 <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; width: auto;" onclick="setReviewFilter('FLAGGED')">🚩 Flagged</button>
             </div>
         </div>
-                <!-- RESULT REVIEW QUESTION PALETTE -->
-        <div style="padding: 10px 15px; background: #f8fafc; border-bottom: 1px solid var(--border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <strong style="font-size: 0.85rem; color: var(--text-dark);">
-                    Question Navigator
-                </strong>
-                <span style="font-size: 0.72rem; color: var(--text-gray);">
-                    Tap any question
-                </span>
-            </div>
+     
+<!-- Palette popup: the trigger stays inline beside All / Correct / Incorrect / Skipped / Flagged -->
+    <div id="reviewPalettePopup"
+        style="display:none; margin:8px 15px 10px; padding:12px;
+        background:var(--bg-gray); border:1px solid var(--border);
+        border-radius:10px;">
 
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; font-size: 0.7rem;">
-                <span style="color: #15803d;">● Correct</span>
-                <span style="color: #dc2626;">● Incorrect</span>
-                <span style="color: #64748b;">● Skipped</span>
-            </div>
+        <div style="display:flex; justify-content:space-between;
+            align-items:center; margin-bottom:10px;">
 
-            <div id="reviewQuestionPalette"
-                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 7px; max-height: 110px; overflow-y: auto; padding: 2px;">
-            </div>
-        </div>
-        <!-- END RESULT REVIEW QUESTION PALETTE -->
+            <strong style="color:var(--text-dark);">
+                Question Navigator
+            </strong>
 
-        <div style="flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px;">
-            <div id="revQuestionText" style="font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;"></div>
-            <ul id="revOptionsContainer" style="list-style: none; padding: 0; margin-bottom: 25px;"></ul>
-            <div id="revExplanation" style="background: #e2eef9; padding: 15px; border-radius: 8px; font-size: 0.95rem; border-left: 4px solid var(--primary); line-height: 1.6;"></div>
+            <button type="button"
+                class="btn btn-outline"
+                style="width:auto; padding:4px 10px;"
+                onclick="toggleReviewPalette(false)">
+                ✕
+            </button>
+
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 15px 20px; border-top: 1px solid var(--border); background: white;">
-            <button id="revPrevBtn" class="btn btn-outline" onclick="prevReviewQuestion()" style="width: 48%;">← Previous</button>
-            <button id="revNextBtn" class="btn btn-primary" onclick="nextReviewQuestion()" style="width: 48%;">Next →</button>
+
+        <div id="reviewQuestionPalette"
+            style="display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(34px,1fr));
+            gap:7px; max-height:160px; overflow-y:auto;">
         </div>
+
     </div>
+<!-- END COMPACT REVIEW PALETTE -->
+
 
     <!-- Loading Screen -->
     <div id="loadingScreen" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -3251,7 +3769,7 @@ const qBank = [
                   let html = '';
                   for (let i = 0; i < Math.min(savedHistory.length, 5); i++) {
                       let t = savedHistory[i];
-                      let pct = Math.round((t.score / t.total) * 100);
+                      let pct = t.total > 0 ? Math.min(100, Math.round(((Number(t.correct) || 0) / Number(t.total)) * 100)) : 0;
                       let col = pct >= 70 ? '#10b981' : (pct >= 50 ? '#f59e0b' : '#ef4444');
                       html += `
                           <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding:8px 0; font-size:0.82rem;">
@@ -3259,7 +3777,7 @@ const qBank = [
                                   <div style="font-weight:700; color:var(--text-dark);">${t.name}</div>
                                   <div style="font-size:0.7rem; color:var(--text-gray);">${t.date}</div>
                               </div>
-                              <div style="font-weight:800; color:${col};">${t.score}/${t.total} (${pct}%)</div>
+                              <div style="font-weight:800; color:${col};">${Number(t.correct) || 0}/${Number(t.total) || 0} correct (${pct}% accuracy)</div>
                           </div>
                       `;
                   }
@@ -3369,13 +3887,13 @@ const qBank = [
               let savedHistory = JSON.parse(localStorage.getItem('medqTestHistory')) || [];
               if (savedHistory.length > 0) {
                   let latest = savedHistory[0];
-                  let pct = Math.round((latest.score / latest.total) * 100);
+                  let pct = latest.total > 0 ? Math.min(100, Math.round(((Number(latest.correct) || 0) / Number(latest.total)) * 100)) : 0;
                   let col = pct >= 70 ? '#10b981' : (pct >= 50 ? '#f59e0b' : '#ef4444');
                   recentExamBox.innerHTML = `
                       <div style="font-weight: 700; color: var(--text-dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${latest.name}</div>
                       <div style="display: flex; justify-content: space-between; align-items: center;">
                           <span>${latest.date}</span>
-                          <span style="font-weight: 800; color: ${col};">${latest.score}/${latest.total} (${pct}%)</span>
+                          <span style="font-weight: 800; color: ${col};">${Number(latest.correct) || 0}/${Number(latest.total) || 0} correct (${pct}%)</span>
                       </div>
                   `;
               }
@@ -3564,22 +4082,23 @@ const qBank = [
                       histHtml = `<div style="text-align:center; padding:15px; color:var(--text-gray);">No ${window.currentHistoryFilter} tests found.</div>`;
                   } else {
                       filteredHistory.forEach((t) => {
-                          let pct = Math.round((t.score / t.total) * 100);
+                          let pct = t.total > 0 ? Math.min(100, Math.round(((Number(t.correct) || 0) / Number(t.total)) * 100)) : 0;
                           let col = pct >= 70 ? '#10b981' : (pct >= 50 ? '#f59e0b' : '#ef4444');
                           let bgCol = pct >= 70 ? '#ecfdf5' : (pct >= 50 ? '#fffbeb' : '#fef2f2');
 
                           histHtml += `
-                              <div style="border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 12px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                              <div style="border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 12px; background: var(--bg-gray); box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
                                   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
                                       <div style="flex: 1;">
                                           <div style="font-weight: 800; color: var(--text-dark); font-size: 0.9rem;">${t.name}</div>
                                           <div style="display: flex; align-items: center; gap: 6px; margin-top: 4px;">
-                                              <span style="font-size: 0.72rem; font-weight: 700; background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 12px;">📅 ${t.date}</span>
+                                              <span style="font-size: 0.72rem; font-weight: 700; background: var(--primary-light); color: var(--text-dark); padding: 2px 8px; border-radius: 12px;">📅 ${t.date}</span>
                                           </div>
                                       </div>
                                       <div style="text-align: right; background: ${bgCol}; padding: 4px 10px; border-radius: 8px; border: 1px solid ${col};">
-                                          <div style="font-weight: 900; color: ${col}; font-size: 1.1rem;">${t.score} <span style="font-size:0.75rem; color:#666;">/ ${t.maxScore || t.total}</span></div>
-                                          <div style="font-size: 0.7rem; font-weight: bold; color: ${col};">${pct}% Acc</div>
+                                          <div style="font-weight: 900; color: ${col}; font-size: 1.1rem;">${Number(t.correct) || 0} <span style="font-size:0.75rem; color:var(--text-gray);">/ ${Number(t.total) || 0} correct</span></div>
+                                          <div style="font-size: 0.7rem; font-weight: bold; color: ${col};">${pct}% Accuracy</div>
+                                          <div style="font-size:0.66rem; color:var(--text-gray); margin-top:2px;">Score: ${Number(t.score) || 0} / ${Number(t.maxScore) || 0}</div>
                                       </div>
                                   </div>
                                   <div style="display: flex; gap: 8px;">
@@ -4314,7 +4833,7 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
           if (scoreElem) {
               let scorePct = maxMarks > 0 ? Math.round((totalMarks / maxMarks) * 100) : 0;
               scoreElem.innerHTML = `
-                  <h3 style="font-size: 2rem; color: ${scorePct >= 70 ? '#28a745' : (scorePct >= 50 ? '#f59e0b' : '#dc3545')}; margin: 0;">${totalMarks} <span style="font-size: 1.2rem; color:#666;">/ ${maxMarks}</span></h3>
+                  <h3 style="font-size: 2rem; color: ${scorePct >= 70 ? '#28a745' : (scorePct >= 50 ? '#f59e0b' : '#dc3545')}; margin: 0;">${totalMarks} <span style="font-size: 1.2rem; color:var(--text-gray);">/ ${maxMarks}</span></h3>
                   <div style="background: #f8f9fa; display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; color: var(--primary); margin-top: 8px;">${patternName}</div>
                   
                   <div style="font-size: 0.9rem; color: #475569; font-weight: 700; margin-top: 10px; background: #f1f5f9; padding: 6px; border-radius: 8px; display: inline-block;">
@@ -4339,9 +4858,13 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
               id: 'hist_' + Date.now(),
               date: todayStr, 
               name: activeTestState.testName, 
+              seedId: activeTestState.seedId || null,
               score: totalMarks, 
               maxScore: maxMarks, 
-              correct: correct, 
+              correct: correct,
+              wrong: wrong,
+              skipped: skipped,
+              accuracy: totalQ > 0 ? Math.min(100, Math.round((correct / totalQ) * 100)) : 0,
               total: totalQ,
               type: testType,
               questions: activeTestState.questions, // রিভিউ করার জন্য সেভ
@@ -4426,6 +4949,34 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
           });
       }
 
+
+function toggleReviewPalette(forceState) {
+    const popup = document.getElementById('reviewPalettePopup');
+    if (!popup) return;
+
+    const shouldOpen = typeof forceState === 'boolean'
+        ? forceState
+        : popup.style.display === 'none';
+
+    popup.style.display = shouldOpen ? 'block' : 'none';
+}
+
+document.addEventListener('click', function(event) {
+    const popup = document.getElementById('reviewPalettePopup');
+    if (!popup || popup.style.display === 'none') return;
+
+    const clickedInside = popup.contains(event.target);
+    const clickedButton = event.target.closest(
+        'button[onclick*="toggleReviewPalette"]'
+    );
+
+    if (!clickedInside && !clickedButton) {
+        popup.style.display = 'none';
+    }
+});
+
+
+
 function renderReviewPalette() {
     const palette = document.getElementById('reviewQuestionPalette');
     if (!palette || !activeTestState || !activeTestState.questions) return;
@@ -4493,6 +5044,7 @@ function jumpToReviewQuestion(questionIndex) {
 
     renderReviewQuestion();
     renderReviewPalette();
+    toggleReviewPalette(false);
 }
 
       function renderReviewQuestion() {
@@ -4703,53 +5255,82 @@ let selectedTopics = Array.from(checkedSubtopics).map(function(cb) {
               pyqQuestions = [];
           }
 
-          // Shuffle both pools
-          regularQuestions.sort(function() {
-              return Math.random() - 0.5;
+          // Shuffle pools before selecting questions.
+          regularQuestions.sort(function() { return Math.random() - 0.5; });
+          pyqQuestions.sort(function() { return Math.random() - 0.5; });
+
+          const includeWrong = !!document.getElementById('customIncludeWrong')?.checked;
+          const includeSaved = !!document.getElementById('customIncludeSaved')?.checked;
+          const eligiblePool = regularQuestions.concat(pyqQuestions);
+          const selectedSpecialQuestions = [];
+          const selectedIds = new Set();
+
+          function addUniqueQuestions(pool, quota) {
+              const candidates = pool.filter(function(q) {
+                  const key = String(q.id ?? q.q ?? '');
+                  return key && !selectedIds.has(key);
+              }).sort(function() { return Math.random() - 0.5; });
+              const picked = candidates.slice(0, Math.max(0, quota));
+              picked.forEach(function(q) {
+                  selectedSpecialQuestions.push(q);
+                  selectedIds.add(String(q.id ?? q.q ?? ''));
+              });
+          }
+
+          // Special sources are restricted to the already selected subjects/topics,
+          // difficulty and PYQ source. Each selected source contributes up to 10%.
+          const specialQuota = Math.floor(selectedCustomQCount * 0.10);
+          if (includeWrong && specialQuota > 0) {
+              let mistakeLog = [];
+              try { mistakeLog = JSON.parse(localStorage.getItem('medqMistakeLog') || '[]'); } catch(e) {}
+              const wrongKeys = new Set(mistakeLog.map(function(q) {
+                  return String(q && (q.id ?? q.q) || '');
+              }).filter(Boolean));
+              const wrongPool = eligiblePool.filter(function(q) {
+                  return wrongKeys.has(String(q.id ?? q.q ?? ''));
+              });
+              addUniqueQuestions(wrongPool, specialQuota);
+          }
+
+          if (includeSaved && specialQuota > 0) {
+              let favoriteIds = [];
+              try { favoriteIds = JSON.parse(localStorage.getItem('medqFavorites') || '[]'); } catch(e) {}
+              const savedKeys = new Set((Array.isArray(favoriteIds) ? favoriteIds : []).map(String));
+              const savedPool = eligiblePool.filter(function(q) {
+                  return savedKeys.has(String(q.id ?? ''));
+              });
+              addUniqueQuestions(savedPool, specialQuota);
+          }
+
+          let finalCustomQs = selectedSpecialQuestions.slice();
+          const remainingCount = Math.max(0, selectedCustomQCount - finalCustomQs.length);
+          const remainingPool = eligiblePool.filter(function(q) {
+              return !selectedIds.has(String(q.id ?? q.q ?? ''));
           });
+          const remainingPYQs = remainingPool.filter(isPYQQuestion);
+          const remainingRegular = remainingPool.filter(function(q) { return !isPYQQuestion(q); });
 
-          pyqQuestions.sort(function() {
-              return Math.random() - 0.5;
-          });
+          // Keep the original maximum 18% PYQ share, counting any special-source
+          // PYQs already selected toward that limit.
+          const alreadySelectedPYQs = finalCustomQs.filter(isPYQQuestion).length;
+          const totalPyqCap = Math.round(selectedCustomQCount * 0.18);
+          const pyqSlots = Math.max(0, totalPyqCap - alreadySelectedPYQs);
+          const pickedPYQs = remainingPYQs.slice(0, Math.min(remainingCount, pyqSlots));
+          const pickedRegular = remainingRegular.slice(0, remainingCount - pickedPYQs.length);
+          finalCustomQs = finalCustomQs.concat(pickedPYQs, pickedRegular);
 
-          let finalCustomQs = [];
-
-          if (pyqMode === 'NONE') {
-
-              // Only normal Question Bank questions
-              finalCustomQs = regularQuestions.slice(0, selectedCustomQCount);
-
-          } else {
-
-              // Preserve the existing maximum 18% PYQ allocation
-              let maxPyqCount = Math.max(
-                  1,
-                  Math.round(selectedCustomQCount * 0.18)
+          // If the regular pool is short, fill remaining places from eligible PYQs
+          // without duplicating a question or exceeding the requested test size.
+          if (finalCustomQs.length < selectedCustomQCount) {
+              const alreadyInTest = new Set(finalCustomQs.map(function(q) {
+                  return String(q.id ?? q.q ?? '');
+              }));
+              const fallback = eligiblePool.filter(function(q) {
+                  return !alreadyInTest.has(String(q.id ?? q.q ?? ''));
+              }).sort(function() { return Math.random() - 0.5; });
+              finalCustomQs = finalCustomQs.concat(
+                  fallback.slice(0, selectedCustomQCount - finalCustomQs.length)
               );
-
-              let pickedPYQs = pyqQuestions.slice(0, maxPyqCount);
-
-              let neededRegular = selectedCustomQCount - pickedPYQs.length;
-
-              let pickedRegular = regularQuestions.slice(0, neededRegular);
-
-              finalCustomQs = pickedPYQs.concat(pickedRegular);
-
-              // If normal questions are insufficient,
-              // use additional PYQs from the selected source only
-              if (finalCustomQs.length < selectedCustomQCount) {
-
-                  let remainingPYQs = pyqQuestions.filter(function(q) {
-                      return !pickedPYQs.includes(q);
-                  });
-
-                  finalCustomQs = finalCustomQs.concat(
-                      remainingPYQs.slice(
-                          0,
-                          selectedCustomQCount - finalCustomQs.length
-                      )
-                  );
-              }
           }
 
           // Stop if no eligible question exists
@@ -4779,7 +5360,11 @@ let selectedTopics = Array.from(checkedSubtopics).map(function(cb) {
     BOTH: "Both PYQs"
 }[pyqMode] || "No PYQs";
 
-const customTitle = `Custom Mock (${patternName} • ${pyqSourceLabel} • ${finalCustomQs.length} Qs)`;
+const sourceLabels = [];
+          if (includeWrong) sourceLabels.push('Wrong up to 10%');
+          if (includeSaved) sourceLabels.push('Saved up to 10%');
+          const sourceSuffix = sourceLabels.length ? ' • ' + sourceLabels.join(' + ') : '';
+          const customTitle = `Custom Mock (${patternName} • ${pyqSourceLabel}${sourceSuffix} • ${finalCustomQs.length} Qs)`;
           
           pendingTestParams = {
               seedId: 'custom_' + Date.now(),
@@ -5157,6 +5742,38 @@ for (let i = 1; i <= totalMocks; i++) {
           
           html += subjectMocksHtml + `</div>`;
           container.innerHTML = html;
+
+          // Attach the latest saved attempt to each matching Test Series paper.
+          let historyItems = [];
+          try { historyItems = JSON.parse(localStorage.getItem('medqTestHistory') || '[]'); } catch(e) {}
+          const testButtons = container.querySelectorAll('button[onclick*="startStandardTest"]');
+          testButtons.forEach(function(button) {
+              const onclickText = button.getAttribute('onclick') || '';
+              const match = onclickText.match(/startStandardTest\s*\(\s*['"]([^'"]+)['"]/);
+              if (!match) return;
+              const seed = match[1];
+              const attempt = historyItems.find(function(item) {
+                  return item.seedId === seed && Array.isArray(item.questions);
+              });
+              if (!attempt) return;
+
+              const accuracy = attempt.total > 0
+                  ? Math.min(100, Math.round(((Number(attempt.correct) || 0) / Number(attempt.total)) * 100))
+                  : 0;
+              const summary = document.createElement('div');
+              summary.className = 'test-series-attempt';
+              summary.innerHTML = `
+                  <div class="test-series-attempt-info">
+                      <strong>Last attempt</strong>
+                      <span>${Number(attempt.correct) || 0}/${Number(attempt.total) || 0} correct · ${accuracy}% accuracy</span>
+                      <small>Score: ${Number(attempt.score) || 0}/${Number(attempt.maxScore) || 0} · ${attempt.date || ''}</small>
+                  </div>
+                  <div class="test-series-attempt-actions">
+                      <button type="button" onclick="loadSavedReview('${attempt.id}')">Review Result</button>
+                      <button type="button" onclick="retestSavedExam('${attempt.id}')">Retest</button>
+                  </div>`;
+              button.insertAdjacentElement('afterend', summary);
+          });
       }
 
 
@@ -5349,7 +5966,8 @@ sectionIndex: 0,
 sectionCount: customSectionCount,
 sectionTimeLeft: useIniSections ? 45 * 60 : totalDuration,
 totalDurationSeconds: totalDuration,
-totalTimeLeft: totalDuration
+totalTimeLeft: totalDuration,
+seedId: seedId,
         };
 
         document.getElementById('activeTestTitle').innerText = testName;
@@ -5576,7 +6194,8 @@ totalTimeLeft: totalDuration
         sectionTimeLeft: iniSectionMode ? 45 * 60 : totalDuration,
 
         totalDurationSeconds: totalDuration,
-        totalTimeLeft: totalDuration
+        totalTimeLeft: totalDuration,
+        seedId: seedId
     };
 
     document.getElementById('activeTestTitle').innerText = testName;
@@ -7027,7 +7646,7 @@ var topicsForSub = availableTopics.length
           let html = '';
           for(var i = 0; i < savedHistory.length; i++) {
               var test = savedHistory[i];
-              let pct = Math.round((test.score / test.total) * 100);
+              let pct = test.total > 0 ? Math.min(100, Math.round(((Number(test.correct) || 0) / Number(test.total)) * 100)) : 0;
               let color = pct >= 70 ? '#10b981' : (pct >= 50 ? '#f59e0b' : '#ef4444');
               html += `
                   <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding: 8px 0;">
@@ -7036,7 +7655,7 @@ var topicsForSub = availableTopics.length
                           <div style="font-size: 0.75rem; color: #666;">${test.date}</div>
                       </div>
                       <div style="font-weight: bold; color: ${color};">
-                          ${test.score}/${test.total} (${pct}%)
+                          ${Number(test.correct) || 0}/${Number(test.total) || 0} correct (${pct}% accuracy)
                       </div>
                   </div>
               `;
@@ -7301,57 +7920,116 @@ var topicsForSub = availableTopics.length
           closeNotesSrsModal();
       };
 
-          // ================= 🌟 SMART TEST HISTORY ACTIONS (UPDATED) =================
-      window.filterTestHistory = function(type) {
-          if (typeof playUISound === 'function') playUISound('tap');
-          window.currentHistoryFilter = type;
-          if (typeof renderInsightsHub === 'function') renderInsightsHub();
-      };
+ 
+// ================= MEDQ TEST HISTORY ACTIONS - FIXED =================
 
-      window.loadSavedReview = function(historyId) {
-          if (typeof playUISound === 'function') playUISound('btn');
-          let savedHistory = JSON.parse(localStorage.getItem('medqTestHistory')) || [];
-          let tData = savedHistory.find(h => h.id === historyId);
-          if (!tData || !tData.questions) {
-              alert("Sorry, detailed data for this older test is not available.");
-              return;
-          }
-          
-          activeTestState = { questions: tData.questions, answers: tData.answers, testName: tData.name, flags: {} };
-          hideAllActiveScreens();
-          
-          let scorePct = tData.maxScore > 0 ? Math.round((tData.score / tData.maxScore) * 100) : 0;
-          let correct = tData.correct || 0;
-          let totalQ = tData.total || tData.questions.length;
-          let wrong = 0, skipped = 0;
-          tData.answers.forEach(a => { if (a === null) skipped++; else wrong++; });
-          wrong = wrong - correct;
+window.filterTestHistory = function(type) {
+    if (typeof playUISound === 'function') playUISound('tap');
 
-          const scoreElem = document.getElementById('scoreDisplay');
-          if (scoreElem) {
-              scoreElem.innerHTML = `
-                  <h3 style="color:var(--primary); margin: 0 0 10px 0;">${tData.name}</h3>
-                  <h3 style="font-size: 2rem; color: ${scorePct >= 70 ? '#28a745' : (scorePct >= 50 ? '#f59e0b' : '#dc3545')}; margin: 0;">${tData.score} <span style="font-size: 1.2rem; color:#666;">/ ${tData.maxScore}</span></h3>
-                  <p style="font-weight: 600; margin: 12px 0 0 0; color: #555; font-size: 0.95rem;">✅ Correct: <span style="color:#28a745">${correct}</span> | ❌ Wrong: <span style="color:#dc3545">${wrong}</span> | ⏭️ Skipped: <span style="color:#888">${skipped}</span></p>
-                  <p style="font-weight: bold; color: var(--text-dark); margin-top: 6px;">Accuracy: ${scorePct}%</p>
-              `;
-          }
-          
-          document.getElementById('resultScreen').classList.remove('hidden');
-          document.getElementById('resultScreen').style.display = 'block';
-      };
+    window.currentHistoryFilter = type;
 
-      window.retestSavedExam = function(historyId) {
-          if (typeof playUISound === 'function') playUISound('btn');
-          let savedHistory = JSON.parse(localStorage.getItem('medqTestHistory')) || [];
-          let tData = savedHistory.find(h => h.id === historyId);
-          if (!tData || !tData.questions) { alert("Sorry, detailed data for this older test is not available."); return; }
+    if (typeof renderInsightsHub === 'function') {
+        renderInsightsHub();
+    }
+};
 
-          if (confirm("Do you want to re-take this exact exam (" + tData.name + ")?")) {
-              pendingTestParams = { seedId: 'retest_' + Date.now(), testName: tData.name + " (Retest)", subjectFilter: null, maxQs: tData.questions.length, customPool: tData.questions, examPattern: tData.pattern || 'NEET_PG' };
-              proceedToActualTest();
-          }
-      };
+window.loadSavedReview = function(historyId) {
+    if (typeof playUISound === 'function') playUISound('btn');
+
+    const savedHistory =
+        JSON.parse(localStorage.getItem('medqTestHistory')) || [];
+
+    const tData = savedHistory.find(function(item) {
+        return item.id === historyId;
+    });
+
+    if (!tData || !Array.isArray(tData.questions)) {
+        alert("Detailed review is not available for this attempt.");
+        return;
+    }
+
+    activeTestState = {
+        questions: tData.questions,
+        answers: Array.isArray(tData.answers)
+            ? tData.answers
+            : new Array(tData.questions.length).fill(null),
+        testName: tData.name,
+        examPattern: tData.pattern || 'NEET_PG',
+        flags: {},
+        visited: {}
+    };
+
+    filteredQuestionIndices = [];
+    currentReviewQ = 0;
+    currentFilter = 'ALL';
+
+    hideAllActiveScreens();
+
+    const scoreElem = document.getElementById('scoreDisplay');
+
+    if (scoreElem) {
+        const pct = tData.total > 0
+            ? Math.min(100, Math.round(((Number(tData.correct) || 0) / Number(tData.total)) * 100))
+            : 0;
+
+        scoreElem.innerHTML = `
+            <h3 style="color:var(--primary); margin:0 0 8px;">
+                ${tData.name}
+            </h3>
+            <p style="color:var(--text-gray); margin:0;">
+                Previous Attempt • ${tData.date}
+            </p>
+            <h2 style="color:var(--text-dark); margin-top:8px;">
+                ${Number(tData.correct) || 0} / ${Number(tData.total) || 0} Correct
+                (${pct}% Accuracy)
+                <div style="font-size:0.82rem; color:var(--text-gray); margin-top:4px;">Score: ${Number(tData.score) || 0} / ${Number(tData.maxScore) || 0}</div>
+            </h2>
+        `;
+    }
+
+    startReviewMode();
+};
+
+window.retestSavedExam = function(historyId) {
+    if (typeof playUISound === 'function') playUISound('btn');
+
+    const savedHistory =
+        JSON.parse(localStorage.getItem('medqTestHistory')) || [];
+
+    const tData = savedHistory.find(function(item) {
+        return item.id === historyId;
+    });
+
+    if (!tData || !Array.isArray(tData.questions)) {
+        alert("The saved questions for this test are unavailable.");
+        return;
+    }
+
+    if (!confirm(
+        "Retake this exact question paper?\n\n" + tData.name
+    )) {
+        return;
+    }
+
+    const retestPattern = tData.pattern || 'NEET_PG';
+    const patternSelect = document.getElementById('instExamPattern');
+    if (patternSelect) {
+        patternSelect.value = retestPattern;
+        patternSelect.disabled = false;
+    }
+
+    pendingTestParams = {
+        seedId: tData.seedId || ('retest_' + Date.now()),
+        testName: tData.name + ' (Retest)',
+        subjectFilter: null,
+        maxQs: tData.questions.length,
+        customPool: tData.questions,
+        examPattern: retestPattern
+    };
+
+    proceedToActualTest();
+};
+
 
       // ================= ⭐ BOOKMARKS & ⚠️ MISTAKES DRILL (Updated with Selection) =================
       window.startSpecialDrill = function(drillType) {
@@ -7465,11 +8143,17 @@ function getSavedFlashcardIds() {
 }
 
 function getAllFlashcards() {
-    return Array.isArray(window.MEDQ_FLASHCARDS)
-        ? window.MEDQ_FLASHCARDS.filter(function(card) {
-            return card && card.id !== undefined && typeof card.img === 'string' && card.img.trim();
-        })
-        : [];
+    const source = Array.isArray(window.MEDQ_FLASHCARDS) ? window.MEDQ_FLASHCARDS : [];
+    return source.map(function(card) {
+        if (!card || card.id === undefined) return null;
+        const imagePath = card.img || card.image || card.imagePath || card.src || card.image_url;
+        if (typeof imagePath !== 'string' || !imagePath.trim()) return null;
+        return Object.assign({}, card, {
+            img: imagePath.trim(),
+            subject: card.subject || 'Uncategorized',
+            topic: card.topic || 'General'
+        });
+    }).filter(Boolean);
 }
 
 function openFlashcards() {
@@ -7483,6 +8167,8 @@ function openFlashcards() {
 
     const cards = getAllFlashcards();
     const subjectSelect = document.getElementById('flashcardSubjectFilter');
+    const savedOnlyInput = document.getElementById('flashcardSavedOnly');
+    if (!subjectSelect || !savedOnlyInput) return;
 
     subjectSelect.innerHTML = '<option value="ALL">All Subjects</option>';
 
@@ -7495,7 +8181,7 @@ function openFlashcards() {
             subjectSelect.appendChild(option);
         });
 
-    document.getElementById('flashcardSavedOnly').checked = false;
+    savedOnlyInput.checked = false;
     updateFlashcardTopicOptions();
     applyFlashcardFilters();
 }
@@ -7511,8 +8197,10 @@ function closeFlashcards() {
 }
 
 function updateFlashcardTopicOptions() {
-    const subject = document.getElementById('flashcardSubjectFilter').value;
+    const subjectSelect = document.getElementById('flashcardSubjectFilter');
     const topicSelect = document.getElementById('flashcardTopicFilter');
+    if (!subjectSelect || !topicSelect) return;
+    const subject = subjectSelect.value;
     const previousTopic = topicSelect.value;
 
     const topics = [...new Set(
@@ -7535,9 +8223,13 @@ function updateFlashcardTopicOptions() {
 }
 
 function applyFlashcardFilters() {
-    const selectedSubject = document.getElementById('flashcardSubjectFilter').value;
-    const selectedTopic = document.getElementById('flashcardTopicFilter').value;
-    const savedOnly = document.getElementById('flashcardSavedOnly').checked;
+    const subjectSelect = document.getElementById('flashcardSubjectFilter');
+    const topicSelect = document.getElementById('flashcardTopicFilter');
+    const savedOnlyInput = document.getElementById('flashcardSavedOnly');
+    if (!subjectSelect || !topicSelect || !savedOnlyInput) return;
+    const selectedSubject = subjectSelect.value;
+    const selectedTopic = topicSelect.value;
+    const savedOnly = savedOnlyInput.checked;
     const savedIds = getSavedFlashcardIds();
 
     flashcardVisibleCards = getAllFlashcards().filter(function(card) {
@@ -7628,7 +8320,8 @@ function toggleFlashcardSaved() {
 
     localStorage.setItem('medqSavedFlashcards', JSON.stringify(saved));
     renderFlashcard();
-    if (document.getElementById('flashcardSavedOnly').checked) applyFlashcardFilters();
+    const savedOnlyInput = document.getElementById('flashcardSavedOnly');
+    if (savedOnlyInput && savedOnlyInput.checked) applyFlashcardFilters();
 }
 
 // ================= END IMAGE-ONLY FLASHCARDS =================
@@ -7645,11 +8338,32 @@ function toggleFlashcardSaved() {
       };
 
       // মডাল ম্যানুয়ালি বন্ধ করলে স্ট্যাক ক্লিয়ার করার জন্য
-      window.popAppHistory = function(screenId) {
-          if (appHistoryStack.length > 0 && appHistoryStack[appHistoryStack.length - 1] === screenId) {
-              appHistoryStack.pop();
-          }
-      };
+      
+window.popAppHistory = function(screenId) {
+
+    if (
+        appHistoryStack.length > 0 &&
+        appHistoryStack[appHistoryStack.length - 1] === screenId
+    ) {
+        appHistoryStack.pop();
+    }
+
+    // Remove stale modal hash without adding another history entry
+    const currentHash = window.location.hash.replace('#', '');
+
+    if (currentHash === screenId) {
+        const cleanUrl =
+            window.location.pathname +
+            window.location.search;
+
+        history.replaceState(
+            history.state,
+            '',
+            cleanUrl
+        );
+    }
+};
+
 
       // ফোনের ব্যাক বাটন চাপলে এই ইভেন্টটি ফায়ার হবে
       window.addEventListener('popstate', function(event) {
@@ -7767,5 +8481,68 @@ function toggleFlashcardSaved() {
         </div>
         <div style="color: #cbd5e1; font-size: 0.8rem; margin-top: 10px;">Use buttons to zoom in/out • Tap ✕ to close</div>
     </div>
+
+<script id="medq-final-runtime-fixes">
+(function () {
+  'use strict';
+
+  function ensureAppChrome() {
+    const nav = document.getElementById('bottomNav');
+    const sidebar = document.getElementById('mainSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (nav) {
+      nav.style.display = 'grid';
+      nav.style.visibility = 'visible';
+      nav.style.opacity = '1';
+    }
+    if (sidebar) {
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = '0';
+      sidebar.style.bottom = '0';
+    }
+    if (overlay) {
+      overlay.style.position = 'fixed';
+      overlay.style.inset = '0';
+    }
+  }
+
+  const originalSwitchTab = window.switchTab;
+  if (typeof originalSwitchTab === 'function') {
+    window.switchTab = function () {
+      const result = originalSwitchTab.apply(this, arguments);
+      ensureAppChrome();
+      requestAnimationFrame(ensureAppChrome);
+      return result;
+    };
+  }
+
+  const originalToggleSidebar = window.toggleSidebar;
+  if (typeof originalToggleSidebar === 'function') {
+    window.toggleSidebar = function () {
+      const result = originalToggleSidebar.apply(this, arguments);
+      ensureAppChrome();
+      return result;
+    };
+  }
+
+  window.addEventListener('pageshow', ensureAppChrome);
+  window.addEventListener('focus', ensureAppChrome);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) ensureAppChrome();
+  });
+  ensureAppChrome();
+
+  // Make image flashcards tolerate the supported image-path field variants.
+  // The actual card content remains supplied by data/flashcards.js.
+  const originalOpenFlashcards = window.openFlashcards;
+  if (typeof originalOpenFlashcards === 'function') {
+    window.openFlashcards = function () {
+      ensureAppChrome();
+      return originalOpenFlashcards.apply(this, arguments);
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
