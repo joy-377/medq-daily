@@ -1,6 +1,4 @@
-// data/blog-data.js
-
-export const blogArticles = [
+window.MEDQ_BLOG_DATA = [
           { 
               id: 101, category: "Clinical Tips", subject: "General Tips", theme: "amber",
               title: "The 'Don't Miss' Diagnoses in ER (Red Flags)", 
