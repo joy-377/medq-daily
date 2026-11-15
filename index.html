@@ -2811,6 +2811,25 @@ body.dark-mode #bottomNav .nav-item svg { fill:currentColor !important; }
     </div>
 <!-- END COMPACT REVIEW PALETTE -->
 
+    <!-- Detailed Review Question Area (required by the review renderer) -->
+    <div class="review-body" style="flex:1; min-height:0; overflow-y:auto; padding:16px 15px 24px;">
+        <div class="review-card" style="max-width:900px; margin:0 auto;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px;">
+                <div id="revQuestionText" class="review-q" style="flex:1;">Question will appear here.</div>
+                <button id="revShareBtn" type="button" class="btn btn-outline" style="width:auto; padding:7px 10px;" title="Share question">📤</button>
+            </div>
+            <ul id="revOptionsContainer" class="review-opts"></ul>
+            <div id="revExplanation" class="review-exp"></div>
+        </div>
+    </div>
+    <div class="test-footer" style="display:flex; gap:10px; align-items:center; padding:12px 15px; border-top:1px solid var(--border); background:white;">
+        <button id="revPrevBtn" type="button" class="btn btn-outline btn-small" onclick="prevReviewQuestion()">← Previous</button>
+        <button type="button" class="btn btn-outline btn-small" onclick="exitReviewMode()">Close Review</button>
+        <button id="revNextBtn" type="button" class="btn btn-primary btn-small" onclick="nextReviewQuestion()">Next →</button>
+    </div>
+</div>
+<!-- END REVIEW SCREEN -->
+
 
     <!-- Loading Screen -->
     <div id="loadingScreen" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -4478,7 +4497,7 @@ function finishDailyTimingSummary() {
         return answer !== null && answer !== undefined;
     }).length;
     const correctCount = dailyAnswers.reduce(function(total, answer, index) {
-        return total + (answer === dailyQuestions[index].ans ? 1 : 0);
+        return total + (answer === normalizeMedQAnswer(dailyQuestions[index], dailyQuestions[index].ans) ? 1 : 0);
     }, 0);
     const accuracy = answeredCount > 0
         ? Math.round((correctCount / answeredCount) * 100)
@@ -4869,6 +4888,18 @@ dailyQuestionElapsed = new Array(dailyQuestions.length).fill(0);
 let filteredQuestionIndices = [];
 
       function submitTest() {
+          if (!activeTestState || !Array.isArray(activeTestState.questions) || activeTestState.questions.length === 0) {
+              alert('No active test is available to submit.');
+              return;
+          }
+          if (activeTestState._submitted) return;
+          activeTestState._submitted = true;
+          activeTestState.answers = Array.isArray(activeTestState.answers)
+              ? activeTestState.answers.slice(0, activeTestState.questions.length)
+              : [];
+          while (activeTestState.answers.length < activeTestState.questions.length) {
+              activeTestState.answers.push(null);
+          }
           playUISound('btn');
           if (activeTestState.timer) { clearInterval(activeTestState.timer); activeTestState.timer = null; }
           localStorage.removeItem('medqActiveTestBackup');
@@ -4897,7 +4928,7 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
               let userAns = activeTestState.answers[idx];
               if (userAns === null || userAns === undefined) { 
                   skipped++; 
-              } else if (userAns === q.ans) { 
+              } else if (normalizeMedQAnswer(q, userAns) === normalizeMedQAnswer(q, q.ans)) { 
                   correct++; 
                   recordQuestionAttempt(true, q, userAns); 
                   recordSubjectAttempt(q.subject, true, avgQTime); 
@@ -4961,7 +4992,7 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
                     // 💡 ৬. টেস্ট হিস্ট্রি সংরক্ষণ (আপডেটেড: ১০০টি পর্যন্ত টেস্ট সেভ থাকবে)
           let savedHistory = JSON.parse(localStorage.getItem('medqTestHistory')) || [];
           let todayStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-          let testType = activeTestState.testName.toLowerCase().includes('custom') ? 'custom' : 'mock';
+          let testType = String(activeTestState.testName || '').toLowerCase().includes('custom') ? 'custom' : 'mock';
           
           let newHistoryItem = { 
               id: 'hist_' + Date.now(),
@@ -4987,9 +5018,22 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
 
 
           if (auth && auth.currentUser) { syncDataToCloud(auth.currentUser.uid); }
-          document.getElementById('activeTestScreen').classList.add('hidden');
-          document.getElementById('resultScreen').classList.remove('hidden');
-          document.getElementById('resultScreen').scrollTop = 0;
+          const activeScreenEl = document.getElementById('activeTestScreen');
+          const resultScreenEl = document.getElementById('resultScreen');
+          const reviewScreenEl = document.getElementById('reviewScreen');
+          if (activeScreenEl) {
+              activeScreenEl.classList.add('hidden');
+              activeScreenEl.style.display = 'none';
+          }
+          if (reviewScreenEl) {
+              reviewScreenEl.classList.add('hidden');
+              reviewScreenEl.style.display = 'none';
+          }
+          if (resultScreenEl) {
+              resultScreenEl.classList.remove('hidden');
+              resultScreenEl.style.display = 'block';
+              resultScreenEl.scrollTop = 0;
+          }
 
           // ================= SMART POP-UP QUEUE: Post-Test =================
           setTimeout(function() {
@@ -5047,7 +5091,7 @@ let timeTakenSecs = Math.max(0, maxTime - timeLeft);
           filteredQuestionIndices = [];
           activeTestState.questions.forEach(function(q, idx) {
               let userAns = activeTestState.answers[idx];
-              let isCorrect = (userAns === q.ans);
+              let isCorrect = (normalizeMedQAnswer(q, userAns) === normalizeMedQAnswer(q, q.ans));
               let isSkipped = (userAns === null || userAns === undefined);
               let isFlagged = activeTestState.flags[idx] === true;
               if (currentFilter === 'ALL') { filteredQuestionIndices.push(idx); } 
@@ -5096,7 +5140,7 @@ function renderReviewPalette() {
         const userAns = activeTestState.answers[idx];
 
         const isSkipped = userAns === null || userAns === undefined;
-        const isCorrect = !isSkipped && userAns === q.ans;
+        const isCorrect = !isSkipped && normalizeMedQAnswer(q, userAns) === normalizeMedQAnswer(q, q.ans);
         const isCurrent = filteredQuestionIndices[currentReviewQ] === idx;
 
         let bg = '#64748b';
@@ -5161,7 +5205,7 @@ function jumpToReviewQuestion(questionIndex) {
           const realIdx = filteredQuestionIndices[currentReviewQ];
           const qData = activeTestState.questions[realIdx];
           const userAns = activeTestState.answers[realIdx];
-          const isCorrect = (userAns === qData.ans);
+          const isCorrect = (normalizeMedQAnswer(qData, userAns) === normalizeMedQAnswer(qData, qData.ans));
           document.getElementById('revCurrentQNum').innerText = currentReviewQ + 1;
           document.getElementById('revTotalQNum').innerText = filteredQuestionIndices.length;
           
@@ -6697,7 +6741,7 @@ seedId: seedId,
               const borderStyle = isChecked ? "border: 2px solid var(--primary); background: var(--primary-light);" : "background:var(--bg-gray); border:1px solid var(--border);";
               
               optionsContainer.innerHTML += `
-                  <div class="option-label" onclick="handleOptionToggle(${index})" style="display:flex; align-items:center; padding:12px 14px; margin-bottom:10px; border-radius:8px; cursor:pointer; user-select:none; ${borderStyle}">
+                  <div class="option-label ${isChecked ? 'selected' : ''}" onclick="handleOptionToggle(${index})"  style="display:flex; align-items:center; padding:12px 14px; margin-bottom:10px; border-radius:8px; cursor:pointer; user-select:none; ${borderStyle}">
                       <input type="radio" name="examOption" value="${index}" ${isChecked ? 'checked' : ''} style="accent-color: var(--primary); pointer-events:none;">
                       <span style="margin-left:10px; font-size:0.95rem; font-weight:600;">${opt}</span>
                   </div>
@@ -8964,6 +9008,385 @@ window.popAppHistory = function(screenId) {
   }
 })();
 </script>
+
+
+<!-- ================= MEDQ DAILY STABILITY & COMPATIBILITY PATCH ================= -->
+<style id="medq-stability-overrides">
+/* Keep instant Daily MCQ feedback visible despite older high-specificity base rules. */
+#optionsContainer .option-label.selected {
+    border: 2px solid var(--primary) !important;
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+}
+body.dark-mode #optionsContainer .option-label.selected {
+    border-color: #38bdf8 !important;
+    background: rgba(56,189,248,.16) !important;
+    color: #f8fafc !important;
+}
+#dailyMcqContainer .mcq-option.correct {
+    background: #d1fae5 !important;
+    border: 2px solid #059669 !important;
+    color: #065f46 !important;
+    pointer-events: none !important;
+}
+#dailyMcqContainer .mcq-option.incorrect {
+    background: #fee2e2 !important;
+    border: 2px solid #dc2626 !important;
+    color: #991b1b !important;
+    pointer-events: none !important;
+}
+body.dark-mode #optionsContainer .option-label.selected {
+    border: 2px solid var(--primary) !important;
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+}
+body.dark-mode #optionsContainer .option-label.selected {
+    border-color: #38bdf8 !important;
+    background: rgba(56,189,248,.16) !important;
+    color: #f8fafc !important;
+}
+#dailyMcqContainer .mcq-option.correct {
+    background: rgba(16,185,129,.20) !important;
+    border: 2px solid #34d399 !important;
+    color: #a7f3d0 !important;
+}
+body.dark-mode #dailyMcqContainer .mcq-option.incorrect {
+    background: rgba(239,68,68,.20) !important;
+    border: 2px solid #f87171 !important;
+    color: #fecaca !important;
+}
+body.dark-mode #dailyMcqContainer .explanation,
+body.dark-mode #dailyMcqContainer #dailyExpBlock {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-left-color: #38bdf8 !important;
+}
+body.dark-mode #dailyMcqContainer #dailyExpBlock div {
+    color: #e2e8f0 !important;
+}
+#resultScreen, #reviewScreen, #activeTestScreen {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+#resultScreen { z-index: 1060 !important; }
+#reviewScreen { z-index: 1070 !important; }
+#activeTestScreen { z-index: 1050 !important; }
+</style>
+<script id="medq-stability-runtime">
+(function () {
+    'use strict';
+
+    // Supports the question-bank's normal numeric index and common legacy A-D forms.
+    // Unknown formats return -1 rather than silently marking an answer as correct.
+    window.normalizeMedQAnswer = function (question, rawAnswer) {
+        if (rawAnswer === null || rawAnswer === undefined || rawAnswer === '') return -1;
+        const options = question && Array.isArray(question.opts) ? question.opts : [];
+        if (typeof rawAnswer === 'object') {
+            if (Number.isInteger(rawAnswer.index)) rawAnswer = rawAnswer.index;
+            else if (rawAnswer.answer !== undefined) rawAnswer = rawAnswer.answer;
+            else if (rawAnswer.value !== undefined) rawAnswer = rawAnswer.value;
+        }
+        if (typeof rawAnswer === 'number' && Number.isInteger(rawAnswer)) {
+            return rawAnswer >= 0 && rawAnswer < options.length ? rawAnswer : -1;
+        }
+        const value = String(rawAnswer).trim();
+        if (/^\d+$/.test(value)) {
+            const n = Number(value);
+            return n >= 0 && n < options.length ? n : -1;
+        }
+        const letter = value.match(/^([A-D])(?:[\).:]|\s|$)/i);
+        if (letter) {
+            const idx = letter[1].toUpperCase().charCodeAt(0) - 65;
+            return idx < options.length ? idx : -1;
+        }
+        const normalized = value.replace(/^\s*[A-D][\).:]\s*/i, '').trim().toLowerCase();
+        const found = options.findIndex(function (option) {
+            return String(option).trim().toLowerCase() === normalized;
+        });
+        return found;
+    };
+
+    function safeArray(value) {
+        return Array.isArray(value) ? value : [];
+    }
+
+    // Avoid a blank Daily Dose screen when the external question scripts are unavailable
+    // or contain no usable records. External files remain separate and unchanged.
+    const originalRenderDailyMCQ = window.renderDailyMCQ;
+    window.renderDailyMCQ = function () {
+        const container = document.getElementById('dailyMcqContainer');
+        const usable = safeArray(window.qBank || (typeof qBank !== 'undefined' ? qBank : []))
+            .filter(function (q) {
+                return q && typeof q.q === 'string' && Array.isArray(q.opts) && q.opts.length >= 2;
+            });
+        if (!usable.length) {
+            if (container) {
+                container.innerHTML = '<div class="card" role="status"><strong>Daily MCQ is temporarily unavailable.</strong><p style="margin-top:8px;color:var(--text-gray);">Question data could not be loaded. Please check the subject data files and refresh the page.</p></div>';
+            }
+            const progress = document.getElementById('dailyProgress');
+            if (progress) progress.textContent = '0 of 0';
+            return;
+        }
+        if (typeof originalRenderDailyMCQ === 'function') {
+            return originalRenderDailyMCQ.apply(this, arguments);
+        }
+    };
+
+    // Prevent repeated taps from recording more than one attempt and always use the
+    // canonical answer index stored on the question record.
+    window.handleDailyAnswer = function (qIndex, selectedIdx) {
+        if (!Array.isArray(dailyQuestions) || !Array.isArray(dailyAnswers)) return;
+        if (!Number.isInteger(qIndex) || qIndex < 0 || qIndex >= dailyQuestions.length) return;
+        if (dailyAnswers[qIndex] !== null && dailyAnswers[qIndex] !== undefined) return;
+        const question = dailyQuestions[qIndex];
+        const selected = Number(selectedIdx);
+        if (!Number.isInteger(selected) || selected < 0 || !Array.isArray(question.opts) || selected >= question.opts.length) return;
+
+        if (typeof playUISound === 'function') playUISound('tap');
+        if (typeof stopDailyQuestionClock === 'function') stopDailyQuestionClock(qIndex);
+        dailyAnswers[qIndex] = selected;
+
+        const correctIndex = normalizeMedQAnswer(question, question.ans);
+        const isCorrect = selected === correctIndex;
+        if (typeof recordQuestionAttempt === 'function') {
+            recordQuestionAttempt(isCorrect, question, selected);
+        }
+        if (typeof recordSubjectAttempt === 'function') {
+            recordSubjectAttempt(question.subject, isCorrect);
+        }
+        if (typeof renderSingleDailyQuestion === 'function') renderSingleDailyQuestion();
+    };
+
+    // Guard test review against incomplete/legacy history records and answer formats.
+    window.applyReviewFilter = function () {
+        if (typeof activeTestState === 'undefined' || !activeTestState || !Array.isArray(activeTestState.questions)) {
+            filteredQuestionIndices = [];
+            return;
+        }
+        const answers = safeArray(activeTestState.answers);
+        const flags = activeTestState.flags || {};
+        filteredQuestionIndices = [];
+        activeTestState.questions.forEach(function (question, index) {
+            const answer = answers[index];
+            const skipped = answer === null || answer === undefined || answer === '';
+            const correct = !skipped &&
+                normalizeMedQAnswer(question, answer) === normalizeMedQAnswer(question, question.ans);
+            const flagged = flags[index] === true;
+            if (currentFilter === 'ALL' ||
+                (currentFilter === 'CORRECT' && correct) ||
+                (currentFilter === 'INCORRECT' && !skipped && !correct) ||
+                (currentFilter === 'SKIPPED' && skipped) ||
+                (currentFilter === 'FLAGGED' && flagged)) {
+                filteredQuestionIndices.push(index);
+            }
+        });
+    };
+
+    window.startReviewMode = function () {
+        if (typeof activeTestState === 'undefined' || !activeTestState || !Array.isArray(activeTestState.questions) ||
+            !activeTestState.questions.length) {
+            alert('Detailed review data is not available for this test.');
+            return;
+        }
+        activeTestState.answers = safeArray(activeTestState.answers);
+        while (activeTestState.answers.length < activeTestState.questions.length) {
+            activeTestState.answers.push(null);
+        }
+        activeTestState.flags = activeTestState.flags || {};
+        currentFilter = 'ALL';
+        currentReviewQ = 0;
+        applyReviewFilter();
+
+        const result = document.getElementById('resultScreen');
+        const review = document.getElementById('reviewScreen');
+        if (result) {
+            result.classList.add('hidden');
+            result.style.display = 'none';
+        }
+        if (review) {
+            review.classList.remove('hidden');
+            review.style.display = 'flex';
+        }
+        const filterLabel = document.getElementById('revFilterName');
+        if (filterLabel) filterLabel.textContent = 'ALL';
+        renderReviewQuestion();
+        renderReviewPalette();
+    };
+
+    window.renderReviewQuestion = function () {
+        if (typeof activeTestState === 'undefined' || !activeTestState || !Array.isArray(activeTestState.questions) ||
+            !filteredQuestionIndices.length) {
+            const qText = document.getElementById('revQuestionText');
+            const options = document.getElementById('revOptionsContainer');
+            const exp = document.getElementById('revExplanation');
+            if (qText) qText.textContent = 'No questions are available in this review filter.';
+            if (options) options.replaceChildren();
+            if (exp) exp.textContent = '';
+            return;
+        }
+        currentReviewQ = Math.max(0, Math.min(currentReviewQ, filteredQuestionIndices.length - 1));
+        const realIndex = filteredQuestionIndices[currentReviewQ];
+        const question = activeTestState.questions[realIndex];
+        const answers = safeArray(activeTestState.answers);
+        const userAnswer = answers[realIndex];
+        const correctIndex = normalizeMedQAnswer(question, question.ans);
+        const selectedIndex = userAnswer === null || userAnswer === undefined ? -1 :
+            normalizeMedQAnswer(question, userAnswer);
+        const isSkipped = userAnswer === null || userAnswer === undefined || userAnswer === '';
+        const isCorrect = !isSkipped && selectedIndex === correctIndex;
+
+        const current = document.getElementById('revCurrentQNum');
+        const total = document.getElementById('revTotalQNum');
+        const questionText = document.getElementById('revQuestionText');
+        const optionsContainer = document.getElementById('revOptionsContainer');
+        const explanation = document.getElementById('revExplanation');
+        const prev = document.getElementById('revPrevBtn');
+        const next = document.getElementById('revNextBtn');
+        if (current) current.textContent = String(currentReviewQ + 1);
+        if (total) total.textContent = String(filteredQuestionIndices.length);
+        if (questionText) {
+            questionText.textContent = 'Q' + (realIndex + 1) + '. ' + (question.q || 'Question unavailable');
+            if (question.img) {
+                const img = document.createElement('img');
+                img.src = question.img;
+                img.alt = 'Question image';
+                img.loading = 'lazy';
+                img.style.cssText = 'max-width:100%;border-radius:8px;margin-top:12px;border:1px solid var(--border);display:block;';
+                questionText.appendChild(img);
+            }
+        }
+        const shareButton = document.getElementById('revShareBtn');
+        if (shareButton) {
+            shareButton.onclick = function () {
+                if (typeof shareQuestion === 'function' && question.id !== undefined) shareQuestion(question.id);
+            };
+        }
+        if (optionsContainer) {
+            optionsContainer.replaceChildren();
+            safeArray(question.opts).forEach(function (option, index) {
+                const li = document.createElement('li');
+                li.textContent = (index === correctIndex ? '✓ ' : (index === selectedIndex && !isCorrect ? '✕ ' : '')) + String(option);
+                li.className = index === correctIndex ? 'opt-correct' :
+                    (index === selectedIndex && !isCorrect ? 'opt-wrong' : 'opt-normal');
+                optionsContainer.appendChild(li);
+            });
+        }
+        if (explanation) {
+            explanation.replaceChildren();
+            const heading = document.createElement('strong');
+            heading.textContent = 'Standard Explanation: ';
+            explanation.appendChild(heading);
+            const standardText = document.createElement('div');
+            standardText.style.marginTop = '5px';
+            standardText.textContent = question.exp || 'No explanation was supplied for this question.';
+            explanation.appendChild(standardText);
+            if (question.wrongExp) {
+                const toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = 'btn btn-outline';
+                toggle.style.cssText = 'margin-top:12px;width:auto;padding:8px 12px;font-size:.85rem;';
+                toggle.textContent = '🧐 Rule Out: Why Not The Others?';
+                const detail = document.createElement('div');
+                detail.id = 'revWrongExpBlock';
+                detail.className = 'hidden';
+                detail.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);line-height:1.6;';
+                detail.textContent = question.wrongExp;
+                toggle.onclick = function () {
+                    detail.classList.toggle('hidden');
+                    toggle.textContent = detail.classList.contains('hidden')
+                        ? '🧐 Rule Out: Why Not The Others?' : 'Hide Other-Option Explanation';
+                };
+                explanation.appendChild(toggle);
+                explanation.appendChild(detail);
+            }
+            if (isSkipped) {
+                const skipped = document.createElement('p');
+                skipped.textContent = 'Your answer: Not attempted';
+                explanation.appendChild(skipped);
+            } else {
+                const selected = document.createElement('p');
+                selected.textContent = 'Your answer: ' + (safeArray(question.opts)[selectedIndex] ?? 'Unrecognized answer format');
+                explanation.appendChild(selected);
+            }
+        }
+        if (prev) prev.style.visibility = currentReviewQ === 0 ? 'hidden' : 'visible';
+        if (next) next.style.visibility = currentReviewQ === filteredQuestionIndices.length - 1 ? 'hidden' : 'visible';
+    };
+
+    window.exitReviewMode = function () {
+        if (typeof playUISound === 'function') playUISound('tap');
+        const review = document.getElementById('reviewScreen');
+        const result = document.getElementById('resultScreen');
+        if (review) {
+            review.classList.add('hidden');
+            review.style.display = 'none';
+        }
+        if (result) {
+            result.classList.remove('hidden');
+            result.style.display = 'block';
+        }
+    };
+
+    // History review must initialize all state required by the live review renderer.
+    window.loadSavedReview = function (historyId) {
+        let history = [];
+        try { history = JSON.parse(localStorage.getItem('medqTestHistory') || '[]'); } catch (_) {}
+        const item = history.find(function (entry) { return entry && entry.id === historyId; });
+        if (!item || !Array.isArray(item.questions) || !item.questions.length) {
+            alert('Detailed review is not available for this attempt.');
+            return;
+        }
+        activeTestState = {
+            questions: item.questions,
+            answers: safeArray(item.answers).slice(0, item.questions.length),
+            testName: item.name || 'Previous Test',
+            examPattern: item.pattern || 'NEET_PG',
+            flags: {},
+            visited: {}
+        };
+        while (activeTestState.answers.length < item.questions.length) activeTestState.answers.push(null);
+        currentFilter = 'ALL';
+        currentReviewQ = 0;
+        filteredQuestionIndices = [];
+        hideAllActiveScreens();
+        const score = document.getElementById('scoreDisplay');
+        if (score) {
+            score.innerHTML = '<h3 style="color:var(--primary);margin:0 0 8px;"></h3><p style="color:var(--text-gray);margin:0;"></p>';
+            score.querySelector('h3').textContent = item.name || 'Previous Test';
+            score.querySelector('p').textContent = 'Previous Attempt • ' + (item.date || '');
+        }
+        startReviewMode();
+    };
+
+    // Make old/malformed local backups recoverable without crashing the app.
+    const originalResume = window.resumeTestFromBanner;
+    if (typeof originalResume === 'function') {
+        window.resumeTestFromBanner = function () {
+            try {
+                const raw = localStorage.getItem('medqActiveTestBackup');
+                if (raw) {
+                    const state = JSON.parse(raw);
+                    if (state && Array.isArray(state.questions)) {
+                        state.answers = safeArray(state.answers).slice(0, state.questions.length);
+                        while (state.answers.length < state.questions.length) state.answers.push(null);
+                        state.flags = state.flags || {};
+                        state.visited = state.visited || {};
+                        localStorage.setItem('medqActiveTestBackup', JSON.stringify(state));
+                    }
+                }
+            } catch (error) {
+                console.warn('Could not restore saved test backup:', error);
+                localStorage.removeItem('medqActiveTestBackup');
+            }
+            return originalResume.apply(this, arguments);
+        };
+    }
+
+    // Expose stable globals for inline handlers and integrations.
+    window.normalizeMedQAnswer = window.normalizeMedQAnswer;
+})();
+</script>
+<!-- ================= END MEDQ DAILY STABILITY PATCH ================= -->
 
 </body>
 </html>
